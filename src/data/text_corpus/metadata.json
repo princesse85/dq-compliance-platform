@@ -1,0 +1,19 @@
+{
+  "total_samples": 10000,
+  "train_samples": 7000,
+  "validation_samples": 1500,
+  "test_samples": 1500,
+  "categories": [
+    "regulatory",
+    "litigation",
+    "contracts",
+    "compliance"
+  ],
+  "risk_levels": [
+    "MediumRisk",
+    "HighRisk",
+    "LowRisk"
+  ],
+  "generated_date": "2025-08-12T22:54:41.189366",
+  "data_generator": "ComplianceDataGenerator with Faker"
+}
