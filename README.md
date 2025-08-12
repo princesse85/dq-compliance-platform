@@ -60,6 +60,7 @@ This platform implements a modern data architecture with the following component
 #### Option 1: Automated Setup (Recommended)
 
 **For Linux/macOS:**
+
 ```bash
 git clone https://github.com/your-username/dq-compliance-platform.git
 cd dq-compliance-platform
@@ -69,6 +70,7 @@ chmod +x scripts/setup.sh
 ```
 
 **For Windows:**
+
 ```powershell
 git clone https://github.com/your-username/dq-compliance-platform.git
 cd dq-compliance-platform
@@ -78,17 +80,26 @@ cd dq-compliance-platform
 #### Option 2: Manual Setup
 
 1. **Clone the repository:**
+
 ```bash
 git clone https://github.com/your-username/dq-compliance-platform.git
 cd dq-compliance-platform
 ```
 
 2. **Configure AWS credentials:**
+
 ```bash
 aws configure
 ```
 
-3. **Install dependencies:**
+3. **Configure environment:**
+
+```bash
+python scripts/configure_env.py
+```
+
+4. **Install dependencies:**
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
@@ -96,7 +107,8 @@ pip install -r requirements.txt
 npm install -g aws-cdk
 ```
 
-4. **Deploy infrastructure:**
+5. **Deploy infrastructure:**
+
 ```bash
 cdk bootstrap
 cdk deploy --all --require-approval never
@@ -126,14 +138,18 @@ curl https://your-api-gateway-url.amazonaws.com/prod/health
 ## 📋 Detailed Setup Instructions
 
 # Deploy data quality platform
+
 cdk deploy enterprise-data-quality --require-approval never
 
 # Deploy billing alarms
+
 cdk deploy enterprise-billing --require-approval never
 
 # Deploy Document Processing
+
 cdk deploy enterprise-document-processing --require-approval never
-```
+
+````
 
 ### Deploy Specific Components
 
@@ -143,7 +159,7 @@ cdk deploy enterprise-data-quality --require-approval never
 
 # Deploy only monitoring components
 cdk deploy enterprise-monitoring --require-approval never
-```
+````
 
 ## 📊 Data Pipeline Usage
 

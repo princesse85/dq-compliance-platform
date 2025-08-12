@@ -32,6 +32,10 @@ function Test-AwsCredentials {
         
         $accountId = aws sts get-caller-identity --query Account --output text 2>$null
         $region = aws configure get region 2>$null
+        if (-not $region) {
+            Write-Host "❌ AWS region not configured. Please run 'aws configure' first." -ForegroundColor Red
+            exit 1
+        }
         
         Write-Host "✅ AWS credentials validated successfully" -ForegroundColor Green
         Write-Host "   Account ID: $accountId" -ForegroundColor White

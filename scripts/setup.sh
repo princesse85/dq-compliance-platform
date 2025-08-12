@@ -157,44 +157,15 @@ install_cdk() {
 configure_environment() {
     print_status "Configuring environment..."
     
-    # Get user input for configuration
-    echo ""
-    read -p "Enter your project prefix (default: enterprise): " PROJECT_PREFIX
-    PROJECT_PREFIX=${PROJECT_PREFIX:-enterprise}
+    # Use the Python configuration script
+    python scripts/configure_env.py
     
-    read -p "Enter your billing email: " BILLING_EMAIL
+    if [ $? -ne 0 ]; then
+        print_error "Environment configuration failed"
+        exit 1
+    fi
     
-    read -p "Enter your monthly budget in USD (default: 5000): " MONTHLY_BUDGET
-    MONTHLY_BUDGET=${MONTHLY_BUDGET:-5000}
-    
-    read -p "Enter your AWS region (default: us-east-1): " AWS_REGION
-    AWS_REGION=${AWS_REGION:-us-east-1}
-    
-    # Create environment file
-    cat > .env << EOF
-# Environment Configuration
-ENV_NAME=development
-PROJECT_PREFIX=$PROJECT_PREFIX
-AWS_REGION=$AWS_REGION
-
-# AWS Configuration
-AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID
-
-# Billing and Cost Management
-BILLING_EMAIL=$BILLING_EMAIL
-MONTHLY_BUDGET=$MONTHLY_BUDGET
-
-# Security (update these with your values)
-AUTH_USER_POOL_ID=
-AUTH_CLIENT_ID=
-KMS_KEY_ALIAS=${PROJECT_PREFIX}-development-key
-
-# Monitoring
-CLOUDWATCH_LOG_GROUP=/aws/${PROJECT_PREFIX}-dq/development
-EOF
-    
-    print_success "Environment configuration saved to .env"
-    print_warning "Please update the security settings in .env with your actual values"
+    print_success "Environment configuration completed"
 }
 
 # Function to bootstrap CDK

@@ -55,7 +55,8 @@ def validate_etl_job() -> ValidationResult:
         # Check for hardcoded region
         with open(etl_path, 'r') as f:
             content = f.read()
-            if "eu-west-2" in content and "os.environ" not in content:
+            # Look for hardcoded region without environment variable usage
+            if "eu-west-2" in content and "os.getenv" not in content:
                 return ValidationResult("ETL Job", False, "Hardcoded region found")
         
         # Check for proper error handling

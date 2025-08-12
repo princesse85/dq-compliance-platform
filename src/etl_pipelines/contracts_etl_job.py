@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 # Get AWS region from environment or use default
-aws_region = os.getenv('AWS_DEFAULT_REGION', 'eu-west-2')
+aws_region = os.getenv('AWS_DEFAULT_REGION', os.getenv('AWS_REGION', 'eu-west-2'))
 
 # Arguments (injected by Glue job)
 args = {k.replace('--',''): v for k,v in zip(sys.argv[1::2], sys.argv[2::2]) if k.startswith('--')}

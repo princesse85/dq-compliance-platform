@@ -1,5 +1,9 @@
 import os
 import aws_cdk as cdk
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from infrastructure.foundation_stack import FoundationStack
 from infrastructure.billing_alarm_stack import BillingAlarmStack
@@ -9,12 +13,12 @@ from infrastructure.document_processing_stack import DocumentProcessingStack
 
 app = cdk.App()
 
-# Configuration from context
-project_prefix = app.node.try_get_context("project_prefix") or "enterprise"
-env_name = app.node.try_get_context("env_name") or "production"
-primary_region = app.node.try_get_context("region") or os.getenv("CDK_DEFAULT_REGION") or "eu-west-2"
-billing_email = app.node.try_get_context("billing_email") or "enterprise-support@company.com"
-monthly_budget = float(app.node.try_get_context("monthly_budget") or 5000)
+# Configuration from environment variables and context
+project_prefix = os.getenv("PROJECT_PREFIX") or app.node.try_get_context("project_prefix") or "enterprise"
+env_name = os.getenv("ENV_NAME") or app.node.try_get_context("env_name") or "development"
+primary_region = os.getenv("AWS_REGION") or app.node.try_get_context("region") or os.getenv("CDK_DEFAULT_REGION") or "us-east-1"
+billing_email = os.getenv("BILLING_EMAIL") or app.node.try_get_context("billing_email") or "enterprise-support@company.com"
+monthly_budget = float(os.getenv("MONTHLY_BUDGET") or app.node.try_get_context("monthly_budget") or 5000)
 
 # Environment configurations
 primary_env = cdk.Environment(account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=primary_region)

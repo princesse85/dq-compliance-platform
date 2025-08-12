@@ -169,46 +169,15 @@ function Set-Environment {
     
     Write-Status "Configuring environment..."
     
-    # Get user input for configuration
-    Write-Host ""
-    $projectPrefix = Read-Host "Enter your project prefix (default: enterprise)"
-    if (-not $projectPrefix) { $projectPrefix = "enterprise" }
+    # Use the Python configuration script
+    python scripts/configure_env.py
     
-    $billingEmail = Read-Host "Enter your billing email"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Environment configuration failed"
+        exit 1
+    }
     
-    $monthlyBudget = Read-Host "Enter your monthly budget in USD (default: 5000)"
-    if (-not $monthlyBudget) { $monthlyBudget = "5000" }
-    
-    $awsRegion = Read-Host "Enter your AWS region (default: us-east-1)"
-    if (-not $awsRegion) { $awsRegion = "us-east-1" }
-    
-    # Create environment file
-    $envContent = @"
-# Environment Configuration
-ENV_NAME=development
-PROJECT_PREFIX=$projectPrefix
-AWS_REGION=$awsRegion
-
-# AWS Configuration
-AWS_ACCOUNT_ID=$($AwsInfo.AccountId)
-
-# Billing and Cost Management
-BILLING_EMAIL=$billingEmail
-MONTHLY_BUDGET=$monthlyBudget
-
-# Security (update these with your values)
-AUTH_USER_POOL_ID=
-AUTH_CLIENT_ID=
-KMS_KEY_ALIAS=${projectPrefix}-development-key
-
-# Monitoring
-CLOUDWATCH_LOG_GROUP=/aws/${projectPrefix}-dq/development
-"@
-    
-    $envContent | Out-File -FilePath ".env" -Encoding UTF8
-    
-    Write-Success "Environment configuration saved to .env"
-    Write-Warning "Please update the security settings in .env with your actual values"
+    Write-Success "Environment configuration completed"
 }
 
 # Function to bootstrap CDK
