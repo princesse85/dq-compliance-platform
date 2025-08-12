@@ -78,7 +78,7 @@ if __name__ == "__main__":
     # Training arguments
     args = TrainingArguments(
         output_dir=str(ANALYTICS_DIR / "checkpoints"),
-        evaluation_strategy="epoch",
+        eval_strategy="epoch",
         save_strategy="epoch",
         learning_rate=LR,
         per_device_train_batch_size=BATCH,
