@@ -76,6 +76,7 @@ enterprise-data-quality-platform/
 ## 📁 Source Code Structure (`src/`)
 
 ### Data Quality Modules (`src/data_quality/`)
+
 ```
 src/data_quality/
 ├── 📄 __init__.py
@@ -87,6 +88,7 @@ src/data_quality/
 ```
 
 ### ETL Pipelines (`src/etl_pipelines/`)
+
 ```
 src/etl_pipelines/
 ├── 📄 __init__.py
@@ -97,6 +99,7 @@ src/etl_pipelines/
 ```
 
 ### Machine Learning (`src/ml/`)
+
 ```
 src/ml/
 ├── 📄 __init__.py
@@ -116,6 +119,7 @@ src/ml/
 ```
 
 ### OCR and Document Processing (`src/ocr/`)
+
 ```
 src/ocr/
 ├── 📄 __init__.py
@@ -125,6 +129,7 @@ src/ocr/
 ```
 
 ### Data Processing (`src/data/`)
+
 ```
 src/data/
 ├── 📄 __init__.py
@@ -136,6 +141,7 @@ src/data/
 ```
 
 ### Utilities (`src/utils/`)
+
 ```
 src/utils/
 ├── 📄 __init__.py
@@ -145,6 +151,7 @@ src/utils/
 ## 📁 Infrastructure Structure (`infrastructure/`)
 
 ### CDK Stacks (`infrastructure/stacks/`)
+
 ```
 infrastructure/stacks/
 ├── 📄 foundation_stack.py         # Foundation infrastructure
@@ -155,6 +162,7 @@ infrastructure/stacks/
 ```
 
 ### Configuration (`infrastructure/config/`)
+
 ```
 infrastructure/config/
 ├── 📄 production.py               # Production configuration
@@ -163,6 +171,7 @@ infrastructure/config/
 ```
 
 ### Security (`infrastructure/security/`)
+
 ```
 infrastructure/security/
 ├── 📄 security_config.py          # Security configuration
@@ -284,6 +293,7 @@ lambda_app/
 ## 🔧 Key Configuration Files
 
 ### Root Level
+
 - **`app.py`**: CDK application entry point
 - **`cdk.json`**: CDK configuration
 - **`requirements.txt`**: Python dependencies
@@ -293,11 +303,13 @@ lambda_app/
 - **`.gitignore`**: Git ignore rules
 
 ### Infrastructure
+
 - **`infrastructure/config/production.py`**: Production settings
 - **`infrastructure/security/security_config.py`**: Security settings
 - **`infrastructure/stacks/*.py`**: CDK infrastructure stacks
 
 ### CI/CD
+
 - **`.github/workflows/ci.yml`**: GitHub Actions workflow
 - **`scripts/deploy.sh`**: Deployment scripts
 - **`scripts/setup.sh`**: Environment setup
@@ -305,36 +317,43 @@ lambda_app/
 ## 🎯 Benefits of This Structure
 
 ### 1. **Clear Separation of Concerns**
+
 - Source code, infrastructure, and documentation are clearly separated
 - Each module has a specific responsibility
 - Easy to locate and maintain code
 
 ### 2. **Scalability**
+
 - Modular structure supports team growth
 - Easy to add new features and modules
 - Clear boundaries between components
 
 ### 3. **Maintainability**
+
 - Consistent naming conventions
 - Logical grouping of related files
 - Easy to understand and navigate
 
 ### 4. **Deployment Ready**
+
 - Infrastructure as code with CDK
 - Environment-specific configurations
 - Automated deployment pipelines
 
 ### 5. **Testing Support**
+
 - Dedicated test structure
 - Unit, integration, and e2e tests
 - Comprehensive test coverage
 
 ### 6. **Documentation**
+
 - Comprehensive documentation structure
 - Architecture and deployment guides
 - API and troubleshooting documentation
 
 ### 7. **Monitoring and Observability**
+
 - Dedicated monitoring structure
 - CloudWatch and Grafana integration
 - Comprehensive alerting
@@ -349,4 +368,3 @@ lambda_app/
 6. **Start development**: Begin adding features
 
 This structure provides a solid foundation for enterprise-scale development while maintaining clarity and organization.
-

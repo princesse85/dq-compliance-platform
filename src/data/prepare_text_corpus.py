@@ -2,7 +2,9 @@ import csv
 import random
 import pathlib
 from typing import List, Tuple
+from src.utils.logging_config import get_logger
 
+logger = get_logger(__name__)
 random.seed(42)
 
 def read_rows(path: str) -> List[Tuple[str, str]]:
@@ -24,7 +26,7 @@ def create_splits_from_existing():
     
     # Check if we have individual files already
     if (base / "train.csv").exists() and (base / "valid.csv").exists() and (base / "test.csv").exists():
-        print("Train/valid/test splits already exist.")
+        logger.info("Train/valid/test splits already exist.")
         return
     
     # If we have a single source file, create splits
@@ -47,9 +49,9 @@ def create_splits_from_existing():
                 w.writerow(['text', 'label'])
                 w.writerows(items)
         
-        print({k: len(v) for k, v in splits.items()})
+        logger.info(f"Split sizes: {dict((k, len(v)) for k, v in splits.items())}")
     else:
-        print("No source file found. Using existing synthetic data.")
+        logger.info("No source file found. Using existing synthetic data.")
 
 if __name__ == "__main__":
     create_splits_from_existing()

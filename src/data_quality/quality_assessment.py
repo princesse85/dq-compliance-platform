@@ -7,6 +7,9 @@ from datetime import datetime
 from dateutil.parser import isoparse
 from expectations_contract_register import REQUIRED_COLS, VALID_CCY
 from utils import is_email, parse_date
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 S3 = boto3.client('s3')
 
@@ -85,4 +88,4 @@ if __name__ == "__main__":
     analytics_bucket = os.environ.get('ANALYTICS_BUCKET')
     ingest_date = os.environ.get('INGEST_DATE')  # e.g., 2025-08-11
     b, p = run(raw_bucket, analytics_bucket, ingest_date)
-    print({"baseline": b, "post": p})
+    logger.info(f"Quality metrics - baseline: {b}, post: {p}")

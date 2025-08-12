@@ -1,5 +1,8 @@
 import great_expectations as ge
 from great_expectations.core.expectation_suite import ExpectationSuite
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 def build_suite():
     suite = ExpectationSuite(expectation_suite_name="contract_register_suite")

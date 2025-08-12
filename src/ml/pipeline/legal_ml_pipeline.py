@@ -33,6 +33,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'explainability'))
 from legal_text_generator import generate_enhanced_dataset
 from model_config import get_config, update_config
 from mlflow_tracker import create_mlflow_tracker
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 # Import model components (these will be created next)
 # from baseline_models import BaselineModelTrainer
@@ -92,18 +95,18 @@ class LegalMLPipeline:
         self.baseline_summary = None
         self.transformer_summary = None
         
-        print("Legal ML Pipeline Initialized")
-        print("="*60)
+        logger.info(r"Legal ML Pipeline Initialized")
+        logger.info("="*60)
     
     def run_data_generation(self) -> Dict[str, Any]:
         """Run legal text data generation."""
         if self.skip_data_generation:
-            print("Skipping data generation...")
+            logger.info(r"Skipping data generation...")
             return {'status': 'skipped'}
         
-        print("\n" + "="*60)
-        print("STEP 1: LEGAL TEXT DATA GENERATION")
-        print("="*60)
+        logger.info("\n" + "="*60)
+        logger.info(r"STEP 1: LEGAL TEXT DATA GENERATION")
+        logger.info("="*60)
         
         start_time = time.time()
         
@@ -133,28 +136,28 @@ class LegalMLPipeline:
             # Log to MLflow
             self.mlflow_tracker.log_dataset_info(results)
             
-            print(f"✅ Data generation completed successfully!")
-            print(f"   Total samples: {total_samples}")
-            print(f"   Train samples: {len(splits['train'])}")
-            print(f"   Validation samples: {len(splits['valid'])}")
-            print(f"   Test samples: {len(splits['test'])}")
+            logger.info(r"✅ Data generation completed successfully!")
+            logger.info(r"   Total samples: {total_samples}")
+            logger.info(r"   Train samples: {len(splits['train'])}")
+            logger.info(r"   Validation samples: {len(splits['valid'])}")
+            logger.info(r"   Test samples: {len(splits['test'])}")
             
             self.timing['data_generation'] = time.time() - start_time
             return results
             
         except Exception as e:
-            print(f"❌ Data generation failed: {e}")
+            logger.info(r"❌ Data generation failed: {e}")
             return {'status': 'failed', 'error': str(e)}
     
     def run_baseline_models(self) -> Dict[str, Any]:
         """Run baseline model training and evaluation."""
         if self.skip_baseline:
-            print("Skipping baseline models...")
+            logger.info(r"Skipping baseline models...")
             return {'status': 'skipped'}
         
-        print("\n" + "="*60)
-        print("STEP 2: BASELINE MODEL TRAINING")
-        print("="*60)
+        logger.info("\n" + "="*60)
+        logger.info(r"STEP 2: BASELINE MODEL TRAINING")
+        logger.info("="*60)
         
         start_time = time.time()
         
@@ -180,27 +183,27 @@ class LegalMLPipeline:
                 'best_accuracy': 1.0
             }
             
-            print(f"✅ Baseline models completed successfully!")
-            print(f"   Models trained: {results['models_trained']}")
-            print(f"   Best model: {results['best_model']}")
-            print(f"   Best F1-Score: {results['best_f1_score']:.4f}")
+            logger.info(r"✅ Baseline models completed successfully!")
+            logger.info(r"   Models trained: {results['models_trained']}")
+            logger.info(r"   Best model: {results['best_model']}")
+            logger.info(r"   Best F1-Score: {results['best_f1_score']:.4f}")
             
             self.timing['baseline_models'] = time.time() - start_time
             return results
             
         except Exception as e:
-            print(f"❌ Baseline models failed: {e}")
+            logger.info(r"❌ Baseline models failed: {e}")
             return {'status': 'failed', 'error': str(e)}
     
     def run_transformer_models(self) -> Dict[str, Any]:
         """Run transformer model training and evaluation."""
         if self.skip_transformer:
-            print("Skipping transformer models...")
+            logger.info(r"Skipping transformer models...")
             return {'status': 'skipped'}
         
-        print("\n" + "="*60)
-        print("STEP 3: TRANSFORMER MODEL TRAINING")
-        print("="*60)
+        logger.info("\n" + "="*60)
+        logger.info(r"STEP 3: TRANSFORMER MODEL TRAINING")
+        logger.info("="*60)
         
         start_time = time.time()
         
@@ -226,27 +229,27 @@ class LegalMLPipeline:
                 'best_accuracy': 0.95
             }
             
-            print(f"✅ Transformer models completed successfully!")
-            print(f"   Models trained: {results['models_trained']}")
-            print(f"   Best model: {results['best_model']}")
-            print(f"   Best F1-Score: {results['best_f1_score']:.4f}")
+            logger.info(r"✅ Transformer models completed successfully!")
+            logger.info(r"   Models trained: {results['models_trained']}")
+            logger.info(r"   Best model: {results['best_model']}")
+            logger.info(r"   Best F1-Score: {results['best_f1_score']:.4f}")
             
             self.timing['transformer_models'] = time.time() - start_time
             return results
             
         except Exception as e:
-            print(f"❌ Transformer models failed: {e}")
+            logger.info(r"❌ Transformer models failed: {e}")
             return {'status': 'failed', 'error': str(e)}
     
     def run_explainability(self) -> Dict[str, Any]:
         """Run explainability analysis."""
         if self.skip_explainability:
-            print("Skipping explainability analysis...")
+            logger.info(r"Skipping explainability analysis...")
             return {'status': 'skipped'}
         
-        print("\n" + "="*60)
-        print("STEP 4: EXPLAINABILITY ANALYSIS")
-        print("="*60)
+        logger.info("\n" + "="*60)
+        logger.info(r"STEP 4: EXPLAINABILITY ANALYSIS")
+        logger.info("="*60)
         
         start_time = time.time()
         
@@ -268,23 +271,23 @@ class LegalMLPipeline:
                 'average_accuracy': 0.95
             }
             
-            print(f"✅ Explainability analysis completed successfully!")
-            print(f"   Explanations generated: {results['explanations_generated']}")
-            print(f"   Models analyzed: {results['models_analyzed']}")
-            print(f"   Average accuracy: {results['average_accuracy']:.4f}")
+            logger.info(r"✅ Explainability analysis completed successfully!")
+            logger.info(r"   Explanations generated: {results['explanations_generated']}")
+            logger.info(r"   Models analyzed: {results['models_analyzed']}")
+            logger.info(r"   Average accuracy: {results['average_accuracy']:.4f}")
             
             self.timing['explainability'] = time.time() - start_time
             return results
             
         except Exception as e:
-            print(f"❌ Explainability analysis failed: {e}")
+            logger.info(r"❌ Explainability analysis failed: {e}")
             return {'status': 'failed', 'error': str(e)}
     
     def generate_final_comparison(self) -> Dict[str, Any]:
         """Generate final comparison and summary."""
-        print("\n" + "="*60)
-        print("STEP 5: FINAL COMPARISON AND SUMMARY")
-        print("="*60)
+        logger.info("\n" + "="*60)
+        logger.info(r"STEP 5: FINAL COMPARISON AND SUMMARY")
+        logger.info("="*60)
         
         try:
             # Create comparison summary
@@ -314,60 +317,60 @@ class LegalMLPipeline:
             
             comparison['best_overall_model'] = best_overall
             
-            print("\n" + "="*60)
-            print("FINAL COMPARISON SUMMARY")
-            print("="*60)
-            print(f"Best Baseline Model: {self.results.get('baseline_models', {}).get('best_model', 'N/A')}")
-            print(f"  F1-Score: {baseline_f1:.4f}")
-            print(f"Best Transformer Model: {self.results.get('transformer_models', {}).get('best_model', 'N/A')}")
-            print(f"  F1-Score: {transformer_f1:.4f}")
-            print(f"Best Overall Model: {best_overall['type']} - {best_overall['model']}")
-            print(f"  F1-Score: {best_overall['f1_score']:.4f}")
+            logger.info("\n" + "="*60)
+            logger.info(r"FINAL COMPARISON SUMMARY")
+            logger.info("="*60)
+            logger.info(r"Best Baseline Model: {self.results.get('baseline_models', {}).get('best_model', 'N/A')}")
+            logger.info(r"  F1-Score: {baseline_f1:.4f}")
+            logger.info(r"Best Transformer Model: {self.results.get('transformer_models', {}).get('best_model', 'N/A')}")
+            logger.info(r"  F1-Score: {transformer_f1:.4f}")
+            logger.info(r"Best Overall Model: {best_overall['type']} - {best_overall['model']}")
+            logger.info(r"  F1-Score: {best_overall['f1_score']:.4f}")
             
             return comparison
             
         except Exception as e:
-            print(f"❌ Final comparison failed: {e}")
+            logger.info(r"❌ Final comparison failed: {e}")
             return {'status': 'failed', 'error': str(e)}
     
     def generate_executive_summary(self):
         """Generate executive summary."""
-        print("\n" + "="*60)
-        print("EXECUTIVE SUMMARY")
-        print("="*60)
+        logger.info("\n" + "="*60)
+        logger.info(r"EXECUTIVE SUMMARY")
+        logger.info("="*60)
         
         total_time = sum(self.timing.values())
-        print(f"Total Pipeline Execution Time: {total_time:.2f} seconds ({total_time/60:.2f} minutes)")
+        logger.info(r"Total Pipeline Execution Time: {total_time:.2f} seconds ({total_time/60:.2f} minutes)")
         
-        print("\nTiming Breakdown:")
+        logger.info(r"\nTiming Breakdown:")
         for step, time_taken in self.timing.items():
-            print(f"  {step.replace('_', ' ').title()}: {time_taken:.2f}s")
+            logger.info(r"  {step.replace('_', ' ').title()}: {time_taken:.2f}s")
         
-        print("\nResults Summary:")
+        logger.info(r"\nResults Summary:")
         for step, result in self.results.items():
             status = result.get('status', 'unknown') if result else 'not_run'
             status_icon = "✅" if status == 'success' else "❌" if status == 'failed' else "⏭️"
-            print(f"  {status_icon} {step.replace('_', ' ').title()}: {status.title()}")
+            logger.info(r"  {status_icon} {step.replace('_', ' ').title()}: {status.title()}")
         
-        print("\nOutput Directories:")
-        print(f"  📊 Baseline Models: {self.config.data.output_dir}/baseline/")
-        print(f"  🤖 Transformer Models: {self.config.data.output_dir}/transformer/")
-        print(f"  🔍 Explainability: {self.config.data.output_dir}/explainability/")
-        print(f"  📈 MLflow Experiments: {self.config.mlflow.artifact_location}/")
+        logger.info(r"\nOutput Directories:")
+        logger.info(r"  📊 Baseline Models: {self.config.data.output_dir}/baseline/")
+        logger.info(r"  🤖 Transformer Models: {self.config.data.output_dir}/transformer/")
+        logger.info(r"  🔍 Explainability: {self.config.data.output_dir}/explainability/")
+        logger.info(r"  📈 MLflow Experiments: {self.config.mlflow.artifact_location}/")
         
-        print("\nKey Artifacts Generated:")
-        print("  • Multiple trained models (baseline + transformer)")
-        print("  • Hyperparameter optimization results")
-        print("  • Comprehensive evaluation metrics")
-        print("  • LIME and feature importance explanations")
-        print("  • Interactive dashboards")
-        print("  • Comparative analysis reports")
+        logger.info(r"\nKey Artifacts Generated:")
+        logger.info(r"  • Multiple trained models (baseline + transformer)")
+        logger.info(r"  • Hyperparameter optimization results")
+        logger.info(r"  • Comprehensive evaluation metrics")
+        logger.info(r"  • LIME and feature importance explanations")
+        logger.info(r"  • Interactive dashboards")
+        logger.info(r"  • Comparative analysis reports")
     
     def run_complete_pipeline(self):
         """Run the complete Legal ML pipeline."""
-        print("🚀 Starting Legal ML Pipeline")
-        print(f"📅 Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print("="*80)
+        logger.info(r"🚀 Starting Legal ML Pipeline")
+        logger.info(r"📅 Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        logger.info("="*80)
         
         pipeline_start_time = time.time()
         
@@ -408,13 +411,13 @@ class LegalMLPipeline:
             
             self.mlflow_tracker.log_experiment_summary(final_summary)
             
-            print("\n" + "="*80)
-            print("🎉 Legal ML Pipeline Completed Successfully!")
-            print(f"📅 Completed at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-            print("="*80)
+            logger.info("\n" + "="*80)
+            logger.info(r"🎉 Legal ML Pipeline Completed Successfully!")
+            logger.info(r"📅 Completed at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            logger.info("="*80)
             
         except Exception as e:
-            print(f"\n❌ Pipeline failed with error: {e}")
+            logger.info(r"\n❌ Pipeline failed with error: {e}")
             self.mlflow_tracker.log_experiment_summary({
                 'pipeline_status': 'failed',
                 'error': str(e)

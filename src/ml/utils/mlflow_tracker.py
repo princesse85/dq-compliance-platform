@@ -20,6 +20,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
 import warnings
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 warnings.filterwarnings('ignore')
 
 class NumpyEncoder(json.JSONEncoder):
@@ -74,8 +77,8 @@ class MLflowTracker:
                 self.experiment_id = experiment.experiment_id
                 
         except Exception as e:
-            print(f"Warning: MLflow setup failed: {e}")
-            print("Continuing without MLflow tracking...")
+            logger.info(r"Warning: MLflow setup failed: {e}")
+            logger.info(r"Continuing without MLflow tracking...")
     
     def start_run(self, run_name: str = None) -> bool:
         """
@@ -95,7 +98,7 @@ class MLflowTracker:
             self.run_id = mlflow.active_run().info.run_id
             return True
         except Exception as e:
-            print(f"Warning: Failed to start MLflow run: {e}")
+            logger.info(r"Warning: Failed to start MLflow run: {e}")
             return False
     
     def end_run(self) -> bool:
@@ -111,7 +114,7 @@ class MLflowTracker:
                 return True
             return False
         except Exception as e:
-            print(f"Warning: Failed to end MLflow run: {e}")
+            logger.info(r"Warning: Failed to end MLflow run: {e}")
             return False
     
     def log_parameters(self, params: Dict[str, Any]) -> bool:
@@ -132,7 +135,7 @@ class MLflowTracker:
                     mlflow.log_param(key, value)
             return True
         except Exception as e:
-            print(f"Warning: Failed to log parameters: {e}")
+            logger.info(r"Warning: Failed to log parameters: {e}")
             return False
     
     def log_metrics(self, metrics: Dict[str, float]) -> bool:
@@ -150,7 +153,7 @@ class MLflowTracker:
                 mlflow.log_metric(key, float(value))
             return True
         except Exception as e:
-            print(f"Warning: Failed to log metrics: {e}")
+            logger.info(r"Warning: Failed to log metrics: {e}")
             return False
     
     def log_artifacts(self, local_dir: str, artifact_path: str = None) -> bool:
@@ -168,7 +171,7 @@ class MLflowTracker:
             mlflow.log_artifacts(local_dir, artifact_path)
             return True
         except Exception as e:
-            print(f"Warning: Failed to log artifacts: {e}")
+            logger.info(r"Warning: Failed to log artifacts: {e}")
             return False
     
     def log_model(self, model, model_name: str, model_type: str = "sklearn") -> bool:
@@ -189,11 +192,11 @@ class MLflowTracker:
             elif model_type == "pytorch":
                 mlflow.pytorch.log_model(model, model_name)
             else:
-                print(f"Warning: Unknown model type: {model_type}")
+                logger.info(r"Warning: Unknown model type: {model_type}")
                 return False
             return True
         except Exception as e:
-            print(f"Warning: Failed to log model: {e}")
+            logger.info(r"Warning: Failed to log model: {e}")
             return False
     
     def log_dataset_info(self, dataset_info: Dict[str, Any]) -> bool:
@@ -217,7 +220,7 @@ class MLflowTracker:
             })
             return True
         except Exception as e:
-            print(f"Warning: Failed to log dataset info: {e}")
+            logger.info(r"Warning: Failed to log dataset info: {e}")
             return False
     
     def log_confusion_matrix(self, cm: np.ndarray, class_names: List[str]) -> bool:
@@ -254,7 +257,7 @@ class MLflowTracker:
             
             return True
         except Exception as e:
-            print(f"Warning: Failed to log confusion matrix: {e}")
+            logger.info(r"Warning: Failed to log confusion matrix: {e}")
             return False
     
     def log_classification_report(self, report: Dict[str, Any]) -> bool:
@@ -284,7 +287,7 @@ class MLflowTracker:
             })
             return True
         except Exception as e:
-            print(f"Warning: Failed to log classification report: {e}")
+            logger.info(r"Warning: Failed to log classification report: {e}")
             return False
     
     def log_experiment_summary(self, summary: Dict[str, Any]) -> bool:
@@ -303,7 +306,7 @@ class MLflowTracker:
             })
             return True
         except Exception as e:
-            print(f"Warning: Failed to log experiment summary: {e}")
+            logger.info(r"Warning: Failed to log experiment summary: {e}")
             return False
     
     def log_model_parameters(self, model_params: Dict[str, Any]) -> bool:
@@ -324,7 +327,7 @@ class MLflowTracker:
                     mlflow.log_param(key, value)
             return True
         except Exception as e:
-            print(f"Warning: Failed to log model parameters: {e}")
+            logger.info(r"Warning: Failed to log model parameters: {e}")
             return False
     
     def log_evaluation_metrics(self, metrics: Dict[str, float]) -> bool:
@@ -342,7 +345,7 @@ class MLflowTracker:
                 mlflow.log_metric(f"eval_{key}", float(value))
             return True
         except Exception as e:
-            print(f"Warning: Failed to log evaluation metrics: {e}")
+            logger.info(r"Warning: Failed to log evaluation metrics: {e}")
             return False
 
 def create_mlflow_tracker(experiment_name: str = None, 

@@ -2,6 +2,9 @@ import os
 import random
 import csv
 from datetime import datetime, timedelta
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 CURRENCIES = ["GBP","EUR","USD","NGN","ZAR","INR","usd"," xyz "]
 LAWS = ["England & Wales","Scotland","Delaware","New York","Nigeria"]
@@ -56,4 +59,4 @@ if __name__ == '__main__':
     out = os.environ.get('OUT','assets/sample_contract_register.csv')
     n = int(os.environ.get('N','500'))
     write_csv(out, n)
-    print(f"Wrote {n} rows to {out}")
+    logger.info(f"Wrote {n} rows to {out}")

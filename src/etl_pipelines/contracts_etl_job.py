@@ -5,6 +5,9 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lit, upper, trim, regexp_replace, when, to_date, coalesce, lower
 from pyspark.sql.functions import monotonically_increasing_id
 from pyspark.sql.types import StringType
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 # Set AWS region explicitly
 os.environ['AWS_DEFAULT_REGION'] = 'eu-west-2'
@@ -16,19 +19,19 @@ processed_bucket = args.get('processed_bucket')
 raw_prefix = args.get('raw_prefix', 'contract_register/')
 processed_prefix = args.get('processed_prefix', 'contract_register/')
 
-print(f"Raw bucket: {raw_bucket}")
-print(f"Processed bucket: {processed_bucket}")
-print(f"Raw prefix: {raw_prefix}")
-print(f"Processed prefix: {processed_prefix}")
+logger.info(r"Raw bucket: {raw_bucket}")
+logger.info(r"Processed bucket: {processed_bucket}")
+logger.info(r"Raw prefix: {raw_prefix}")
+logger.info(r"Processed prefix: {processed_prefix}")
 
 spark = SparkSession.builder.appName('contract-register-etl').getOrCreate()
 
 raw_path = f"s3://{raw_bucket}/{raw_prefix}"
 processed_path = f"s3://{processed_bucket}/{processed_prefix}"
 
-print(f"Raw path: {raw_path}")
-print(f"Processed path: {processed_path}")
-print(f"AWS Region: {os.environ.get('AWS_DEFAULT_REGION', 'NOT_SET')}")
+logger.info(r"Raw path: {raw_path}")
+logger.info(r"Processed path: {processed_path}")
+logger.info(r"AWS Region: {os.environ.get('AWS_DEFAULT_REGION', 'NOT_SET')}")
 
 # Configure Spark to use the correct region
 spark.conf.set("spark.hadoop.fs.s3a.endpoint", "s3.eu-west-2.amazonaws.com")

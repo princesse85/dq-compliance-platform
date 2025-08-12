@@ -1,5 +1,8 @@
 import os
 import mlflow
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 def init_mlflow(run_name: str, use_s3: bool = False, s3_bucket: str = None):
     """Initialize MLflow tracking with optional S3 artifact storage."""

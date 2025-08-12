@@ -2,6 +2,9 @@ import json
 import pathlib
 import numpy as np
 from joblib import load
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 MODEL_DIR = pathlib.Path('analytics/models/baseline')
 
@@ -20,4 +23,4 @@ if __name__ == '__main__':
 
     with open(MODEL_DIR / 'global_top_words.json', 'w') as f:
         json.dump(out, f, indent=2)
-    print('Saved global_top_words.json')
+    logger.info('Saved global_top_words.json')

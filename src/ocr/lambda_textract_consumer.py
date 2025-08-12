@@ -1,6 +1,9 @@
 import os, json, logging
 import boto3
 from common import PROCESSED_BUCKET, write_s3_text, write_s3_json
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 log = logging.getLogger()
 log.setLevel(logging.INFO)

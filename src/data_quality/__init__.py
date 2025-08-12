@@ -8,6 +8,9 @@ and monitoring capabilities for enterprise data pipelines.
 from .quality_assessment import run_quality_assessment
 from .data_validation_suite import build_validation_suite
 from .generate_synthetic_data import generate_synthetic_data
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 __version__ = "1.0.0"
 __author__ = "Enterprise Data Platform Team"

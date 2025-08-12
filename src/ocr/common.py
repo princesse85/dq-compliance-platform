@@ -4,6 +4,9 @@ import json
 import os
 from datetime import datetime
 import boto3
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 # Initialize AWS clients
 s3_client = boto3.client('s3')

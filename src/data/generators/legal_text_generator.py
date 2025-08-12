@@ -12,6 +12,9 @@ import random
 from typing import Dict, List, Tuple, Optional
 from pathlib import Path
 import warnings
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 warnings.filterwarnings('ignore')
 
 class LegalTextGenerator:
@@ -279,7 +282,7 @@ class LegalTextGenerator:
         for split_name, df in splits.items():
             file_path = output_path / f"{split_name}.csv"
             df.to_csv(file_path, index=False)
-            print(f"Saved {split_name} split: {len(df)} samples -> {file_path}")
+            logger.info(r"Saved {split_name} split: {len(df)} samples -> {file_path}")
     
     def generate_and_save_dataset(self,
                                  total_samples: int = 1200,
@@ -304,7 +307,7 @@ class LegalTextGenerator:
         Returns:
             Dict[str, pd.DataFrame]: Dictionary containing train, valid, and test splits
         """
-        print(f"Generating {total_samples} legal text samples...")
+        logger.info(r"Generating {total_samples} legal text samples...")
         
         # Generate dataset
         df = self.generate_dataset(
@@ -322,10 +325,10 @@ class LegalTextGenerator:
         self.save_splits(splits, output_dir)
         
         # Print summary
-        print("\nDataset Summary:")
-        print(f"Total samples: {len(df)}")
-        print(f"Categories: {df['category'].value_counts().to_dict()}")
-        print(f"Risk levels: {df['label'].value_counts().to_dict()}")
+        logger.info(r"\nDataset Summary:")
+        logger.info(r"Total samples: {len(df)}")
+        logger.info(r"Categories: {df['category'].value_counts().to_dict()}")
+        logger.info(r"Risk levels: {df['label'].value_counts().to_dict()}")
         
         return splits
 
@@ -373,4 +376,4 @@ def generate_enhanced_dataset(output_dir: str = "data/text_corpus",
 if __name__ == "__main__":
     # Example usage
     splits = generate_enhanced_dataset()
-    print("Dataset generation completed successfully!")
+    logger.info(r"Dataset generation completed successfully!")

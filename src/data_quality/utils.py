@@ -1,5 +1,8 @@
 import re
 from datetime import datetime
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 def is_email(e: str) -> bool:
     if not e:

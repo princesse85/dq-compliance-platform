@@ -8,6 +8,9 @@ from lime.lime_text import LimeTextExplainer
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TextClassificationPipeline
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 OUT_DIR = pathlib.Path('analytics/models/explanations')
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -68,4 +71,4 @@ def explain_transformer(model_dir='analytics/models/transformer/hf_model', n_per
 if __name__ == '__main__':
     explain_baseline()
     explain_transformer()
-    print('Saved LIME explanations to analytics/models/explanations')
+    logger.info('Saved LIME explanations to analytics/models/explanations')

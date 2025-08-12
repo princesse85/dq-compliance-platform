@@ -13,6 +13,9 @@ import mlflow
 import sys
 sys.path.append('src/ml')
 from mlflow_utils import init_mlflow
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 ANALYTICS_DIR = pathlib.Path('analytics/models/baseline')
 ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
@@ -62,4 +65,4 @@ if __name__ == '__main__':
     mlflow.log_artifact(str(ANALYTICS_DIR / 'metrics.json'))
     mlflow.log_artifact(str(ANALYTICS_DIR / 'confusion_matrix.csv'))
 
-    print('Baseline done. F1(weighted)=', round(rep['weighted avg']['f1-score'], 4))
+    logger.info('Baseline done. F1(weighted)=', round(rep['weighted avg']['f1-score'], 4))

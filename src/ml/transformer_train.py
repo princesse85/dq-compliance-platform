@@ -10,6 +10,9 @@ import mlflow
 import sys
 sys.path.append('src/ml')
 from mlflow_utils import init_mlflow
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 ANALYTICS_DIR = pathlib.Path('analytics/models/transformer')
 ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
@@ -105,4 +108,4 @@ if __name__ == '__main__':
     mlflow.log_metric('f1_weighted', float(eval_metrics.get('eval_f1_weighted', 0)))
     mlflow.log_artifact(str(ANALYTICS_DIR / 'metrics.json'))
 
-    print('Transformer done. F1(weighted)=', round(float(eval_metrics.get('eval_f1_weighted', 0)), 4))
+    logger.info('Transformer done. F1(weighted)=', round(float(eval_metrics.get('eval_f1_weighted', 0)), 4))

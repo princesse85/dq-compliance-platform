@@ -87,6 +87,9 @@ def get_logger(name: str = None) -> logging.Logger:
     if name is None:
         # Get the calling module's name
         import inspect
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
         frame = inspect.currentframe().f_back
         name = frame.f_globals.get('__name__', 'enterprise_dq')
     
