@@ -23,12 +23,14 @@ This platform implements a modern data architecture with the following component
 - Quality scoring and monitoring
 - Audit trail and compliance logging
 
-### Phase 2: Document Processing (Planned)
+### Phase 2: Document Processing ✅
 
 - PDF contract processing with Amazon Textract
 - OCR-based data extraction
 - Document classification and routing
 - Compliance rule validation
+- Multi-format support (PDF/DOCX)
+- Review manifest for low-confidence documents
 
 ### Phase 3: Machine Learning Pipeline (Planned)
 
@@ -101,6 +103,9 @@ cdk deploy enterprise-data-quality --require-approval never
 
 # Deploy billing alarms
 cdk deploy enterprise-billing --require-approval never
+
+# Deploy Document Processing
+cdk deploy enterprise-document-processing --require-approval never
 ```
 
 ### Deploy Specific Components
@@ -148,6 +153,18 @@ export ANALYTICS_BUCKET="enterprise-analytics-{env}-{account}-{region}"
 export INGEST_DATE="2025-01-15"
 
 python src/data_quality/run_quality_assessment.py
+```
+
+## 📄 Document Processing
+
+Upload PDF/DOCX files to `raw/docs/ingest_date=YYYY-MM-DD/` and they'll be automatically processed:
+
+```bash
+# Upload documents
+aws s3 cp document.pdf s3://enterprise-raw-{env}-{account}-{region}/docs/ingest_date=2025-08-12/
+
+# Check results
+aws s3 ls s3://enterprise-processed-{env}-{account}-{region}/docs/text/2025-08-12/
 ```
 
 ## 🔧 Configuration

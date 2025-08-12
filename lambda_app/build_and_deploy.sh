@@ -6,10 +6,10 @@
 set -e
 
 # Configuration
-PROJECT_PREFIX=${PROJECT_PREFIX:-"legal"}
-ENV_NAME=${ENV_NAME:-"dev2"}
-AWS_REGION=${AWS_REGION:-"us-east-1"}
-ECR_REPO_NAME="${PROJECT_PREFIX}-${ENV_NAME}-legal-infer-repo"
+PROJECT_PREFIX=${PROJECT_PREFIX:-"enterprise"}
+ENV_NAME=${ENV_NAME:-"production"}
+AWS_REGION=${AWS_REGION:-"eu-west-2"}
+ECR_REPO_NAME="${PROJECT_PREFIX}-${ENV_NAME}-ml-inference-repo"
 IMAGE_TAG="latest"
 
 # Colors for output
@@ -151,7 +151,7 @@ push_image() {
 update_lambda() {
     log_info "Updating Lambda function..."
     
-    FUNCTION_NAME="${PROJECT_PREFIX}-${ENV_NAME}-legal-infer"
+    FUNCTION_NAME="${PROJECT_PREFIX}-${ENV_NAME}-ml-inference"
     ECR_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG
     
     # Check if function exists
@@ -177,7 +177,7 @@ update_lambda() {
 create_versions() {
     log_info "Creating Lambda versions for A/B testing..."
     
-    FUNCTION_NAME="${PROJECT_PREFIX}-${ENV_NAME}-legal-infer"
+    FUNCTION_NAME="${PROJECT_PREFIX}-${ENV_NAME}-ml-inference"
     
     # Check if function exists
     if ! aws lambda get-function --function-name $FUNCTION_NAME --region $AWS_REGION > /dev/null 2>&1; then
@@ -273,7 +273,7 @@ main() {
     echo "=== DEPLOYMENT SUMMARY ==="
     echo "ECR Repository: $ECR_REPO_NAME"
     echo "Image URI: $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:$IMAGE_TAG"
-    echo "Lambda Function: ${PROJECT_PREFIX}-${ENV_NAME}-legal-infer"
+    echo "Lambda Function: ${PROJECT_PREFIX}-${ENV_NAME}-ml-inference"
     echo "Alias: prod (with A/B routing)"
     echo "Region: $AWS_REGION"
     echo ""

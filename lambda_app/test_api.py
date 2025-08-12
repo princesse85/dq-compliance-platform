@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test script for the Legal Compliance Inference API
+Test script for the ML Inference API
 Tests both baseline and transformer models with various inputs
 """
 

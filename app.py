@@ -5,6 +5,7 @@ from stacks.foundation_stack import FoundationStack
 from stacks.billing_alarm_stack import BillingAlarmStack
 from stacks.data_quality_stack import DataQualityStack
 from stacks.ml_inference_stack import MLInferenceStack
+from stacks.document_processing_stack import DocumentProcessingStack
 
 app = cdk.App()
 
@@ -55,6 +56,15 @@ ml_inference = MLInferenceStack(
     project_prefix=project_prefix,
     env_name=env_name,
     analytics_bucket=foundation.analytics_bucket,
+    env=primary_env,
+)
+
+# Document Processing Stack
+document_processing = DocumentProcessingStack(
+    app,
+    f"{project_prefix}-document-processing",
+    project_prefix=project_prefix,
+    env_name=env_name,
     env=primary_env,
 )
 

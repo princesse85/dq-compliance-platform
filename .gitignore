@@ -115,3 +115,143 @@ cdk-assets-policy.json
 
 # Account ID file (temporary)
 get_account_id.py
+
+# Security reports
+security-report.json
+security-reports/
+
+# Monitoring and observability
+monitoring/prometheus/data/
+monitoring/grafana/data/
+
+# Docker volumes
+docker-volumes/
+
+# Local development
+.env.local
+.env.development
+.env.test
+
+# IDE specific
+.vscode/settings.json
+.idea/workspace.xml
+
+# OS specific
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Logs
+*.log
+logs/
+log/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Model artifacts
+models/
+*.pkl
+*.joblib
+*.h5
+*.onnx
+
+# Data files
+*.csv
+*.json
+*.parquet
+*.avro
+*.orc
+data/raw/
+data/processed/
+data/analytics/
+
+# Assets
+assets/*.csv
+assets/*.json
+assets/*.parquet
+assets/*.png
+assets/*.jpg
+assets/*.pdf
+
+# Analytics outputs
+analytics/*.csv
+analytics/*.json
+analytics/*.png
+analytics/*.html
+
+# Test outputs
+test_outputs/
+test_results/
+
+# Documentation builds
+docs/_build/
+docs/build/
+
+# Package files
+*.tar.gz
+*.zip
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# AWS
+.aws/
+credentials
+config
+cdk.out/
+cdk.context.json

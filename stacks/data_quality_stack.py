@@ -59,9 +59,9 @@ class DataQualityStack(Stack):
         raw_prefix = "contract_register/"  # under raw/
         processed_prefix = "contract_register/"  # under processed/
 
-                    glue.CfnCrawler(
-                self, "RawContractsCrawler",
-                name=f"{project_prefix}-{env_name}-raw-contracts",
+        glue.CfnCrawler(
+            self, "RawContractsCrawler",
+            name=f"{project_prefix}-{env_name}-raw-contracts",
             role=glue_role.role_arn,
             database_name=db_name,
             targets=glue.CfnCrawler.TargetsProperty(
@@ -75,9 +75,9 @@ class DataQualityStack(Stack):
             recrawl_policy=glue.CfnCrawler.RecrawlPolicyProperty(recrawl_behavior="CRAWL_EVERYTHING"),
         )
 
-                    glue.CfnCrawler(
-                self, "ProcessedContractsCrawler",
-                name=f"{project_prefix}-{env_name}-processed-contracts",
+        glue.CfnCrawler(
+            self, "ProcessedContractsCrawler",
+            name=f"{project_prefix}-{env_name}-processed-contracts",
             role=glue_role.role_arn,
             database_name=db_name,
             targets=glue.CfnCrawler.TargetsProperty(
@@ -92,13 +92,13 @@ class DataQualityStack(Stack):
         )
 
         # ---- Glue ETL Job asset (PySpark script) ----
-                    etl_asset = assets.Asset(self, "ContractsEtlScript",
-                path="src/etl_pipelines/contracts_etl_job.py"
-            )
+        etl_asset = assets.Asset(self, "ContractsEtlScript",
+            path="src/etl_pipelines/contracts_etl_job.py"
+        )
 
-                    glue.CfnJob(
-                self, "ContractsEtlJob",
-                name=f"{project_prefix}-{env_name}-contracts-etl",
+        glue.CfnJob(
+            self, "ContractsEtlJob",
+            name=f"{project_prefix}-{env_name}-contracts-etl",
             role=glue_role.role_arn,
             glue_version="4.0",  # Spark 3.3 / Py 3.10
             number_of_workers=2,
