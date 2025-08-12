@@ -17,6 +17,10 @@ from aws_cdk import (
 class FoundationStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, *, project_prefix: str, env_name: str, billing_email: str, monthly_budget: float, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
+        
+        # Validate input parameters
+        if monthly_budget <= 0:
+            raise ValueError("monthly_budget must be a positive value")
 
         # ---------- S3 Buckets (dev-friendly: destroy on stack delete) ----------
         suffix = f"{self.account}-{self.region}".lower()
@@ -115,8 +119,8 @@ class FoundationStack(Stack):
             "GlueDatabase",
             catalog_id=self.account,
             database_input=glue.CfnDatabase.DatabaseInputProperty(
-                name="legal_platform",
-                description="Data catalog for legal compliance platform (Phase 0)",
+                name=f"{project_prefix}_compliance_platform_{env_name}",
+                description=f"Data catalog for {project_prefix} compliance platform ({env_name})",
             ),
         )
 

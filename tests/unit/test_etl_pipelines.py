@@ -253,3 +253,5 @@ class TestContractsETLJob:
         
         assert validation_result['is_valid'] == True
         assert len(validation_result['rule_violations']) == 0
+
+

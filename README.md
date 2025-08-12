@@ -1,326 +1,239 @@
-# Enterprise Data Quality & Compliance Platform
+# 🏢 Enterprise Compliance Dashboard
 
-A comprehensive, production-ready data quality and compliance platform built on AWS, designed for enterprise-scale data governance, quality monitoring, and regulatory compliance.
+A comprehensive, real-time dashboard for data quality and compliance monitoring built with Streamlit.
 
-## 🏗️ Architecture Overview
+## ✨ Features
 
-This platform implements a modern data architecture with the following components:
+### 🚀 **Interactive Dashboard**
+- **Real-time Auto-refresh**: Configurable intervals (15s to 5min)
+- **Multi-select Filters**: Risk categories, regions, and risk levels
+- **Dynamic Data Loading**: Cached data loading for optimal performance
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
 
-- **Data Lake**: Multi-zone S3-based data lake (Raw → Processed → Analytics)
-- **Data Processing**: AWS Glue ETL jobs with PySpark
-- **Data Quality**: Great Expectations validation framework
-- **Monitoring**: CloudWatch metrics and S3-based quality logs
-- **Security**: IAM roles, CloudTrail audit logging, and encryption
-- **Cost Management**: Billing alarms and budget controls
+### 📊 **Analytics & Visualization**
+- **Executive Dashboard**: Key performance indicators with trend analysis
+- **Risk Analytics**: Deep dive into risk register with interactive tables
+- **Document Intelligence**: AI-powered document analysis (PDF, TXT)
+- **ML Performance Monitoring**: Real-time model performance tracking
+- **Data Quality Metrics**: Comprehensive data quality assessment
 
-## 🚀 Features
+### 🎨 **Enhanced UI/UX**
+- **Professional Styling**: Modern, clean interface with dark sidebar
+- **Animated Components**: Hover effects and smooth transitions
+- **Status Indicators**: Real-time feedback and loading states
+- **Export Functionality**: Data export capabilities (ready for implementation)
 
-### Phase 1: Data Lake & Quality Foundation ✅
+### 🔧 **Technical Features**
+- **Modular Architecture**: Clean, maintainable code structure
+- **AWS Integration**: Ready for production deployment with S3
+- **Caching**: Optimized performance with Streamlit caching
+- **Error Handling**: Robust error handling and fallbacks
 
-- Automated data ingestion and cataloging
-- ETL pipelines with data cleaning and standardization
-- Comprehensive data quality validation
-- Quality scoring and monitoring
-- Audit trail and compliance logging
+## 🏗️ Project Structure
 
-### Phase 2: Document Processing ✅
-
-- PDF contract processing with Amazon Textract
-- OCR-based data extraction
-- Document classification and routing
-- Compliance rule validation
-- Multi-format support (PDF/DOCX)
-- Review manifest for low-confidence documents
-
-### Phase 3: Machine Learning Pipeline (Planned)
-
-- Automated model training and deployment
-- Risk scoring and prediction
-- Model monitoring and drift detection
-- A/B testing framework
-
-### Phase 4: API & Inference (Planned)
-
-- RESTful API for real-time predictions
-- Model serving with AWS Lambda
-- API Gateway with authentication
-- Real-time monitoring and alerting
+```
+dq-compliance-platform/
+├── streamlit_app.py          # Streamlit Cloud entry point
+├── requirements.txt          # Python dependencies
+├── README.md                # This file
+├── .gitignore              # Git ignore rules
+├── src/
+│   └── dashboard/
+│       ├── __init__.py      # Dashboard module
+│       ├── main.py          # Main dashboard application
+│       └── utils.py         # Utility functions and data loading
+├── scripts/                 # Deployment and setup scripts
+└── assets/                  # Static assets (images, etc.)
+```
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Local Development
 
-- **Python 3.8+** - [Download here](https://www.python.org/downloads/)
-- **Node.js 16+** - [Download here](https://nodejs.org/)
-- **AWS CLI** - [Download here](https://aws.amazon.com/cli/)
-- **Docker** (optional) - [Download here](https://www.docker.com/)
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/dq-compliance-platform.git
+   cd dq-compliance-platform
+   ```
 
-### Easy Deployment
+2. **Create virtual environment**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
 
-#### Option 1: Automated Setup (Recommended)
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-**For Linux/macOS:**
+4. **Run the dashboard**
+   ```bash
+   streamlit run streamlit_app.py
+   ```
 
-```bash
-git clone https://github.com/your-username/dq-compliance-platform.git
-cd dq-compliance-platform
-chmod +x scripts/setup.sh
-./scripts/setup.sh setup
-./scripts/setup.sh deploy
-```
+5. **Open your browser**
+   Navigate to `http://localhost:8501`
 
-**For Windows:**
+### Streamlit Cloud Deployment
 
-```powershell
-git clone https://github.com/your-username/dq-compliance-platform.git
-cd dq-compliance-platform
-.\scripts\deploy.ps1 deploy
-```
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial dashboard deployment"
+   git push origin main
+   ```
 
-#### Option 2: Manual Setup
-
-1. **Clone the repository:**
-
-```bash
-git clone https://github.com/your-username/dq-compliance-platform.git
-cd dq-compliance-platform
-```
-
-2. **Configure AWS credentials:**
-
-```bash
-aws configure
-```
-
-3. **Configure environment:**
-
-```bash
-python scripts/configure_env.py
-```
-
-4. **Install dependencies:**
-
-```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-npm install -g aws-cdk
-```
-
-5. **Deploy infrastructure:**
-
-```bash
-cdk bootstrap
-cdk deploy --all --require-approval never
-```
-
-### What Gets Deployed
-
-The platform deploys the following AWS infrastructure:
-
-- **🏗️ Foundation Stack** - S3 buckets, IAM roles, VPC, CloudWatch
-- **💰 Billing Alarm Stack** - Cost monitoring and alerts
-- **🔍 Data Quality Stack** - Great Expectations, Glue jobs
-- **🤖 ML Inference Stack** - Lambda functions, API Gateway
-- **📄 Document Processing Stack** - Textract, OCR processing
-
-### Testing Your Deployment
-
-```bash
-# Run tests
-./scripts/setup.sh test  # Linux/macOS
-.\scripts\deploy.ps1 test  # Windows
-
-# Test API endpoints (get URL from CDK outputs)
-curl https://your-api-gateway-url.amazonaws.com/prod/health
-```
-
-## 📋 Detailed Setup Instructions
-
-# Deploy data quality platform
-
-cdk deploy enterprise-data-quality --require-approval never
-
-# Deploy billing alarms
-
-cdk deploy enterprise-billing --require-approval never
-
-# Deploy Document Processing
-
-cdk deploy enterprise-document-processing --require-approval never
-
-````
-
-### Deploy Specific Components
-
-```bash
-# Deploy only data quality components
-cdk deploy enterprise-data-quality --require-approval never
-
-# Deploy only monitoring components
-cdk deploy enterprise-monitoring --require-approval never
-````
-
-## 📊 Data Pipeline Usage
-
-### 1. Generate Test Data
-
-```bash
-python src/data_quality/generate_synthetic_data.py
-```
-
-### 2. Upload Data
-
-```bash
-aws s3 cp assets/sample_contracts.csv s3://enterprise-raw-{env}-{account}-{region}/contracts/ingest_date=2025-01-15/
-```
-
-### 3. Run Data Pipeline
-
-```bash
-# Start data discovery
-aws glue start-crawler --name enterprise-{env}-raw-contracts
-
-# Run ETL processing
-aws glue start-job-run --job-name enterprise-{env}-contracts-etl
-
-# Start processed data discovery
-aws glue start-crawler --name enterprise-{env}-processed-contracts
-```
-
-### 4. Run Quality Assessment
-
-```bash
-export RAW_BUCKET="enterprise-raw-{env}-{account}-{region}"
-export ANALYTICS_BUCKET="enterprise-analytics-{env}-{account}-{region}"
-export INGEST_DATE="2025-01-15"
-
-python src/data_quality/run_quality_assessment.py
-```
-
-## 📄 Document Processing
-
-Upload PDF/DOCX files to `raw/docs/ingest_date=YYYY-MM-DD/` and they'll be automatically processed:
-
-```bash
-# Upload documents
-aws s3 cp document.pdf s3://enterprise-raw-{env}-{account}-{region}/docs/ingest_date=2025-08-12/
-
-# Check results
-aws s3 ls s3://enterprise-processed-{env}-{account}-{region}/docs/text/2025-08-12/
-```
+2. **Deploy on Streamlit Cloud**
+   - Go to [share.streamlit.io](https://share.streamlit.io)
+   - Connect your GitHub repository
+   - Set the main file path to `streamlit_app.py`
+   - Deploy!
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
-- `PROJECT_PREFIX`: Project identifier (default: "enterprise")
-- `ENV_NAME`: Environment name (dev, staging, prod)
-- `AWS_REGION`: AWS region for deployment
-- `BILLING_EMAIL`: Email for cost alerts
-- `MONTHLY_BUDGET`: Monthly budget limit
-
-### CDK Configuration
-
-Edit `cdk.json` to customize:
-
-- Project settings
-- Environment configurations
-- Resource naming conventions
-
-## 📈 Monitoring & Observability
-
-### CloudWatch Dashboards
-
-- Data pipeline metrics
-- Quality score trends
-- Cost monitoring
-- Error rates and performance
-
-### Quality Metrics
-
-- Data completeness scores
-- Validation rule compliance
-- Data freshness indicators
-- Anomaly detection alerts
-
-### Cost Monitoring
-
-- Monthly budget alerts
-- Resource utilization tracking
-- Cost optimization recommendations
-
-## 🔒 Security & Compliance
-
-### Data Protection
-
-- Encryption at rest and in transit
-- IAM role-based access control
-- VPC isolation for sensitive workloads
-- Audit logging with CloudTrail
-
-### Compliance Features
-
-- GDPR-compliant data handling
-- SOX audit trail requirements
-- Data retention policies
-- Access control and monitoring
-
-## 🧪 Testing
-
-### Unit Tests
+For production deployment, set these environment variables:
 
 ```bash
-python -m pytest tests/unit/
+# AWS Configuration
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_DEFAULT_REGION=us-east-1
+
+# Dashboard Configuration
+COMPLIANCE_BUCKET=your-s3-bucket-name
 ```
 
-### Integration Tests
+### Customization
+
+The dashboard is highly customizable:
+
+- **Data Sources**: Modify `src/dashboard/utils.py` to connect to your data sources
+- **Styling**: Update CSS in `src/dashboard/main.py`
+- **Charts**: Customize visualizations in the chart functions
+- **Filters**: Add new filter options in the sidebar
+
+## 📊 Dashboard Sections
+
+### 1. Executive Dashboard
+- **KPIs**: Overall compliance, risk scores, high-risk items, ML accuracy
+- **Charts**: Risk distribution, regional heatmap, compliance trends
+- **Real-time Updates**: Auto-refresh with configurable intervals
+
+### 2. Risk Analytics
+- **Interactive Table**: Sortable risk register with progress indicators
+- **Multi-level Filtering**: By category, region, and risk level
+- **Data Export**: Export filtered data (ready for implementation)
+
+### 3. Document Intelligence
+- **File Upload**: Support for PDF and TXT files
+- **AI Analysis**: Compliance scoring, risk assessment, entity extraction
+- **Detailed Reports**: Key risks, recommendations, and extracted entities
+
+### 4. ML Performance
+- **Model Monitoring**: Accuracy, precision, recall, and latency tracking
+- **Performance Trends**: Historical performance visualization
+- **Model Selection**: Compare different ML models
+
+### 5. Data Quality
+- **Quality Metrics**: Completeness, accuracy, timeliness, validity
+- **Trend Analysis**: Quality score changes over time
+- **Issue Detection**: Automated quality issue identification
+
+## 🛠️ Development
+
+### Adding New Features
+
+1. **New Data Source**
+   ```python
+   # In src/dashboard/utils.py
+   def load_new_data():
+       # Your data loading logic
+       pass
+   ```
+
+2. **New Chart**
+   ```python
+   # In src/dashboard/main.py
+   def create_new_chart(data):
+       # Your chart creation logic
+       pass
+   ```
+
+3. **New Tab**
+   ```python
+   # Add to main() function
+   with tab6:
+       show_new_feature_tab()
+   ```
+
+### Testing
 
 ```bash
-python -m pytest tests/integration/
+# Run tests
+pytest tests/
+
+# Run with coverage
+pytest --cov=src tests/
 ```
 
-### End-to-End Tests
+## 🔒 Security
 
-```bash
-python -m pytest tests/e2e/
-```
+- **Environment Variables**: Sensitive data stored in environment variables
+- **Input Validation**: All user inputs are validated
+- **Error Handling**: Secure error messages without exposing internals
+- **AWS IAM**: Proper IAM roles and permissions for production
 
-## 📚 Documentation
+## 📈 Performance
 
-- [Architecture Guide](docs/architecture.md)
-- [API Reference](docs/api.md)
-- [Deployment Guide](docs/deployment.md)
-- [Troubleshooting](docs/troubleshooting.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
+- **Caching**: Streamlit caching for expensive operations
+- **Lazy Loading**: Data loaded only when needed
+- **Optimized Queries**: Efficient data filtering and aggregation
+- **Responsive Design**: Fast loading on all devices
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
-- **Documentation**: [docs/](docs/)
-- **Issues**: [GitHub Issues](https://github.com/your-org/enterprise-data-quality-platform/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/enterprise-data-quality-platform/discussions)
+- **Documentation**: Check the inline code comments
+- **Issues**: Report bugs via GitHub Issues
+- **Discussions**: Use GitHub Discussions for questions
+- **Email**: contact@company.com
 
-## 🏢 Enterprise Support
+## 🔄 Version History
 
-For enterprise customers:
+### v2.1.0 (Current)
+- ✅ Real-time auto-refresh functionality
+- ✅ Multi-select filters for enhanced data exploration
+- ✅ Enhanced visual feedback and animations
+- ✅ Modular architecture for better maintainability
+- ✅ Streamlit Cloud deployment ready
+- ✅ Professional dark sidebar theme
+- ✅ Export functionality framework
 
-- **Email**: enterprise-support@company.com
-- **Phone**: +1-XXX-XXX-XXXX
-- **Slack**: #enterprise-support
+### v2.0.0
+- ✅ Initial dashboard implementation
+- ✅ Basic charts and visualizations
+- ✅ AWS integration framework
+- ✅ Document analysis capabilities
+
+### v1.0.0
+- ✅ Core compliance monitoring features
+- ✅ Basic risk analytics
+- ✅ ML model integration
 
 ---
 
-**Built with ❤️ for enterprise data quality and compliance**
+**Built with ❤️ by the Enterprise Solutions Team**

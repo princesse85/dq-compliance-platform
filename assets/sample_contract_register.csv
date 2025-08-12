@@ -1,0 +1,501 @@
+contract_id,party_a,party_b,effective_date,end_date,governing_law,amount,currency,dpa_present,contact_email,status,review_due_date
+C-100000,PartyA_217,PartyB_17,2023-04-25,2023-01-20,England & Wales,185646.07,NGN,N,contact0@example.com,Active,2023-04-10
+C-100001,PartyA_113,PartyB_230,2023-04-06,2023-07-18,Scotland,58932.56,GBP, ,,Signed,2024-01-02
+C-100002,PartyA_111,PartyB_173,2023-10-12,2025-09-19,Delaware,217455.78,usd,y,contact2@example.com,Expired,2023-11-03
+C-100003,PartyA_194,PartyB_41,2023-04-05,2023-12-30,New York,25082.38,ZAR,Y, user3@bad email .com ,Active,2023-12-13
+C-100004,PartyA_149,PartyB_41,2023-10-28,2025-04-03,England & Wales,155011.42,NGN,Y, user4@bad email .com ,Expired,2024-01-25
+C-100005,PartyA_108,PartyB_137,2023-04-14,2024-01-08,Delaware,70215.43,INR,N,,Draft,2024-03-08
+C-100006,PartyA_139,PartyB_286,2023-03-15,2024-07-30,New York,159109.59,NGN,N,,Signed,2023-06-05
+C-100007,PartyA_34,PartyB_109,2023-11-29,2025-09-25,New York,194223.98,GBP,y,contact7@example.com,Draft,2024-08-15
+C-100008,PartyA_127,PartyB_288,2023-11-19,2024-02-24,Delaware,164204.23, xyz ,N, user8@bad email .com ,Expired,2024-07-21
+C-100009,PartyA_261,PartyB_253,2023-09-27,2025-07-02,Scotland,146561.91,usd,y,,Expired,2023-10-13
+C-100010,PartyA_196,PartyB_240,2023-02-18,2023-02-10,England & Wales,39057.49,usd, ,contact10@example.com,Signed,2023-10-16
+C-100011,PartyA_58,PartyB_151,2023-09-15,2024-12-04,Delaware,215334.15,EUR, ,contact11@example.com,Draft,2024-03-25
+C-100012,PartyA_153,PartyB_260,2023-06-11,2024-05-20,Scotland,1808.08,ZAR, ,,Active,2024-03-18
+C-100013,PartyA_10,PartyB_58,2023-07-23,2023-08-28,Delaware,94104.55,GBP, ,contact13@example.com,Signed,2023-12-25
+C-100014,PartyA_273,PartyB_65,2023-11-11,2024-03-15,New York,15423.37,EUR,Y,,Active,2023-12-16
+C-100015,PartyA_160,PartyB_205,2024-05-01,2025-07-17,Nigeria,42116.61,usd,N,,Expired,2025-03-10
+C-100016,PartyA_174,PartyB_11,2024-01-18,2024-12-11,Scotland,225003.91,EUR,N, user16@bad email .com ,Active,2024-10-15
+C-100017,PartyA_17,PartyB_170,2024-07-21,2024-11-13,Scotland,147521.59,EUR,Y,contact17@example.com,Active,2024-07-27
+C-100018,PartyA_125,PartyB_243,2024-06-10,2024-10-11,Scotland,70340.84,NGN, , user18@bad email .com ,Signed,2024-12-05
+C-100019,PartyA_28,PartyB_51,2023-07-14,2023-06-20,New York,25135.77,INR,n, user19@bad email .com ,Signed,2023-07-15
+C-100020,PartyA_72,PartyB_217,2024-02-17,2025-11-03,Scotland,85486.35,NGN,N,contact20@example.com,Signed,2024-04-20
+C-100021,PartyA_277,PartyB_8,2023-10-13,2024-09-30,England & Wales,63201.81, xyz , ,contact21@example.com,Active,2023-10-30
+C-100022,PartyA_195,PartyB_2,2023-08-31,2023-10-20,England & Wales,102197.1,NGN,n, user22@bad email .com ,Expired,2024-02-16
+C-100023,PartyA_98,PartyB_152,2023-09-29,2025-08-11,New York,196497.21,usd, , user23@bad email .com ,Expired,2023-12-19
+C-100024,PartyA_258,PartyB_272,2023-03-01,2024-06-16,England & Wales,184198.56,INR,Y,contact24@example.com,Signed,2023-04-20
+C-100025,PartyA_207,PartyB_62,2023-02-28,2024-04-03,England & Wales,20947.75,EUR, ,contact25@example.com,Expired,2023-11-16
+C-100026,PartyA_134,PartyB_105,2023-09-10,2024-12-25,Nigeria,149035.27,EUR,n,,Draft,2024-07-18
+C-100027,PartyA_5,PartyB_235,2023-11-18,2024-03-21,Delaware,67138.01,ZAR,n,contact27@example.com,Active,2024-09-01
+C-100028,PartyA_126,PartyB_190,2024-07-30,2024-07-12,Delaware,19241.92,ZAR,N,contact28@example.com,Active,2024-11-22
+C-100029,PartyA_284,PartyB_154,2023-06-11,2024-05-04,Nigeria,208602.49,ZAR, ,,Active,2024-04-15
+C-100030,PartyA_176,PartyB_105,2023-04-17,2023-05-04,Delaware,66852.01,USD,y,contact30@example.com,Expired,2024-03-03
+C-100031,PartyA_2,PartyB_171,2023-09-28,2024-10-29,Delaware,122644.43,EUR,n,contact31@example.com,Active,2024-09-26
+C-100032,PartyA_58,PartyB_39,2023-05-14,2024-10-27,New York,244969.69, xyz , ,contact32@example.com,Active,2024-04-01
+C-100033,PartyA_158,PartyB_187,2023-06-02,2024-08-13,Scotland,9971.01,USD,n, user33@bad email .com ,Active,2023-05-23
+C-100034,PartyA_80,PartyB_122,2024-01-02,2024-04-06,Nigeria,170834.61,EUR,y,,Signed,2024-02-24
+C-100035,PartyA_82,PartyB_56,2023-07-01,2024-04-28,Scotland,7171.8,INR,n,,Draft,2023-12-13
+C-100036,PartyA_13,PartyB_99,2023-02-09,2024-02-05,Scotland,56386.0,INR,y, user36@bad email .com ,Expired,2023-08-02
+C-100037,PartyA_15,PartyB_60,2023-12-03,2024-05-16,New York,216223.88,INR, , user37@bad email .com ,Draft,2024-03-15
+C-100038,PartyA_177,PartyB_161,2023-07-02,2024-10-18,Nigeria,240671.04,GBP,Y, user38@bad email .com ,Signed,2024-01-11
+C-100039,PartyA_1,PartyB_267,2024-06-07,2024-06-05,England & Wales,96913.66,NGN,y,,Signed,2025-02-07
+C-100040,PartyA_154,PartyB_260,2023-07-21,2024-03-29,Delaware,108393.05,INR, ,,Active,2023-11-26
+C-100041,PartyA_90,PartyB_292,2024-02-23,2024-09-24,New York,101197.7,USD,N, user41@bad email .com ,Signed,2024-06-26
+C-100042,PartyA_239,PartyB_227,2024-02-20,2025-05-06,New York,208597.57,ZAR,N, user42@bad email .com ,Draft,2024-09-03
+C-100043,PartyA_48,PartyB_121,2023-08-07,2024-09-13,Delaware,118823.36,USD,Y,,Draft,2024-06-16
+C-100044,PartyA_38,PartyB_234,2023-11-14,2024-03-03,Scotland,201834.16,GBP,Y,contact44@example.com,Signed,2024-05-14
+C-100045,PartyA_3,PartyB_55,2024-08-12,2024-10-30,Scotland,179868.13, xyz ,n, user45@bad email .com ,Expired,2025-02-15
+C-100046,PartyA_63,PartyB_234,2023-08-13,2023-10-12,Nigeria,201223.35, xyz ,Y,,Expired,2023-09-20
+C-100047,PartyA_281,PartyB_229,2024-04-20,2025-11-04,Nigeria,133251.84,INR,n,,Signed,2024-06-10
+C-100048,PartyA_141,PartyB_226,2024-05-01,2025-04-06,New York,65538.7,ZAR, ,contact48@example.com,Expired,2024-05-10
+C-100049,PartyA_197,PartyB_79,2023-10-20,2024-02-17,Scotland,68657.06,EUR,N, user49@bad email .com ,Expired,2024-09-15
+C-100050,PartyA_216,PartyB_200,2023-08-08,2023-06-14,England & Wales,104302.11, xyz ,n, user50@bad email .com ,Expired,2024-08-06
+C-100051,PartyA_153,PartyB_200,2024-08-21,2026-04-05,England & Wales,5863.46,usd,n,,Draft,2025-02-21
+C-100052,PartyA_224,PartyB_249,2024-07-05,2026-04-11,Scotland,183923.88,NGN,n,,Draft,2024-06-19
+C-100053,PartyA_202,PartyB_289,2024-02-03,2024-09-14,Scotland,167549.53,USD,n, user53@bad email .com ,Active,2024-12-08
+C-100054,PartyA_195,PartyB_168,2023-01-28,2022-12-24,England & Wales,161044.66, xyz ,N,contact54@example.com,Draft,2023-04-16
+C-100055,PartyA_241,PartyB_10,2024-04-10,2024-11-10,Delaware,85037.64,ZAR,n, user55@bad email .com ,Active,2025-03-29
+C-100056,PartyA_127,PartyB_103,2024-07-06,2024-04-30,England & Wales,249977.05,NGN,Y, user56@bad email .com ,Active,2024-06-16
+C-100057,PartyA_132,PartyB_189,2023-06-06,2023-10-08,Scotland,32429.02,EUR, ,,Signed,2023-07-31
+C-100058,PartyA_295,PartyB_193,2023-04-28,2025-03-04,England & Wales,205005.99,EUR, , user58@bad email .com ,Draft,2023-10-18
+C-100059,PartyA_290,PartyB_22,2023-07-23,2023-06-10,Delaware,148432.37,NGN,Y,,Active,2023-12-17
+C-100060,PartyA_55,PartyB_222,2024-06-29,2025-05-13,New York,165718.81,INR,Y,contact60@example.com,Signed,2024-12-01
+C-100061,PartyA_239,PartyB_224,2024-04-15,2025-12-10,Nigeria,39094.8,ZAR, ,contact61@example.com,Signed,2025-03-25
+C-100062,PartyA_292,PartyB_195,2023-10-02,2024-04-29,Scotland,213076.58,ZAR,n,contact62@example.com,Signed,2024-02-21
+C-100063,PartyA_175,PartyB_144,2023-01-30,2024-02-20,Delaware,212887.26, xyz ,N,contact63@example.com,Draft,2023-11-01
+C-100064,PartyA_285,PartyB_124,2023-10-10,2025-01-01,New York,3527.63,EUR,N,contact64@example.com,Signed,2024-08-28
+C-100065,PartyA_208,PartyB_125,2024-05-02,2025-10-25,Delaware,178248.76,GBP,Y, user65@bad email .com ,Expired,2024-09-05
+C-100066,PartyA_181,PartyB_233,2024-08-18,2025-05-02,Nigeria,118841.86,INR,n,,Draft,2024-12-04
+C-100067,PartyA_99,PartyB_111,2023-11-10,2024-03-26,England & Wales,58403.97,NGN,y,,Expired,2024-10-23
+C-100068,PartyA_117,PartyB_185,2024-05-10,2024-10-20,Scotland,181421.67,ZAR,Y,,Draft,2024-07-10
+C-100069,PartyA_65,PartyB_252,2023-11-06,2023-07-23,England & Wales,177296.6,ZAR,Y,contact69@example.com,Draft,2023-11-28
+C-100070,PartyA_130,PartyB_245,2023-01-13,2024-04-24,Scotland,71800.49, xyz ,y, user70@bad email .com ,Active,2023-02-10
+C-100071,PartyA_44,PartyB_128,2023-03-08,2023-12-23,Scotland,123444.89,GBP,N,,Draft,2023-04-07
+C-100072,PartyA_227,PartyB_153,2024-07-25,2026-05-18,New York,104627.33,NGN, ,,Signed,2025-04-22
+C-100073,PartyA_42,PartyB_81,2024-03-15,2024-09-23,Scotland,142588.74,EUR,N,contact73@example.com,Draft,2024-06-15
+C-100074,PartyA_150,PartyB_17,2023-06-27,2024-09-14,Nigeria,19691.15,usd,n,contact74@example.com,Signed,2023-09-23
+C-100075,PartyA_218,PartyB_59,2023-10-23,2025-06-17,Delaware,71396.87,EUR,N, user75@bad email .com ,Expired,2024-06-27
+C-100076,PartyA_158,PartyB_292,2023-08-19,2025-02-12,England & Wales,38098.36,USD,Y, user76@bad email .com ,Expired,2023-12-14
+C-100077,PartyA_225,PartyB_42,2024-03-25,2024-04-01,Nigeria,117705.79,usd,y, user77@bad email .com ,Signed,2024-12-26
+C-100078,PartyA_295,PartyB_11,2023-02-10,2023-12-29,England & Wales,183898.95,ZAR,Y,,Expired,2024-02-06
+C-100079,PartyA_93,PartyB_300,2023-10-03,2025-01-15,New York,11017.69, xyz , ,contact79@example.com,Draft,2024-04-13
+C-100080,PartyA_169,PartyB_211,2024-05-18,2024-04-21,England & Wales,118032.59,INR,y, user80@bad email .com ,Expired,2025-04-08
+C-100081,PartyA_130,PartyB_166,2024-05-22,2024-11-13,England & Wales,165983.3,GBP,n, user81@bad email .com ,Draft,2024-06-20
+C-100082,PartyA_266,PartyB_186,2024-02-18,2025-03-30,England & Wales,206406.87, xyz ,n,contact82@example.com,Expired,2024-12-02
+C-100083,PartyA_148,PartyB_225,2024-05-25,2025-10-27,Nigeria,111068.2,NGN,y,contact83@example.com,Expired,2025-04-17
+C-100084,PartyA_283,PartyB_209,2024-05-11,2024-05-15,Delaware,8188.49,NGN,N,,Active,2024-05-28
+C-100085,PartyA_213,PartyB_248,2023-08-19,2023-08-15,Delaware,115900.53,USD,n,contact85@example.com,Draft,2024-03-17
+C-100086,PartyA_36,PartyB_142,2023-09-07,2024-08-19,Nigeria,138265.0,NGN, , user86@bad email .com ,Expired,2024-09-06
+C-100087,PartyA_297,PartyB_251,2024-02-29,2024-10-14,Delaware,233627.85,ZAR,Y,,Draft,2024-04-15
+C-100088,PartyA_123,PartyB_293,2024-04-02,2025-06-07,Delaware,121601.01,usd,n, user88@bad email .com ,Expired,2024-09-15
+C-100089,PartyA_254,PartyB_19,2023-08-28,2025-07-02,New York,103283.0, xyz ,n, user89@bad email .com ,Expired,2023-10-01
+C-100090,PartyA_8,PartyB_74,2024-05-29,2025-09-25,Nigeria,83666.68, xyz ,Y,contact90@example.com,Signed,2024-11-24
+C-100091,PartyA_169,PartyB_274,2023-06-08,2023-04-25,New York,117903.16,INR, , user91@bad email .com ,Active,2023-11-19
+C-100092,PartyA_148,PartyB_117,2023-11-21,2025-04-25,England & Wales,179960.64,GBP, , user92@bad email .com ,Expired,2024-11-07
+C-100093,PartyA_15,PartyB_24,2023-04-03,2024-02-21,Scotland,244606.09,EUR,n,,Draft,2023-08-17
+C-100094,PartyA_290,PartyB_93,2023-02-27,2023-08-26,Nigeria,90257.37,USD,N, user94@bad email .com ,Signed,2023-04-25
+C-100095,PartyA_119,PartyB_237,2023-06-29,2023-05-20,Nigeria,152763.45,NGN,n, user95@bad email .com ,Expired,2024-04-20
+C-100096,PartyA_38,PartyB_227,2023-09-18,2024-09-02,Nigeria,64576.35, xyz ,y,contact96@example.com,Expired,2024-02-11
+C-100097,PartyA_197,PartyB_248,2023-11-03,2025-04-20,Delaware,240545.24,ZAR,n,,Expired,2023-11-27
+C-100098,PartyA_141,PartyB_5,2023-08-31,2024-05-27,England & Wales,143408.75,ZAR,y,,Signed,2024-05-16
+C-100099,PartyA_98,PartyB_129,2023-02-20,2024-07-04,Delaware,186547.87,NGN, , user99@bad email .com ,Expired,2024-01-03
+C-100100,PartyA_297,PartyB_187,2023-05-21,2024-10-25,New York,25193.82,GBP,y,,Active,2024-04-29
+C-100101,PartyA_277,PartyB_188,2023-05-15,2023-04-17,Scotland,227497.33,usd,N, user101@bad email .com ,Expired,2024-01-11
+C-100102,PartyA_240,PartyB_39,2024-05-28,2024-11-03,Delaware,207787.68, xyz ,y, user102@bad email .com ,Active,2024-07-09
+C-100103,PartyA_136,PartyB_275,2023-08-20,2025-03-14,New York,181329.96,INR,Y, user103@bad email .com ,Active,2023-09-22
+C-100104,PartyA_56,PartyB_120,2024-04-10,2024-12-23,New York,168534.27,ZAR, ,,Draft,2024-11-07
+C-100105,PartyA_238,PartyB_155,2023-01-26,2024-06-23,Scotland,221174.48,INR, ,,Active,2023-11-24
+C-100106,PartyA_121,PartyB_276,2024-02-23,2024-02-22,England & Wales,35804.48,ZAR,n,contact106@example.com,Active,2024-04-02
+C-100107,PartyA_51,PartyB_251,2024-02-02,2025-01-11,Scotland,93381.87,usd, ,,Signed,2024-11-13
+C-100108,PartyA_186,PartyB_51,2024-02-22,2024-08-06,New York,9146.36,NGN,n, user108@bad email .com ,Expired,2025-01-08
+C-100109,PartyA_98,PartyB_63,2024-01-12,2025-03-24,New York,225522.36,INR,Y,,Draft,2024-08-01
+C-100110,PartyA_65,PartyB_290,2023-04-04,2024-10-13,Delaware,53814.35,GBP,Y,,Expired,2023-06-18
+C-100111,PartyA_2,PartyB_142,2023-03-12,2025-01-03,Delaware,138997.74,NGN,N,,Expired,2023-04-25
+C-100112,PartyA_184,PartyB_122,2023-05-14,2024-07-20,Scotland,63412.89,EUR,Y,contact112@example.com,Active,2024-02-09
+C-100113,PartyA_33,PartyB_244,2023-11-28,2023-08-16,Nigeria,44387.3,USD,n,contact113@example.com,Active,2024-06-14
+C-100114,PartyA_235,PartyB_16,2024-01-06,2025-02-14,England & Wales,148822.84,NGN, , user114@bad email .com ,Draft,2024-01-07
+C-100115,PartyA_165,PartyB_76,2024-05-05,2025-02-20,England & Wales,107142.13, xyz ,n,contact115@example.com,Active,2024-05-08
+C-100116,PartyA_233,PartyB_259,2023-05-10,2023-10-18,Nigeria,156455.06,INR,n,,Draft,2024-02-13
+C-100117,PartyA_212,PartyB_174,2024-03-16,2024-02-26,New York,198480.93,NGN,n,contact117@example.com,Expired,2024-10-04
+C-100118,PartyA_79,PartyB_243,2024-02-13,2024-12-14,Delaware,182673.51,usd,y, user118@bad email .com ,Draft,2024-02-17
+C-100119,PartyA_288,PartyB_288,2023-04-04,2023-03-02,Nigeria,24214.3,INR,N,contact119@example.com,Active,2023-08-20
+C-100120,PartyA_181,PartyB_54,2023-05-06,2024-03-01,Delaware,89045.92,usd,Y,,Draft,2024-01-26
+C-100121,PartyA_59,PartyB_143,2024-06-03,2024-09-08,Delaware,39527.81,NGN,Y, user121@bad email .com ,Draft,2025-02-21
+C-100122,PartyA_93,PartyB_140,2023-08-20,2025-07-26,Delaware,107848.99,GBP, ,,Active,2024-07-14
+C-100123,PartyA_73,PartyB_16,2023-11-13,2024-06-27,New York,88404.83,USD, ,contact123@example.com,Active,2023-11-29
+C-100124,PartyA_167,PartyB_291,2024-06-27,2024-10-05,Delaware,94672.41,INR,N, user124@bad email .com ,Draft,2025-03-29
+C-100125,PartyA_218,PartyB_249,2023-03-28,2023-01-20,Delaware,39739.4,GBP,Y,,Signed,2024-01-02
+C-100126,PartyA_146,PartyB_250,2024-03-28,2025-01-26,New York,69018.54,EUR,y,,Active,2024-11-22
+C-100127,PartyA_109,PartyB_71,2023-11-12,2023-08-30,Scotland,55909.09,GBP,Y,,Draft,2024-11-07
+C-100128,PartyA_195,PartyB_273,2023-09-19,2024-03-13,Scotland,82702.47, xyz ,n,contact128@example.com,Expired,2024-08-14
+C-100129,PartyA_224,PartyB_10,2023-08-24,2024-09-19,New York,140122.17,INR,Y,,Active,2024-03-16
+C-100130,PartyA_208,PartyB_11,2023-03-21,2023-10-07,Delaware,144364.03,usd,n,,Active,2023-08-04
+C-100131,PartyA_125,PartyB_224,2023-06-25,2025-05-25,New York,236955.96,INR,Y, user131@bad email .com ,Active,2024-03-22
+C-100132,PartyA_40,PartyB_262,2024-02-15,2025-04-06,Delaware,20583.12,INR,N, user132@bad email .com ,Expired,2024-12-05
+C-100133,PartyA_75,PartyB_132,2023-04-27,2024-06-23,Scotland,127978.06,INR,N, user133@bad email .com ,Active,2023-07-07
+C-100134,PartyA_289,PartyB_297,2023-06-27,2024-11-04,New York,39064.58,EUR,N,,Signed,2024-01-12
+C-100135,PartyA_35,PartyB_241,2024-08-01,2026-01-21,Scotland,159189.28,INR,y,,Signed,2025-02-13
+C-100136,PartyA_237,PartyB_232,2023-11-07,2025-10-02,England & Wales,69393.74,INR, ,contact136@example.com,Draft,2023-10-27
+C-100137,PartyA_237,PartyB_298,2023-02-28,2023-11-12,Nigeria,208092.46,EUR, ,contact137@example.com,Signed,2023-11-08
+C-100138,PartyA_257,PartyB_78,2023-02-12,2024-01-18,Nigeria,227353.44,NGN,y,,Signed,2023-02-13
+C-100139,PartyA_127,PartyB_225,2024-04-06,2024-03-22,Scotland,202930.74,EUR, , user139@bad email .com ,Active,2024-10-17
+C-100140,PartyA_174,PartyB_27,2024-06-20,2025-08-09,New York,152841.55,INR,y, user140@bad email .com ,Signed,2025-04-09
+C-100141,PartyA_171,PartyB_42,2023-12-09,2023-10-17,Delaware,83093.0,usd,y,,Expired,2024-09-02
+C-100142,PartyA_159,PartyB_287,2023-05-25,2024-01-18,Nigeria,78247.7,usd,N,,Active,2023-11-03
+C-100143,PartyA_10,PartyB_186,2023-12-03,2025-11-14,Nigeria,32820.65,EUR,n,,Draft,2024-04-09
+C-100144,PartyA_40,PartyB_152,2023-07-04,2023-10-11,Scotland,86091.35,NGN,N, user144@bad email .com ,Expired,2023-07-25
+C-100145,PartyA_193,PartyB_79,2024-06-03,2026-04-03,Nigeria,135402.92,GBP,y,,Expired,2024-07-26
+C-100146,PartyA_122,PartyB_228,2023-07-05,2025-02-13,New York,193003.36, xyz ,Y,contact146@example.com,Draft,2024-04-12
+C-100147,PartyA_241,PartyB_100,2023-10-19,2025-07-30,Scotland,187385.59,NGN, , user147@bad email .com ,Draft,2024-03-25
+C-100148,PartyA_83,PartyB_103,2024-08-07,2025-07-04,Nigeria,115958.31,usd, , user148@bad email .com ,Signed,2025-05-13
+C-100149,PartyA_146,PartyB_43,2023-05-22,2023-10-05,England & Wales,13992.77,INR, , user149@bad email .com ,Active,2024-05-16
+C-100150,PartyA_231,PartyB_179,2023-06-14,2023-11-20,England & Wales,112880.49,USD,n,,Expired,2023-05-28
+C-100151,PartyA_115,PartyB_15,2024-02-29,2023-12-25,England & Wales,99717.04,NGN,n, user151@bad email .com ,Draft,2024-07-11
+C-100152,PartyA_72,PartyB_241,2023-04-12,2024-12-13,Delaware,162840.21,USD,Y,contact152@example.com,Signed,2023-10-28
+C-100153,PartyA_57,PartyB_148,2023-01-06,2022-11-28,Nigeria,5731.97,USD, ,contact153@example.com,Signed,2023-04-07
+C-100154,PartyA_275,PartyB_9,2023-11-05,2023-11-09,England & Wales,12889.61, xyz ,Y, user154@bad email .com ,Signed,2024-08-24
+C-100155,PartyA_124,PartyB_293,2024-06-11,2025-09-22,England & Wales,61242.6,ZAR,n,contact155@example.com,Draft,2024-12-11
+C-100156,PartyA_200,PartyB_241,2023-07-11,2025-01-21,Nigeria,167385.51,INR,Y,,Active,2023-07-03
+C-100157,PartyA_54,PartyB_298,2024-02-01,2024-10-20,Delaware,64158.92,INR,Y,contact157@example.com,Expired,2025-01-12
+C-100158,PartyA_94,PartyB_70,2023-12-07,2023-12-23,New York,12039.59,INR,N,,Signed,2023-12-09
+C-100159,PartyA_264,PartyB_204,2024-04-13,2024-01-21,Delaware,74067.2,NGN,Y,contact159@example.com,Draft,2024-12-17
+C-100160,PartyA_170,PartyB_140,2024-04-29,2024-09-15,Delaware,10118.57,NGN,y,,Active,2024-06-01
+C-100161,PartyA_255,PartyB_255,2024-01-12,2024-12-04,Delaware,222482.14, xyz ,n,,Expired,2024-06-18
+C-100162,PartyA_280,PartyB_151,2024-06-15,2024-11-15,New York,200485.87,usd,Y,,Expired,2024-10-27
+C-100163,PartyA_86,PartyB_228,2023-04-16,2023-03-08,Nigeria,82652.06,ZAR,n, user163@bad email .com ,Signed,2023-09-12
+C-100164,PartyA_208,PartyB_187,2024-04-02,2024-01-16,England & Wales,181976.78,usd,y, user164@bad email .com ,Active,2024-11-20
+C-100165,PartyA_121,PartyB_188,2023-06-13,2023-03-16,Scotland,36552.09, xyz ,Y,,Active,2023-11-15
+C-100166,PartyA_40,PartyB_294,2024-01-28,2025-05-02,Delaware,9063.95, xyz ,y,contact166@example.com,Signed,2024-03-08
+C-100167,PartyA_96,PartyB_256,2024-06-26,2025-03-08,England & Wales,100110.48,ZAR,N,,Active,2025-02-16
+C-100168,PartyA_252,PartyB_103,2024-02-01,2025-05-01,Nigeria,30322.49, xyz ,N, user168@bad email .com ,Draft,2024-03-04
+C-100169,PartyA_34,PartyB_282,2023-05-19,2023-04-04,Delaware,113558.63, xyz ,Y,,Draft,2024-01-21
+C-100170,PartyA_63,PartyB_103,2023-10-25,2024-04-29,Nigeria,212989.15,USD,y,,Expired,2023-12-05
+C-100171,PartyA_45,PartyB_34,2023-08-31,2025-07-20,Nigeria,124011.46,INR,n, user171@bad email .com ,Expired,2024-01-06
+C-100172,PartyA_65,PartyB_163,2024-02-12,2025-10-18,Nigeria,179998.55,usd,n,,Active,2024-12-06
+C-100173,PartyA_67,PartyB_222,2023-03-17,2024-02-20,Nigeria,116992.47,INR,N,,Expired,2023-10-30
+C-100174,PartyA_178,PartyB_266,2023-02-26,2023-03-05,Delaware,130007.43,USD,N, user174@bad email .com ,Expired,2023-06-21
+C-100175,PartyA_258,PartyB_87,2023-03-22,2023-08-05,Delaware,49879.18,ZAR,N,,Active,2023-12-20
+C-100176,PartyA_42,PartyB_24,2024-08-17,2024-09-23,England & Wales,43628.96,INR, ,,Active,2025-06-11
+C-100177,PartyA_280,PartyB_149,2024-08-13,2025-01-11,England & Wales,163131.36,usd, ,,Signed,2025-06-07
+C-100178,PartyA_31,PartyB_81,2023-11-06,2024-11-14,New York,61974.6,usd,y,,Active,2024-05-19
+C-100179,PartyA_205,PartyB_67,2024-03-01,2025-03-11,Delaware,116646.1,USD,y, user179@bad email .com ,Draft,2025-02-23
+C-100180,PartyA_231,PartyB_127,2024-01-15,2025-02-25,England & Wales,140851.15,NGN,n, user180@bad email .com ,Draft,2024-02-26
+C-100181,PartyA_296,PartyB_161,2023-04-10,2023-01-31,Scotland,73262.79,usd,N, user181@bad email .com ,Draft,2023-06-16
+C-100182,PartyA_47,PartyB_202,2023-06-13,2024-07-07,New York,248996.38, xyz ,y, user182@bad email .com ,Active,2024-01-27
+C-100183,PartyA_241,PartyB_147,2024-04-13,2024-08-17,Delaware,54570.96,GBP,Y, user183@bad email .com ,Signed,2024-12-13
+C-100184,PartyA_206,PartyB_27,2023-01-09,2022-12-30,Delaware,108301.01,INR,n, user184@bad email .com ,Active,2023-09-27
+C-100185,PartyA_282,PartyB_144,2024-07-29,2024-10-16,Nigeria,91268.42,EUR,n, user185@bad email .com ,Signed,2025-05-14
+C-100186,PartyA_74,PartyB_102,2023-05-02,2023-05-13,Nigeria,243795.62,INR,y, user186@bad email .com ,Draft,2024-02-04
+C-100187,PartyA_266,PartyB_234,2024-06-05,2025-03-23,Delaware,125519.4,GBP,N,contact187@example.com,Signed,2024-07-21
+C-100188,PartyA_173,PartyB_260,2024-06-11,2024-07-04,New York,82663.5,INR,N,,Draft,2025-01-27
+C-100189,PartyA_57,PartyB_214,2024-06-29,2025-07-15,Delaware,177476.21, xyz ,Y, user189@bad email .com ,Draft,2025-03-24
+C-100190,PartyA_297,PartyB_296,2023-11-12,2025-10-07,New York,224793.01,GBP, ,,Draft,2024-02-06
+C-100191,PartyA_294,PartyB_57,2023-02-22,2024-06-13,Scotland,120631.75,usd,N,,Active,2023-04-30
+C-100192,PartyA_32,PartyB_71,2023-01-20,2023-12-17,New York,79109.43,usd,N,contact192@example.com,Signed,2023-09-12
+C-100193,PartyA_89,PartyB_236,2023-08-01,2024-10-28,New York,81937.33, xyz , ,,Draft,2024-03-30
+C-100194,PartyA_127,PartyB_143,2023-12-17,2025-02-28,New York,89217.46,ZAR, ,,Expired,2024-08-28
+C-100195,PartyA_246,PartyB_179,2023-11-02,2024-02-20,New York,235429.9,ZAR,N, user195@bad email .com ,Draft,2024-07-15
+C-100196,PartyA_149,PartyB_22,2023-10-08,2024-03-30,Delaware,31346.65,usd,n,,Expired,2024-02-02
+C-100197,PartyA_276,PartyB_139,2023-03-22,2023-11-11,Scotland,231078.4,ZAR,n,,Expired,2023-12-04
+C-100198,PartyA_120,PartyB_27,2023-10-06,2023-10-26,England & Wales,28197.42,NGN,N,,Expired,2023-10-27
+C-100199,PartyA_209,PartyB_244,2024-02-28,2024-10-03,Nigeria,179622.16,USD,Y,contact199@example.com,Expired,2024-09-29
+C-100200,PartyA_274,PartyB_20,2023-07-24,2025-05-08,England & Wales,241014.6,ZAR,Y, user200@bad email .com ,Expired,2023-09-21
+C-100201,PartyA_20,PartyB_5,2024-03-03,2024-05-02,Scotland,233546.73,usd,n,contact201@example.com,Draft,2024-07-03
+C-100202,PartyA_69,PartyB_259,2024-08-04,2025-12-14,Nigeria,27717.87,ZAR,n, user202@bad email .com ,Signed,2025-03-01
+C-100203,PartyA_8,PartyB_173,2023-10-07,2023-12-23,Delaware,202394.66,USD,n, user203@bad email .com ,Expired,2024-02-05
+C-100204,PartyA_45,PartyB_206,2024-08-04,2026-02-25,Nigeria,189563.4,usd,n,contact204@example.com,Draft,2025-06-12
+C-100205,PartyA_197,PartyB_121,2023-04-08,2023-06-16,England & Wales,245439.61,INR,N, user205@bad email .com ,Draft,2023-10-23
+C-100206,PartyA_32,PartyB_61,2023-10-01,2024-05-05,Delaware,76184.51,GBP,y,,Expired,2024-04-26
+C-100207,PartyA_114,PartyB_113,2023-11-11,2023-12-24,Delaware,101948.74,ZAR,Y,,Draft,2023-12-19
+C-100208,PartyA_276,PartyB_112,2024-05-04,2024-06-09,Nigeria,114289.69,INR,n,,Signed,2025-04-29
+C-100209,PartyA_289,PartyB_58,2023-09-11,2025-04-09,Delaware,188930.15, xyz , ,contact209@example.com,Active,2023-09-12
+C-100210,PartyA_60,PartyB_106,2024-07-14,2025-08-15,Delaware,51337.04,USD,N,,Signed,2025-06-16
+C-100211,PartyA_263,PartyB_213,2024-08-20,2025-09-04,New York,23644.47, xyz ,Y,,Expired,2025-03-11
+C-100212,PartyA_2,PartyB_112,2024-07-31,2024-05-31,New York,140140.5,ZAR,Y,,Draft,2025-04-23
+C-100213,PartyA_242,PartyB_17,2023-03-16,2023-01-01,England & Wales,106500.65,EUR, ,,Active,2023-07-10
+C-100214,PartyA_194,PartyB_193,2024-02-23,2024-04-27,New York,192474.04,usd,y,,Signed,2024-03-05
+C-100215,PartyA_271,PartyB_66,2024-07-06,2024-07-22,Nigeria,163729.99,EUR,N, user215@bad email .com ,Signed,2025-06-13
+C-100216,PartyA_118,PartyB_127,2023-08-17,2023-04-22,New York,189288.67, xyz , , user216@bad email .com ,Signed,2024-03-09
+C-100217,PartyA_124,PartyB_106,2023-12-21,2024-01-28,New York,69636.78,EUR,Y,,Active,2023-12-25
+C-100218,PartyA_225,PartyB_120,2023-04-14,2024-08-14,England & Wales,9360.49,GBP,N,,Signed,2023-12-16
+C-100219,PartyA_295,PartyB_164,2023-08-11,2025-05-24,Delaware,216068.83,USD, ,contact219@example.com,Expired,2024-05-02
+C-100220,PartyA_32,PartyB_286,2023-11-25,2024-03-26,Delaware,76139.34,NGN,n,contact220@example.com,Draft,2024-08-23
+C-100221,PartyA_269,PartyB_164,2023-06-29,2024-12-01,Delaware,170008.78, xyz ,Y,,Signed,2024-05-20
+C-100222,PartyA_116,PartyB_154,2024-03-02,2024-12-25,New York,38155.18,USD, , user222@bad email .com ,Expired,2025-01-28
+C-100223,PartyA_199,PartyB_125,2023-05-28,2025-05-02,Nigeria,116293.26,usd,n,contact223@example.com,Expired,2023-09-05
+C-100224,PartyA_27,PartyB_138,2023-07-28,2024-03-02,Nigeria,162029.76,INR,Y, user224@bad email .com ,Expired,2024-01-07
+C-100225,PartyA_156,PartyB_8,2023-02-10,2022-12-26,Scotland,47852.66,NGN,n,,Draft,2023-04-29
+C-100226,PartyA_123,PartyB_283,2023-07-14,2025-04-13,Scotland,30211.73,NGN, , user226@bad email .com ,Signed,2023-11-25
+C-100227,PartyA_263,PartyB_255,2023-10-17,2024-07-12,Delaware,117096.36,INR,y,,Draft,2024-05-12
+C-100228,PartyA_212,PartyB_24,2023-04-11,2025-03-13,Delaware,245348.3,INR,N, user228@bad email .com ,Draft,2023-12-25
+C-100229,PartyA_169,PartyB_118,2023-08-15,2025-05-15,Scotland,37334.76,usd,y, user229@bad email .com ,Expired,2024-01-26
+C-100230,PartyA_236,PartyB_87,2024-08-06,2024-12-15,New York,125326.07,INR,y,,Signed,2025-07-17
+C-100231,PartyA_269,PartyB_18,2023-12-27,2024-02-18,Nigeria,35849.67, xyz ,N,,Active,2024-01-04
+C-100232,PartyA_112,PartyB_259,2023-02-19,2024-12-12,Scotland,2589.57,NGN,Y,contact232@example.com,Active,2023-09-10
+C-100233,PartyA_273,PartyB_283,2024-01-18,2023-11-20,England & Wales,154840.97, xyz ,n,,Active,2024-07-16
+C-100234,PartyA_92,PartyB_55,2023-01-13,2022-10-02,Nigeria,132824.99,ZAR,Y, user234@bad email .com ,Signed,2023-02-01
+C-100235,PartyA_41,PartyB_192,2024-06-20,2024-07-22,Delaware,61001.24,ZAR,y,,Signed,2024-12-14
+C-100236,PartyA_48,PartyB_208,2024-04-15,2025-07-17,England & Wales,61558.77,NGN,y,,Active,2024-09-26
+C-100237,PartyA_223,PartyB_170,2024-01-22,2025-04-11,England & Wales,119525.27,GBP,N,,Signed,2024-10-07
+C-100238,PartyA_24,PartyB_39,2023-04-08,2024-06-01,New York,229868.9,NGN, ,contact238@example.com,Draft,2024-02-22
+C-100239,PartyA_74,PartyB_204,2023-10-15,2024-12-24,England & Wales,141313.96,USD,y,contact239@example.com,Expired,2023-10-24
+C-100240,PartyA_72,PartyB_41,2023-11-03,2023-12-19,Delaware,141425.59,usd, ,,Signed,2024-06-16
+C-100241,PartyA_168,PartyB_16,2023-12-21,2023-10-16,Nigeria,25323.76,EUR,y,contact241@example.com,Signed,2024-10-10
+C-100242,PartyA_222,PartyB_96,2023-10-07,2025-08-19,Nigeria,248153.88,NGN,y, user242@bad email .com ,Signed,2024-08-20
+C-100243,PartyA_138,PartyB_79,2024-08-22,2026-03-01,England & Wales,95638.11,ZAR,N,,Active,2025-02-02
+C-100244,PartyA_228,PartyB_185,2023-06-07,2025-03-05,England & Wales,98015.87,EUR,Y, user244@bad email .com ,Draft,2024-05-31
+C-100245,PartyA_53,PartyB_14,2023-10-04,2023-09-18,Nigeria,33994.24,usd,n,contact245@example.com,Signed,2023-10-19
+C-100246,PartyA_212,PartyB_199,2023-12-29,2025-03-20,England & Wales,24173.0,INR,n,,Draft,2024-01-11
+C-100247,PartyA_155,PartyB_138,2024-07-26,2024-12-01,Scotland,143418.15,usd,N,contact247@example.com,Draft,2025-03-05
+C-100248,PartyA_185,PartyB_129,2023-05-30,2023-04-04,New York,42634.64,usd,y, user248@bad email .com ,Active,2023-09-03
+C-100249,PartyA_203,PartyB_171,2024-05-22,2025-09-22,Delaware,154550.53,EUR,N, user249@bad email .com ,Active,2025-03-05
+C-100250,PartyA_154,PartyB_165,2024-01-25,2025-12-28,Nigeria,215687.38,INR,n, user250@bad email .com ,Expired,2024-10-29
+C-100251,PartyA_167,PartyB_193,2023-07-25,2024-07-29,New York,79231.64,INR,y, user251@bad email .com ,Expired,2023-11-15
+C-100252,PartyA_282,PartyB_14,2024-02-07,2024-10-17,Nigeria,29358.07,NGN, ,,Expired,2025-01-14
+C-100253,PartyA_156,PartyB_124,2024-04-17,2025-12-13,New York,53202.45,EUR,n, user253@bad email .com ,Expired,2024-07-25
+C-100254,PartyA_299,PartyB_206,2023-06-07,2025-02-08,Nigeria,106358.86,EUR,n, user254@bad email .com ,Signed,2024-02-05
+C-100255,PartyA_56,PartyB_128,2024-06-02,2026-01-11,Nigeria,105156.87,INR, ,contact255@example.com,Active,2025-04-04
+C-100256,PartyA_6,PartyB_51,2023-12-30,2024-02-18,New York,162102.96,usd,y,contact256@example.com,Active,2024-04-10
+C-100257,PartyA_238,PartyB_257,2023-08-16,2024-09-21,Delaware,186966.4,NGN,n,,Signed,2023-10-02
+C-100258,PartyA_179,PartyB_160,2023-12-20,2023-09-16,England & Wales,121210.0,usd,Y, user258@bad email .com ,Expired,2024-05-13
+C-100259,PartyA_232,PartyB_164,2024-04-11,2026-02-23,England & Wales,52509.96,INR,n, user259@bad email .com ,Signed,2024-04-15
+C-100260,PartyA_125,PartyB_265,2023-11-04,2023-08-21,England & Wales,202736.3,GBP,y,contact260@example.com,Expired,2024-01-02
+C-100261,PartyA_96,PartyB_222,2024-07-19,2024-08-31,New York,83416.42, xyz ,N, user261@bad email .com ,Expired,2025-01-07
+C-100262,PartyA_3,PartyB_110,2023-01-30,2024-10-26,New York,153912.63, xyz , ,contact262@example.com,Signed,2023-04-15
+C-100263,PartyA_167,PartyB_101,2023-10-13,2025-07-24,Scotland,176236.18,EUR, ,contact263@example.com,Draft,2024-05-04
+C-100264,PartyA_59,PartyB_179,2023-04-27,2023-09-22,New York,168004.66,INR, , user264@bad email .com ,Signed,2023-09-24
+C-100265,PartyA_69,PartyB_161,2024-04-13,2025-09-07,Nigeria,43959.35,ZAR, ,,Active,2024-05-13
+C-100266,PartyA_71,PartyB_295,2023-09-02,2024-03-12,New York,30120.28,USD, , user266@bad email .com ,Signed,2024-02-15
+C-100267,PartyA_148,PartyB_72,2024-03-09,2024-05-18,Scotland,122180.88,USD, ,,Signed,2024-05-13
+C-100268,PartyA_197,PartyB_288,2023-11-19,2024-10-25,Scotland,155233.08,GBP,n, user268@bad email .com ,Expired,2024-07-04
+C-100269,PartyA_290,PartyB_16,2024-05-21,2025-03-15,Scotland,171489.47, xyz ,n, user269@bad email .com ,Active,2025-05-15
+C-100270,PartyA_282,PartyB_262,2023-08-14,2024-02-09,New York,9141.08,ZAR,N,contact270@example.com,Signed,2023-09-10
+C-100271,PartyA_280,PartyB_112,2024-08-09,2024-08-05,England & Wales,67704.34,INR, ,,Signed,2025-02-12
+C-100272,PartyA_179,PartyB_45,2023-04-15,2025-01-07,New York,207687.61,ZAR,Y,contact272@example.com,Draft,2023-10-26
+C-100273,PartyA_72,PartyB_106,2023-05-01,2025-03-05,New York,203160.34,INR, ,contact273@example.com,Expired,2023-07-15
+C-100274,PartyA_294,PartyB_137,2023-03-02,2024-06-07,Delaware,88353.05,USD,y, user274@bad email .com ,Draft,2023-10-21
+C-100275,PartyA_128,PartyB_75,2023-04-08,2023-04-26,Scotland,240730.23,GBP,y, user275@bad email .com ,Expired,2024-03-07
+C-100276,PartyA_213,PartyB_193,2023-11-26,2024-04-07,Scotland,190606.92,usd,n,,Draft,2024-06-14
+C-100277,PartyA_233,PartyB_250,2023-03-19,2024-08-28,Delaware,198855.06,usd, ,contact277@example.com,Draft,2023-08-03
+C-100278,PartyA_274,PartyB_204,2024-08-18,2024-04-22,Delaware,217358.03,EUR,n,,Active,2024-11-07
+C-100279,PartyA_290,PartyB_249,2024-03-15,2024-06-19,Nigeria,124184.02,ZAR,y, user279@bad email .com ,Expired,2024-08-07
+C-100280,PartyA_234,PartyB_1,2023-02-19,2022-12-08,Scotland,25794.11,GBP,Y, user280@bad email .com ,Signed,2023-08-27
+C-100281,PartyA_185,PartyB_129,2023-07-27,2025-03-03,Delaware,227442.4,ZAR,N,,Active,2023-08-08
+C-100282,PartyA_220,PartyB_47,2024-01-16,2025-07-29,Delaware,226046.27,GBP,n,contact282@example.com,Expired,2024-12-11
+C-100283,PartyA_5,PartyB_5,2023-04-08,2022-12-10,Scotland,54141.87,USD, ,contact283@example.com,Signed,2024-02-28
+C-100284,PartyA_197,PartyB_46,2023-12-18,2025-12-03,England & Wales,31027.85,USD,n, user284@bad email .com ,Expired,2024-11-26
+C-100285,PartyA_36,PartyB_272,2023-04-15,2023-03-31,Scotland,79024.52,USD,n, user285@bad email .com ,Expired,2023-12-29
+C-100286,PartyA_227,PartyB_112,2023-01-09,2024-05-27,Scotland,162855.03,INR,N, user286@bad email .com ,Signed,2023-01-23
+C-100287,PartyA_72,PartyB_127,2023-04-13,2023-05-06,New York,188358.97,usd,y,,Draft,2023-08-02
+C-100288,PartyA_266,PartyB_261,2023-03-28,2023-08-09,Delaware,138795.76,ZAR,Y,,Expired,2023-06-02
+C-100289,PartyA_256,PartyB_37,2024-02-06,2024-08-06,England & Wales,161896.27, xyz ,n,contact289@example.com,Expired,2024-10-03
+C-100290,PartyA_280,PartyB_89,2023-01-13,2023-09-19,New York,233547.18,usd, ,contact290@example.com,Draft,2024-01-08
+C-100291,PartyA_21,PartyB_31,2024-04-27,2026-02-24,Delaware,19174.97,EUR,Y,,Expired,2024-10-17
+C-100292,PartyA_275,PartyB_276,2024-06-02,2024-11-22,New York,157514.1,usd,n,,Active,2025-03-14
+C-100293,PartyA_201,PartyB_34,2023-06-06,2023-11-17,Nigeria,21815.67,NGN,N,contact293@example.com,Draft,2023-10-12
+C-100294,PartyA_60,PartyB_233,2024-03-23,2025-12-10,England & Wales,238403.57,GBP,N,contact294@example.com,Signed,2024-12-31
+C-100295,PartyA_6,PartyB_84,2023-02-26,2023-09-10,England & Wales,166853.82,USD,Y,,Expired,2023-10-08
+C-100296,PartyA_138,PartyB_61,2023-12-22,2025-02-09,Delaware,129788.49,ZAR,N,,Expired,2024-12-20
+C-100297,PartyA_255,PartyB_234,2023-01-31,2023-09-11,Nigeria,201969.85,EUR,y, user297@bad email .com ,Active,2023-09-19
+C-100298,PartyA_53,PartyB_294,2024-01-04,2023-11-01,Scotland,125402.89,USD,y,,Draft,2024-11-14
+C-100299,PartyA_242,PartyB_187,2023-04-29,2023-08-20,Scotland,185454.21,GBP,Y,contact299@example.com,Active,2023-10-12
+C-100300,PartyA_214,PartyB_164,2023-06-03,2023-08-05,Delaware,232858.86,usd,N,contact300@example.com,Expired,2023-09-19
+C-100301,PartyA_206,PartyB_36,2023-03-21,2024-06-28,Scotland,93829.23,GBP,N,,Active,2023-10-15
+C-100302,PartyA_189,PartyB_103,2023-10-17,2025-08-19,New York,211366.78,EUR, , user302@bad email .com ,Active,2024-02-13
+C-100303,PartyA_101,PartyB_280,2024-07-31,2026-06-14,Delaware,76673.42,NGN,n,,Signed,2025-07-25
+C-100304,PartyA_5,PartyB_172,2023-09-09,2023-10-13,Nigeria,2588.09,GBP,N, user304@bad email .com ,Draft,2023-08-10
+C-100305,PartyA_252,PartyB_31,2024-01-21,2025-10-17,Scotland,182076.54,NGN, ,contact305@example.com,Signed,2024-03-03
+C-100306,PartyA_298,PartyB_49,2023-10-14,2023-09-19,New York,11931.17,usd,y,contact306@example.com,Active,2024-05-29
+C-100307,PartyA_150,PartyB_134,2023-05-17,2024-10-30,Scotland,205170.76,GBP,n,contact307@example.com,Expired,2023-09-25
+C-100308,PartyA_39,PartyB_104,2024-02-07,2025-09-26,Delaware,208143.06,INR,n, user308@bad email .com ,Expired,2024-03-17
+C-100309,PartyA_62,PartyB_275,2024-08-21,2024-08-12,Delaware,39697.23, xyz ,n,contact309@example.com,Signed,2025-01-21
+C-100310,PartyA_21,PartyB_111,2023-08-01,2024-07-08,Scotland,77768.62,EUR,Y, user310@bad email .com ,Draft,2023-12-16
+C-100311,PartyA_134,PartyB_90,2023-06-01,2023-05-05,England & Wales,178078.19,usd, , user311@bad email .com ,Draft,2023-05-17
+C-100312,PartyA_72,PartyB_63,2024-02-19,2025-01-27,New York,139432.49,NGN,Y,,Active,2024-01-26
+C-100313,PartyA_299,PartyB_133,2023-03-05,2025-01-12,Delaware,245659.24,NGN,n,contact313@example.com,Active,2023-03-13
+C-100314,PartyA_63,PartyB_22,2023-01-23,2022-11-30,England & Wales,50239.83, xyz ,N,,Draft,2023-08-17
+C-100315,PartyA_219,PartyB_89,2023-02-21,2023-04-14,England & Wales,231108.8,usd,n, user315@bad email .com ,Signed,2023-07-22
+C-100316,PartyA_152,PartyB_256,2023-08-08,2023-10-18,Nigeria,69470.46,USD,Y, user316@bad email .com ,Expired,2024-02-04
+C-100317,PartyA_270,PartyB_128,2024-07-17,2025-07-22,New York,16183.79,usd,N, user317@bad email .com ,Expired,2025-05-05
+C-100318,PartyA_177,PartyB_290,2024-07-10,2026-06-03,Nigeria,5862.97,INR,n, user318@bad email .com ,Signed,2025-02-22
+C-100319,PartyA_144,PartyB_30,2023-11-26,2024-08-29,Scotland,68338.49,INR, ,contact319@example.com,Active,2024-06-24
+C-100320,PartyA_137,PartyB_274,2024-06-26,2025-02-27,Scotland,191943.7,USD,Y,contact320@example.com,Expired,2025-06-08
+C-100321,PartyA_122,PartyB_163,2023-02-27,2024-12-20,Scotland,249101.62,usd,y,contact321@example.com,Expired,2024-02-09
+C-100322,PartyA_289,PartyB_97,2024-01-03,2025-05-02,Nigeria,8023.44,INR, ,,Expired,2024-08-12
+C-100323,PartyA_11,PartyB_270,2024-07-09,2025-01-21,Scotland,44713.64,EUR,Y,contact323@example.com,Expired,2025-02-08
+C-100324,PartyA_31,PartyB_12,2023-01-01,2023-08-08,Scotland,229556.15,USD,y,contact324@example.com,Draft,2023-02-15
+C-100325,PartyA_52,PartyB_173,2024-08-23,2026-04-16,Delaware,229388.81,INR,Y,contact325@example.com,Signed,2024-12-25
+C-100326,PartyA_288,PartyB_183,2023-11-27,2023-12-16,Delaware,243989.31,usd,n,,Expired,2024-02-19
+C-100327,PartyA_294,PartyB_201,2023-06-29,2024-03-22,Scotland,77398.98,ZAR,N,,Active,2024-06-27
+C-100328,PartyA_73,PartyB_170,2024-08-04,2024-05-09,England & Wales,46338.36,NGN, , user328@bad email .com ,Signed,2025-07-21
+C-100329,PartyA_6,PartyB_136,2023-03-21,2023-07-22,Delaware,87355.72,USD,Y, user329@bad email .com ,Signed,2023-06-06
+C-100330,PartyA_225,PartyB_215,2023-09-13,2025-04-24,England & Wales,17880.9,EUR,Y, user330@bad email .com ,Signed,2023-11-07
+C-100331,PartyA_84,PartyB_232,2024-02-28,2025-03-18,New York,220560.89,usd,Y, user331@bad email .com ,Expired,2024-03-06
+C-100332,PartyA_193,PartyB_83,2023-02-04,2023-08-04,Delaware,5999.42,EUR,Y, user332@bad email .com ,Expired,2024-01-14
+C-100333,PartyA_16,PartyB_221,2023-03-18,2024-05-31,Nigeria,235516.7,INR, ,contact333@example.com,Signed,2024-01-16
+C-100334,PartyA_98,PartyB_210,2023-06-18,2024-10-31,Delaware,222548.56,GBP,Y,contact334@example.com,Expired,2024-05-09
+C-100335,PartyA_50,PartyB_26,2024-07-21,2026-04-01,Delaware,231467.83,ZAR,y,,Expired,2025-01-08
+C-100336,PartyA_45,PartyB_151,2024-08-08,2025-10-24,England & Wales,210123.77,GBP,y,contact336@example.com,Signed,2025-06-12
+C-100337,PartyA_60,PartyB_158,2024-05-06,2024-07-29,England & Wales,25149.74,USD,y,contact337@example.com,Signed,2024-10-26
+C-100338,PartyA_190,PartyB_196,2024-04-27,2025-05-12,New York,223824.49,EUR, , user338@bad email .com ,Expired,2024-10-03
+C-100339,PartyA_289,PartyB_32,2023-07-11,2024-06-11,Scotland,12109.61, xyz ,y, user339@bad email .com ,Draft,2023-08-27
+C-100340,PartyA_199,PartyB_268,2023-04-10,2023-03-08,Scotland,167367.15,usd, ,,Active,2023-10-11
+C-100341,PartyA_203,PartyB_18,2024-07-02,2026-02-05,Delaware,216856.61,NGN,n, user341@bad email .com ,Active,2025-02-14
+C-100342,PartyA_86,PartyB_109,2024-08-07,2025-09-20,New York,200312.13,USD,Y,,Expired,2024-10-14
+C-100343,PartyA_164,PartyB_35,2023-05-10,2023-02-22,Scotland,106420.35,usd,N,,Draft,2023-05-24
+C-100344,PartyA_268,PartyB_215,2024-02-02,2025-04-26,New York,99941.39,ZAR, , user344@bad email .com ,Active,2024-02-29
+C-100345,PartyA_147,PartyB_275,2024-02-29,2024-04-02,Nigeria,37901.74,EUR,Y,,Active,2024-07-24
+C-100346,PartyA_207,PartyB_74,2024-02-25,2024-07-24,Scotland,96377.82, xyz ,Y, user346@bad email .com ,Draft,2024-12-07
+C-100347,PartyA_191,PartyB_11,2024-02-16,2023-11-27,New York,99552.39,NGN,Y, user347@bad email .com ,Draft,2024-07-07
+C-100348,PartyA_227,PartyB_165,2023-11-07,2024-05-23,Scotland,70806.32,EUR,N, user348@bad email .com ,Draft,2024-02-22
+C-100349,PartyA_265,PartyB_192,2024-03-02,2025-07-14,New York,161743.15, xyz ,N,contact349@example.com,Signed,2024-02-29
+C-100350,PartyA_89,PartyB_99,2024-06-11,2026-05-02,Nigeria,40584.14,usd,N, user350@bad email .com ,Active,2024-08-22
+C-100351,PartyA_238,PartyB_259,2023-03-01,2023-07-14,Delaware,9234.69,INR,N,contact351@example.com,Draft,2023-08-21
+C-100352,PartyA_243,PartyB_283,2023-05-07,2024-12-04,New York,8610.23, xyz , , user352@bad email .com ,Expired,2023-10-03
+C-100353,PartyA_26,PartyB_84,2023-12-19,2024-02-04,England & Wales,209575.79,EUR,y, user353@bad email .com ,Signed,2024-09-06
+C-100354,PartyA_5,PartyB_243,2023-08-08,2023-11-22,New York,162197.59,NGN,y,,Active,2023-09-14
+C-100355,PartyA_217,PartyB_193,2023-06-27,2024-11-03,Delaware,200415.34,ZAR, ,contact355@example.com,Draft,2023-11-22
+C-100356,PartyA_262,PartyB_192,2024-04-15,2024-08-31,England & Wales,55334.05,usd, , user356@bad email .com ,Active,2024-12-28
+C-100357,PartyA_142,PartyB_134,2023-10-17,2024-04-19,Delaware,171418.87,EUR,y, user357@bad email .com ,Draft,2024-08-17
+C-100358,PartyA_72,PartyB_14,2023-11-02,2024-01-13,New York,38332.39,GBP, ,contact358@example.com,Draft,2024-09-02
+C-100359,PartyA_176,PartyB_114,2024-05-24,2024-11-22,England & Wales,65597.14,usd,n, user359@bad email .com ,Expired,2025-04-10
+C-100360,PartyA_286,PartyB_93,2024-07-01,2025-12-16,Delaware,196439.37,INR, ,,Expired,2024-10-29
+C-100361,PartyA_182,PartyB_115,2023-04-10,2024-04-06,England & Wales,32858.09,USD,y, user361@bad email .com ,Expired,2024-03-26
+C-100362,PartyA_238,PartyB_61,2023-11-11,2024-09-16,Nigeria,197234.52,INR,y, user362@bad email .com ,Draft,2024-06-08
+C-100363,PartyA_196,PartyB_272,2023-02-24,2024-08-06,Scotland,146310.08,EUR,n,,Active,2023-06-26
+C-100364,PartyA_292,PartyB_235,2024-02-28,2023-12-25,Delaware,217841.44,USD,N,contact364@example.com,Signed,2024-04-11
+C-100365,PartyA_30,PartyB_3,2023-11-20,2025-07-24,Scotland,45908.84, xyz ,y,contact365@example.com,Draft,2024-06-08
+C-100366,PartyA_223,PartyB_220,2023-10-08,2024-01-10,England & Wales,190537.13,USD,n,contact366@example.com,Expired,2024-04-01
+C-100367,PartyA_272,PartyB_98,2024-03-15,2025-03-18,England & Wales,96445.79,NGN,y,contact367@example.com,Draft,2024-02-23
+C-100368,PartyA_197,PartyB_258,2023-01-05,2024-06-09,Scotland,183667.21,INR,y,contact368@example.com,Active,2023-10-03
+C-100369,PartyA_223,PartyB_69,2023-11-10,2023-12-31,New York,17256.47,ZAR,y,contact369@example.com,Draft,2024-04-03
+C-100370,PartyA_68,PartyB_109,2024-05-16,2025-01-18,Scotland,187778.78,usd,Y,contact370@example.com,Expired,2025-04-26
+C-100371,PartyA_274,PartyB_25,2023-01-23,2024-05-20,New York,126653.76,INR,Y,contact371@example.com,Draft,2023-10-24
+C-100372,PartyA_195,PartyB_64,2023-02-19,2024-08-29,New York,27920.25,GBP,Y,contact372@example.com,Signed,2023-10-27
+C-100373,PartyA_267,PartyB_139,2023-09-16,2024-09-15,New York,175765.19,GBP,y,contact373@example.com,Active,2024-06-30
+C-100374,PartyA_255,PartyB_102,2023-05-21,2024-03-24,England & Wales,207832.53,EUR,y,contact374@example.com,Active,2024-02-26
+C-100375,PartyA_83,PartyB_21,2023-07-24,2025-05-30,New York,66485.48,NGN,y,,Draft,2024-03-30
+C-100376,PartyA_46,PartyB_57,2024-05-23,2024-08-23,England & Wales,172362.77,INR,N, user376@bad email .com ,Active,2025-02-10
+C-100377,PartyA_234,PartyB_152,2024-05-20,2024-06-21,Delaware,237412.06,EUR,Y,,Expired,2024-09-02
+C-100378,PartyA_219,PartyB_60,2024-04-20,2024-02-11,Delaware,25852.42,GBP,y,contact378@example.com,Draft,2024-05-08
+C-100379,PartyA_138,PartyB_48,2023-02-16,2022-10-28,Delaware,213147.68,USD,y,,Signed,2023-07-26
+C-100380,PartyA_216,PartyB_86,2023-12-17,2024-02-22,New York,29344.17, xyz ,y, user380@bad email .com ,Signed,2024-01-13
+C-100381,PartyA_292,PartyB_225,2023-05-16,2024-12-28,Nigeria,181876.37,EUR,n,contact381@example.com,Signed,2023-07-17
+C-100382,PartyA_211,PartyB_226,2024-01-24,2025-12-01,New York,90291.13,USD,n,contact382@example.com,Active,2024-01-17
+C-100383,PartyA_222,PartyB_128,2023-03-06,2023-07-31,Nigeria,164088.42,NGN,y,contact383@example.com,Active,2023-10-08
+C-100384,PartyA_6,PartyB_81,2023-12-21,2025-07-02,Nigeria,169397.6,USD, , user384@bad email .com ,Active,2024-08-05
+C-100385,PartyA_143,PartyB_26,2024-04-25,2025-05-17,Scotland,217484.49, xyz ,y,contact385@example.com,Draft,2024-12-10
+C-100386,PartyA_294,PartyB_230,2023-08-17,2024-11-02,New York,161186.01,NGN,Y, user386@bad email .com ,Signed,2023-09-01
+C-100387,PartyA_19,PartyB_286,2024-05-25,2025-04-27,New York,79699.32,GBP,Y, user387@bad email .com ,Signed,2025-01-31
+C-100388,PartyA_234,PartyB_175,2023-01-01,2022-12-05,Nigeria,198154.04,ZAR, ,,Expired,2023-06-06
+C-100389,PartyA_187,PartyB_232,2023-02-25,2025-02-10,Nigeria,56506.61,INR, , user389@bad email .com ,Signed,2023-03-25
+C-100390,PartyA_55,PartyB_24,2023-04-10,2025-01-26,Delaware,165068.65,INR,y,contact390@example.com,Draft,2023-06-03
+C-100391,PartyA_97,PartyB_62,2024-05-19,2024-06-11,Delaware,205637.83,usd,Y,,Expired,2024-11-06
+C-100392,PartyA_64,PartyB_231,2023-08-09,2024-07-22,New York,206313.98,INR,Y,contact392@example.com,Active,2024-02-29
+C-100393,PartyA_261,PartyB_91,2024-05-31,2024-06-17,New York,240999.83,GBP, ,contact393@example.com,Signed,2025-04-20
+C-100394,PartyA_259,PartyB_197,2024-08-15,2024-10-11,Nigeria,182893.17,EUR,n,contact394@example.com,Draft,2025-02-15
+C-100395,PartyA_212,PartyB_263,2023-09-12,2024-02-19,Scotland,100069.63,ZAR,n, user395@bad email .com ,Expired,2024-01-13
+C-100396,PartyA_177,PartyB_68,2024-07-14,2025-01-31,Scotland,178256.71,NGN,N,,Draft,2025-06-12
+C-100397,PartyA_299,PartyB_293,2023-07-02,2024-07-31,Delaware,136080.38,INR,Y,,Signed,2024-05-08
+C-100398,PartyA_13,PartyB_196,2024-03-03,2025-09-24,England & Wales,187219.31,ZAR,n,,Active,2024-04-16
+C-100399,PartyA_32,PartyB_152,2023-02-24,2024-09-12,Delaware,15094.59,USD,y, user399@bad email .com ,Expired,2023-05-09
+C-100400,PartyA_288,PartyB_200,2024-07-08,2024-04-12,Nigeria,90311.93,EUR, , user400@bad email .com ,Expired,2024-10-07
+C-100401,PartyA_214,PartyB_161,2024-06-07,2026-04-21,New York,199411.58,ZAR,Y,,Signed,2025-02-14
+C-100402,PartyA_100,PartyB_151,2023-02-25,2022-11-10,Delaware,186173.82, xyz ,N,contact402@example.com,Expired,2023-09-12
+C-100403,PartyA_143,PartyB_285,2023-07-01,2025-01-30,England & Wales,19542.78,EUR,n,contact403@example.com,Signed,2023-10-14
+C-100404,PartyA_21,PartyB_79,2023-05-14,2023-06-27,New York,146412.53,GBP,y, user404@bad email .com ,Expired,2023-09-26
+C-100405,PartyA_38,PartyB_163,2023-02-22,2024-12-25,Nigeria,233163.08,ZAR,n,,Draft,2023-10-19
+C-100406,PartyA_48,PartyB_179,2023-08-14,2023-10-21,Nigeria,130630.97,USD,n,,Signed,2023-11-05
+C-100407,PartyA_288,PartyB_5,2023-08-07,2025-02-16,Nigeria,83639.0,ZAR,N, user407@bad email .com ,Signed,2023-09-04
+C-100408,PartyA_59,PartyB_198,2023-12-21,2024-11-21,Delaware,60846.62,NGN,Y,,Signed,2024-03-31
+C-100409,PartyA_250,PartyB_23,2024-07-07,2026-03-20,Nigeria,71424.42,INR, ,,Signed,2024-11-05
+C-100410,PartyA_34,PartyB_108,2023-07-17,2024-02-10,Nigeria,128959.78,USD, ,contact410@example.com,Active,2024-05-25
+C-100411,PartyA_79,PartyB_13,2023-08-07,2025-03-10,New York,106628.15,NGN, ,contact411@example.com,Active,2024-02-28
+C-100412,PartyA_295,PartyB_117,2023-12-06,2023-09-15,Nigeria,22792.7,USD,y,contact412@example.com,Active,2024-03-17
+C-100413,PartyA_61,PartyB_274,2024-02-22,2024-11-25,England & Wales,113330.29,usd,y, user413@bad email .com ,Signed,2024-01-26
+C-100414,PartyA_149,PartyB_155,2023-03-06,2024-12-19,Nigeria,186741.81,EUR,y,contact414@example.com,Active,2023-12-11
+C-100415,PartyA_81,PartyB_274,2023-03-30,2023-09-14,England & Wales,191553.29,usd,n, user415@bad email .com ,Signed,2023-06-20
+C-100416,PartyA_6,PartyB_284,2023-05-20,2025-02-22,Delaware,98357.15,ZAR,N,,Draft,2024-01-29
+C-100417,PartyA_157,PartyB_108,2023-05-25,2023-05-31,Nigeria,11401.51,usd, ,,Active,2024-05-12
+C-100418,PartyA_130,PartyB_100,2023-12-19,2024-03-24,Scotland,103750.97,USD,N,,Expired,2024-01-16
+C-100419,PartyA_35,PartyB_129,2023-07-05,2025-01-22,England & Wales,200115.35, xyz , ,contact419@example.com,Draft,2023-07-25
+C-100420,PartyA_146,PartyB_36,2023-07-22,2025-04-05,Scotland,145568.32,INR,N, user420@bad email .com ,Active,2023-09-29
+C-100421,PartyA_162,PartyB_220,2023-11-22,2024-12-03,Scotland,113210.85,ZAR, ,,Draft,2024-01-17
+C-100422,PartyA_170,PartyB_246,2023-01-05,2023-07-24,Delaware,62297.61,usd,y,contact422@example.com,Expired,2023-07-30
+C-100423,PartyA_144,PartyB_72,2024-04-01,2024-12-04,Nigeria,193916.97,EUR,N, user423@bad email .com ,Active,2024-12-02
+C-100424,PartyA_298,PartyB_297,2023-07-21,2023-12-17,England & Wales,183652.61,EUR,Y,,Active,2024-01-14
+C-100425,PartyA_115,PartyB_149,2023-08-06,2023-05-15,Delaware,138346.91, xyz ,N,,Signed,2023-09-13
+C-100426,PartyA_85,PartyB_264,2024-04-20,2025-05-18,England & Wales,128092.59,INR, , user426@bad email .com ,Expired,2024-05-31
+C-100427,PartyA_113,PartyB_250,2024-04-01,2024-05-14,Delaware,45607.15,USD,n,,Active,2024-06-28
+C-100428,PartyA_241,PartyB_233,2023-03-06,2023-08-03,Delaware,92989.36,NGN, ,contact428@example.com,Signed,2023-02-27
+C-100429,PartyA_193,PartyB_194,2023-02-10,2024-08-07,Nigeria,81693.71,ZAR,y,,Expired,2023-07-17
+C-100430,PartyA_247,PartyB_4,2023-03-21,2024-05-03,Delaware,63645.02,usd,y,contact430@example.com,Signed,2023-11-02
+C-100431,PartyA_81,PartyB_186,2023-05-23,2024-04-17,Scotland,42235.85,ZAR,N,contact431@example.com,Expired,2024-02-25
+C-100432,PartyA_108,PartyB_83,2023-05-02,2024-11-08,New York,58356.24,EUR,n, user432@bad email .com ,Signed,2024-02-27
+C-100433,PartyA_294,PartyB_76,2024-02-25,2023-11-19,Nigeria,61673.91,USD,N,contact433@example.com,Active,2024-02-23
+C-100434,PartyA_146,PartyB_44,2023-06-20,2023-11-11,Nigeria,230689.27,usd, ,,Active,2023-09-08
+C-100435,PartyA_299,PartyB_94,2024-04-04,2025-08-18,New York,248201.18,USD,N, user435@bad email .com ,Expired,2025-01-18
+C-100436,PartyA_118,PartyB_194,2024-06-07,2024-11-04,Nigeria,42762.7,INR,n,,Active,2024-11-21
+C-100437,PartyA_91,PartyB_244,2023-05-16,2023-05-07,Nigeria,5124.09,usd,N,,Active,2024-02-24
+C-100438,PartyA_221,PartyB_268,2023-02-09,2024-12-22,Scotland,133326.06,EUR,n,contact438@example.com,Active,2023-08-13
+C-100439,PartyA_295,PartyB_51,2024-01-15,2023-10-31,New York,174713.06,NGN,n, user439@bad email .com ,Draft,2024-07-20
+C-100440,PartyA_132,PartyB_97,2023-05-18,2023-10-05,Nigeria,119808.17,EUR,y,contact440@example.com,Signed,2023-04-20
+C-100441,PartyA_210,PartyB_186,2023-01-08,2024-04-23,Scotland,131112.62,GBP,n,,Draft,2023-02-01
+C-100442,PartyA_142,PartyB_204,2023-06-08,2024-04-19,New York,163242.41,ZAR, , user442@bad email .com ,Draft,2024-05-29
+C-100443,PartyA_130,PartyB_158,2023-07-28,2024-05-26,Delaware,138474.13, xyz ,N,,Signed,2024-04-18
+C-100444,PartyA_83,PartyB_52,2023-12-19,2025-10-21,Scotland,176668.16,USD,Y,,Signed,2024-03-07
+C-100445,PartyA_47,PartyB_75,2024-06-04,2025-03-21,New York,196734.2,GBP,N,,Active,2025-01-01
+C-100446,PartyA_197,PartyB_206,2024-03-21,2024-02-20,Nigeria,16956.03,INR,Y,contact446@example.com,Active,2024-12-30
+C-100447,PartyA_6,PartyB_104,2024-06-17,2024-12-07,New York,178189.85,GBP,N,,Signed,2025-04-19
+C-100448,PartyA_185,PartyB_123,2024-06-14,2024-12-03,Scotland,49491.88,NGN, ,,Active,2025-04-15
+C-100449,PartyA_103,PartyB_266,2023-01-01,2023-02-11,New York,22623.86,usd,y, user449@bad email .com ,Signed,2022-12-09
+C-100450,PartyA_100,PartyB_233,2023-03-12,2023-02-12,Delaware,137848.57,INR,y,,Expired,2023-09-04
+C-100451,PartyA_175,PartyB_60,2024-08-11,2024-04-17,England & Wales,66015.77,EUR, , user451@bad email .com ,Draft,2025-03-31
+C-100452,PartyA_125,PartyB_174,2023-09-21,2024-11-24,New York,203473.69,ZAR,n,,Signed,2024-04-12
+C-100453,PartyA_113,PartyB_118,2024-04-16,2025-08-09,England & Wales,215643.8,EUR,y, user453@bad email .com ,Signed,2024-08-25
+C-100454,PartyA_205,PartyB_176,2024-02-27,2024-10-25,Delaware,129609.55,ZAR,N,contact454@example.com,Active,2024-03-06
+C-100455,PartyA_98,PartyB_256,2024-07-21,2024-09-21,Delaware,119662.31,NGN, , user455@bad email .com ,Expired,2025-07-03
+C-100456,PartyA_183,PartyB_80,2023-07-24,2023-11-21,Scotland,184121.84,NGN,N, user456@bad email .com ,Expired,2023-08-17
+C-100457,PartyA_247,PartyB_191,2023-05-03,2023-03-24,England & Wales,169277.22, xyz , ,,Active,2024-02-14
+C-100458,PartyA_204,PartyB_114,2023-11-19,2024-12-07,Scotland,224632.18,ZAR,n,,Draft,2024-11-07
+C-100459,PartyA_202,PartyB_90,2024-08-13,2024-08-24,England & Wales,14482.89, xyz , , user459@bad email .com ,Draft,2025-03-05
+C-100460,PartyA_298,PartyB_52,2023-05-04,2024-12-19,Scotland,130033.08,GBP,Y, user460@bad email .com ,Signed,2023-09-17
+C-100461,PartyA_176,PartyB_188,2024-01-06,2025-05-27,Delaware,215598.66,ZAR,N,contact461@example.com,Signed,2024-03-10
+C-100462,PartyA_231,PartyB_93,2024-05-25,2025-04-04,New York,53422.59,INR,y,,Draft,2025-02-11
+C-100463,PartyA_196,PartyB_101,2023-05-15,2024-08-26,Nigeria,171816.97,ZAR,N,contact463@example.com,Signed,2023-06-28
+C-100464,PartyA_250,PartyB_154,2023-06-03,2024-06-01,Scotland,201611.42,usd,n,contact464@example.com,Draft,2023-09-09
+C-100465,PartyA_244,PartyB_50,2024-07-29,2025-11-02,Scotland,12879.62,USD,Y,contact465@example.com,Draft,2025-02-14
+C-100466,PartyA_63,PartyB_180,2023-12-09,2024-05-03,England & Wales,90879.54,ZAR,y,,Signed,2024-10-21
+C-100467,PartyA_262,PartyB_250,2023-07-23,2024-11-04,Delaware,144397.72,USD,y,,Draft,2024-07-04
+C-100468,PartyA_216,PartyB_293,2024-04-02,2024-02-22,Scotland,95886.68, xyz ,N, user468@bad email .com ,Draft,2024-09-26
+C-100469,PartyA_203,PartyB_139,2023-03-15,2023-02-04,Delaware,41337.87,INR,y,contact469@example.com,Draft,2023-09-28
+C-100470,PartyA_65,PartyB_121,2024-01-07,2025-10-13,Scotland,147143.02,usd,N, user470@bad email .com ,Active,2024-11-10
+C-100471,PartyA_49,PartyB_33,2023-09-15,2025-06-17,New York,175473.54,NGN,N,contact471@example.com,Active,2024-04-14
+C-100472,PartyA_44,PartyB_200,2024-07-15,2024-05-11,Delaware,7564.86,EUR,Y, user472@bad email .com ,Expired,2024-11-20
+C-100473,PartyA_15,PartyB_18,2023-08-23,2024-01-03,Nigeria,184660.71,USD,N, user473@bad email .com ,Expired,2024-06-27
+C-100474,PartyA_277,PartyB_91,2024-01-01,2024-08-01,New York,216196.04,ZAR, , user474@bad email .com ,Expired,2024-09-29
+C-100475,PartyA_178,PartyB_247,2024-04-12,2025-09-20,Nigeria,187478.99,usd, ,,Draft,2024-12-14
+C-100476,PartyA_156,PartyB_6,2023-08-21,2025-07-25,Delaware,23298.95,INR,n, user476@bad email .com ,Expired,2023-07-22
+C-100477,PartyA_252,PartyB_245,2024-06-19,2026-06-03,New York,189815.07,INR,y,contact477@example.com,Active,2024-10-20
+C-100478,PartyA_97,PartyB_211,2023-01-10,2024-11-04,Nigeria,108178.39,NGN,Y, user478@bad email .com ,Draft,2023-09-24
+C-100479,PartyA_41,PartyB_217,2024-03-23,2025-01-01,Scotland,63224.13,usd,n,,Draft,2025-01-07
+C-100480,PartyA_212,PartyB_97,2023-09-03,2024-10-16,Nigeria,191370.04,ZAR,y,,Draft,2023-09-08
+C-100481,PartyA_252,PartyB_97,2023-07-06,2023-07-25,New York,73109.23, xyz , ,,Draft,2023-11-17
+C-100482,PartyA_138,PartyB_65,2023-01-20,2023-02-24,England & Wales,13358.39,GBP,N,,Draft,2023-12-22
+C-100483,PartyA_176,PartyB_216,2024-03-24,2025-12-08,New York,3042.82,USD,Y,contact483@example.com,Expired,2024-07-31
+C-100484,PartyA_137,PartyB_201,2024-05-25,2025-02-09,Scotland,116457.43,INR,Y,contact484@example.com,Active,2024-05-31
+C-100485,PartyA_198,PartyB_227,2024-07-10,2025-07-06,England & Wales,46219.33,usd,Y, user485@bad email .com ,Expired,2024-10-14
+C-100486,PartyA_166,PartyB_82,2023-02-04,2023-04-28,New York,115747.82,NGN,n,contact486@example.com,Draft,2023-11-23
+C-100487,PartyA_102,PartyB_185,2023-02-13,2024-11-16,New York,234417.81,EUR,y,,Draft,2023-02-09
+C-100488,PartyA_300,PartyB_62,2023-08-12,2023-08-07,Scotland,59755.49,INR,Y, user488@bad email .com ,Draft,2024-01-31
+C-100489,PartyA_46,PartyB_128,2023-09-06,2023-05-18,Scotland,242239.9, xyz , ,,Draft,2023-10-26
+C-100490,PartyA_275,PartyB_55,2024-05-26,2024-04-29,Delaware,171800.22,GBP,Y, user490@bad email .com ,Expired,2024-06-29
+C-100491,PartyA_194,PartyB_184,2024-05-14,2024-09-09,Scotland,79868.15,INR,n,,Active,2025-04-19
+C-100492,PartyA_98,PartyB_291,2023-05-18,2023-10-01,Delaware,224767.1, xyz , , user492@bad email .com ,Signed,2023-07-22
+C-100493,PartyA_36,PartyB_272,2024-07-10,2025-03-03,Nigeria,81596.54,ZAR, , user493@bad email .com ,Expired,2024-08-28
+C-100494,PartyA_95,PartyB_10,2024-04-05,2024-10-04,England & Wales,205035.22,INR,n,,Signed,2025-01-17
+C-100495,PartyA_269,PartyB_255,2024-01-08,2025-11-12,New York,155429.13,EUR, , user495@bad email .com ,Expired,2025-01-04
+C-100496,PartyA_268,PartyB_35,2024-07-18,2024-08-24,England & Wales,153646.77,usd,y, user496@bad email .com ,Active,2024-07-10
+C-100497,PartyA_17,PartyB_293,2023-05-13,2023-07-14,Scotland,218499.7,EUR,n,contact497@example.com,Active,2024-03-06
+C-100498,PartyA_37,PartyB_7,2024-02-02,2025-08-08,Delaware,122987.5,ZAR,Y,,Expired,2024-04-18
+C-100499,PartyA_189,PartyB_30,2024-05-18,2024-04-09,Nigeria,117546.73,GBP,y,,Signed,2025-02-27

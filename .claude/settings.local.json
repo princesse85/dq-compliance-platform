@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/ -v --tb=short)",
+      "Bash(python -m pytest tests/unit/test_dashboard.py tests/unit/test_infrastructure.py -v --tb=short)",
+      "Bash(python -m pytest tests/unit/test_infrastructure.py -v --tb=short)",
+      "Bash(python:*)",
+      "Bash(pip install flake8 black mypy)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(pip install:*)",
+      "Bash(set ANALYTICS_BUCKET=test-bucket)",
+      "Bash(pytest:*)",
+      "Bash(aws sts:*)",
+      "Bash(aws cloudformation list-stacks:*)",
+      "Bash(aws lambda list-functions:*)",
+      "Bash(aws s3:*)",
+      "Bash(cdk list:*)",
+      "Bash(cdk:*)",
+      "Bash(timeout:*)",
+      "Bash(aws lambda get-function:*)",
+      "Bash(aws lambda invoke:*)",
+      "Bash(streamlit run:*)",
+      "Bash(curl:*)",
+      "Bash(rm:*)",
+      "Bash(true)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

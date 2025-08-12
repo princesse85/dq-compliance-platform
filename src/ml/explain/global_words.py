@@ -6,12 +6,12 @@ from src.utils.logging_config import get_logger
 
 logger = get_logger(__name__)
 
-MODEL_DIR = pathlib.Path('analytics/models/baseline')
+MODEL_DIR = pathlib.Path("analytics/models/baseline")
 
-if __name__ == '__main__':
-    pipe = load(MODEL_DIR / 'model.joblib')
-    clf = pipe.named_steps['clf']
-    vec = pipe.named_steps['tfidf']
+if __name__ == "__main__":
+    pipe = load(MODEL_DIR / "model.joblib")
+    clf = pipe.named_steps["clf"]
+    vec = pipe.named_steps["tfidf"]
     feature_names = np.array(vec.get_feature_names_out())
     coefs = clf.coef_  # shape [n_classes, n_features]
 
@@ -21,6 +21,6 @@ if __name__ == '__main__':
         idx = np.argsort(coefs[i])[::-1][:topn]
         out[str(cls)] = feature_names[idx].tolist()
 
-    with open(MODEL_DIR / 'global_top_words.json', 'w') as f:
+    with open(MODEL_DIR / "global_top_words.json", "w") as f:
         json.dump(out, f, indent=2)
-    logger.info('Saved global_top_words.json')
+    logger.info("Saved global_top_words.json")

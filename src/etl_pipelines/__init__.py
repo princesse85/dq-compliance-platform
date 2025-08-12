@@ -13,6 +13,4 @@ logger = get_logger(__name__)
 __version__ = "1.0.0"
 __author__ = "Enterprise Data Platform Team"
 
-__all__ = [
-    "process_contracts_data"
-]
+__all__ = ["process_contracts_data"]

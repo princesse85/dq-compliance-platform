@@ -1,0 +1,52 @@
+# =============================================================================
+# ENVIRONMENT CONFIGURATION
+# =============================================================================
+
+# Project Configuration
+PROJECT_PREFIX=enterprise
+ENV_NAME=development
+AWS_REGION=eu-west-2
+
+# AWS Configuration
+CDK_DEFAULT_ACCOUNT=123456789012
+CDK_DEFAULT_REGION=eu-west-2
+
+# Billing Configuration
+BILLING_EMAIL=enterprise-support@company.com
+MONTHLY_BUDGET=5000
+
+# Data Quality Configuration
+LOG_LEVEL=INFO
+QUALITY_THRESHOLD=0.85
+
+# Document Processing Configuration
+LOW_CONF_THRESHOLD=0.85
+MAX_FILE_SIZE=10485760  # 10MB
+
+# ML Configuration
+MODEL_VARIANT=baseline
+MLFLOW_TRACKING_URI=http://localhost:5000
+
+# Database Configuration (for local development)
+POSTGRES_DB=enterprise_dq
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+
+# Redis Configuration (for local development)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# Elasticsearch Configuration (for local development)
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
+
+# Monitoring Configuration
+PROMETHEUS_PORT=9090
+GRAFANA_PORT=3000
+GRAFANA_PASSWORD=admin
+
+# Development Configuration
+DEBUG=true
+ENABLE_HOT_RELOAD=true

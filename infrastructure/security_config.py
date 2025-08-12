@@ -102,6 +102,80 @@ class SecurityConfig:
         
         if self.ALERT_EMAILS is None:
             self.ALERT_EMAILS = ["security@company.com"]
+    
+    def create_vpc_config(self) -> Dict[str, str]:
+        """Create VPC configuration."""
+        return {
+            "cidr": "10.0.0.0/16",
+            "enable_dns_hostnames": True,
+            "enable_dns_support": True
+        }
+    
+    def create_iam_policies(self) -> Dict[str, Dict]:
+        """Create IAM policies for different roles."""
+        return {
+            "admin_policy": {
+                "Version": "2012-10-17",
+                "Statement": [
+                    {
+                        "Effect": "Allow",
+                        "Action": "*",
+                        "Resource": "*"
+                    }
+                ]
+            },
+            "user_policy": {
+                "Version": "2012-10-17",
+                "Statement": [
+                    {
+                        "Effect": "Allow",
+                        "Action": [
+                            "s3:GetObject",
+                            "s3:PutObject",
+                            "lambda:InvokeFunction"
+                        ],
+                        "Resource": "*"
+                    }
+                ]
+            }
+        }
+    
+    def create_security_groups(self) -> Dict[str, List[Dict]]:
+        """Create security group configurations."""
+        return {
+            "web_tier": [
+                {
+                    "protocol": "tcp",
+                    "port": 80,
+                    "source": "0.0.0.0/0"
+                },
+                {
+                    "protocol": "tcp",
+                    "port": 443,
+                    "source": "0.0.0.0/0"
+                }
+            ],
+            "app_tier": [
+                {
+                    "protocol": "tcp",
+                    "port": 8080,
+                    "source": "10.0.0.0/16"
+                }
+            ]
+        }
+    
+    def is_valid_cidr(self, cidr: str) -> bool:
+        """Validate CIDR notation."""
+        import ipaddress
+        try:
+            ipaddress.IPv4Network(cidr, strict=False)
+            return True
+        except (ipaddress.AddressValueError, ValueError):
+            return False
+    
+    def is_valid_port(self, port: int) -> bool:
+        """Validate port number."""
+        return 1 <= port <= 65535
 
 
 class SecurityManager:

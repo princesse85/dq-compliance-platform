@@ -294,3 +294,5 @@ class TestDataQualityUtils:
         assert 'detailed_analysis' in report
         assert 'recommendations' in report
         assert isinstance(report['summary'], dict)
+
+
