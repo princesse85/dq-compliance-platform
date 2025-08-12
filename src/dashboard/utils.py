@@ -27,9 +27,13 @@ class DashboardDataLoader:
         """Initialize AWS S3 client."""
         try:
             self.s3_client = boto3.client("s3", region_name=self.aws_region)
-            logger.info("AWS S3 client initialized successfully")
+            # Only log if we have credentials
+            if os.getenv("AWS_ACCESS_KEY_ID"):
+                logger.info("AWS S3 client initialized successfully")
         except Exception as e:
-            logger.warning(f"Failed to initialize AWS S3 client: {e}")
+            # Don't log warnings for missing credentials (expected in demo)
+            if "NoCredentialsError" not in str(e):
+                logger.warning(f"Failed to initialize AWS S3 client: {e}")
             self.s3_client = None
 
     def load_compliance_data(self, year: int, risk_type: str = "all") -> pd.DataFrame:
@@ -64,7 +68,11 @@ class DashboardDataLoader:
             logger.info(f"Successfully loaded data from S3: {file_key}")
             return data
         except Exception as e:
-            logger.warning(f"Failed to load from S3: {e}")
+            # Only log warning if we have S3 credentials but bucket doesn't exist
+            if "NoSuchBucket" in str(e) or "AccessDenied" in str(e):
+                logger.info(f"Using mock data (S3 bucket not available): {bucket_name}")
+            else:
+                logger.warning(f"Failed to load from S3: {e}")
             return self._generate_mock_data(year, risk_type)
 
     def _generate_mock_data(self, year: int, risk_type: str) -> pd.DataFrame:

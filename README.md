@@ -5,12 +5,14 @@ A comprehensive, real-time dashboard for data quality and compliance monitoring 
 ## ✨ Features
 
 ### 🚀 **Interactive Dashboard**
+
 - **Real-time Auto-refresh**: Configurable intervals (15s to 5min)
 - **Multi-select Filters**: Risk categories, regions, and risk levels
 - **Dynamic Data Loading**: Cached data loading for optimal performance
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 
 ### 📊 **Analytics & Visualization**
+
 - **Executive Dashboard**: Key performance indicators with trend analysis
 - **Risk Analytics**: Deep dive into risk register with interactive tables
 - **Document Intelligence**: AI-powered document analysis (PDF, TXT)
@@ -18,12 +20,14 @@ A comprehensive, real-time dashboard for data quality and compliance monitoring 
 - **Data Quality Metrics**: Comprehensive data quality assessment
 
 ### 🎨 **Enhanced UI/UX**
+
 - **Professional Styling**: Modern, clean interface with dark sidebar
 - **Animated Components**: Hover effects and smooth transitions
 - **Status Indicators**: Real-time feedback and loading states
 - **Export Functionality**: Data export capabilities (ready for implementation)
 
 ### 🔧 **Technical Features**
+
 - **Modular Architecture**: Clean, maintainable code structure
 - **AWS Integration**: Ready for production deployment with S3
 - **Caching**: Optimized performance with Streamlit caching
@@ -51,23 +55,27 @@ dq-compliance-platform/
 ### Local Development
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/your-username/dq-compliance-platform.git
    cd dq-compliance-platform
    ```
 
 2. **Create virtual environment**
+
    ```bash
    python -m venv .venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
 3. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. **Run the dashboard**
+
    ```bash
    streamlit run streamlit_app.py
    ```
@@ -78,6 +86,7 @@ dq-compliance-platform/
 ### Streamlit Cloud Deployment
 
 1. **Push to GitHub**
+
    ```bash
    git add .
    git commit -m "Initial dashboard deployment"
@@ -118,26 +127,31 @@ The dashboard is highly customizable:
 ## 📊 Dashboard Sections
 
 ### 1. Executive Dashboard
+
 - **KPIs**: Overall compliance, risk scores, high-risk items, ML accuracy
 - **Charts**: Risk distribution, regional heatmap, compliance trends
 - **Real-time Updates**: Auto-refresh with configurable intervals
 
 ### 2. Risk Analytics
+
 - **Interactive Table**: Sortable risk register with progress indicators
 - **Multi-level Filtering**: By category, region, and risk level
 - **Data Export**: Export filtered data (ready for implementation)
 
 ### 3. Document Intelligence
+
 - **File Upload**: Support for PDF and TXT files
 - **AI Analysis**: Compliance scoring, risk assessment, entity extraction
 - **Detailed Reports**: Key risks, recommendations, and extracted entities
 
 ### 4. ML Performance
+
 - **Model Monitoring**: Accuracy, precision, recall, and latency tracking
 - **Performance Trends**: Historical performance visualization
 - **Model Selection**: Compare different ML models
 
 ### 5. Data Quality
+
 - **Quality Metrics**: Completeness, accuracy, timeliness, validity
 - **Trend Analysis**: Quality score changes over time
 - **Issue Detection**: Automated quality issue identification
@@ -147,6 +161,7 @@ The dashboard is highly customizable:
 ### Adding New Features
 
 1. **New Data Source**
+
    ```python
    # In src/dashboard/utils.py
    def load_new_data():
@@ -155,6 +170,7 @@ The dashboard is highly customizable:
    ```
 
 2. **New Chart**
+
    ```python
    # In src/dashboard/main.py
    def create_new_chart(data):
@@ -215,6 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔄 Version History
 
 ### v2.1.0 (Current)
+
 - ✅ Real-time auto-refresh functionality
 - ✅ Multi-select filters for enhanced data exploration
 - ✅ Enhanced visual feedback and animations
@@ -224,12 +241,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Export functionality framework
 
 ### v2.0.0
+
 - ✅ Initial dashboard implementation
 - ✅ Basic charts and visualizations
 - ✅ AWS integration framework
 - ✅ Document analysis capabilities
 
 ### v1.0.0
+
 - ✅ Core compliance monitoring features
 - ✅ Basic risk analytics
 - ✅ ML model integration

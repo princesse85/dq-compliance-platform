@@ -7,15 +7,13 @@ from datasets import Dataset
 from evaluate import load
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 from sklearn.preprocessing import LabelEncoder
-import mlflow
-import sys
+import logging
 
-sys.path.append("src/ml")
-from mlflow_utils import init_mlflow
-from src.utils.logging_config import get_logger
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-logger = get_logger(__name__)
-
+# Create analytics directory
 ANALYTICS_DIR = pathlib.Path("analytics/models/transformer")
 ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -27,20 +25,24 @@ LR = float(os.getenv("LR", "5e-5"))
 
 def load_df(split):
     """Load dataset split as DataFrame."""
-    return pd.read_csv(f"data/text_corpus/{split}.csv")
+    return pd.read_csv(f"src/data/text_corpus/{split}.csv")
 
 
 if __name__ == "__main__":
-    mlflow = init_mlflow("transformer_" + MODEL_NAME)
+    logger.info(f"Starting transformer training with {MODEL_NAME}...")
 
     # Load data
     train_df = load_df("train")
     valid_df = load_df("valid")
     test_df = load_df("test")
 
+    logger.info(f"Loaded {len(train_df)} training samples, {len(valid_df)} validation samples, {len(test_df)} test samples")
+
     # Encode labels
     le = LabelEncoder()
     le.fit(train_df["label"].tolist() + valid_df["label"].tolist() + test_df["label"].tolist())
+
+    logger.info(f"Classes: {list(le.classes_)}")
 
     # Initialize tokenizer
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -56,11 +58,13 @@ if __name__ == "__main__":
         )
 
     # Prepare datasets
+    logger.info("Preparing datasets...")
     train_ds = to_ds(train_df).map(tok, batched=True)
     valid_ds = to_ds(valid_df).map(tok, batched=True)
     test_ds = to_ds(test_df).map(tok, batched=True)
 
     # Initialize model
+    logger.info("Initializing model...")
     model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=len(le.classes_))
 
     # Setup metrics
@@ -73,7 +77,7 @@ if __name__ == "__main__":
 
     # Training arguments
     args = TrainingArguments(
-        output_dir="analytics/tmp",
+        output_dir=str(ANALYTICS_DIR / "checkpoints"),
         evaluation_strategy="epoch",
         save_strategy="epoch",
         learning_rate=LR,
@@ -98,18 +102,20 @@ if __name__ == "__main__":
     )
 
     # Train model
+    logger.info("Starting training...")
     trainer.train()
 
     # Evaluate on test set
-    eval_metrics = trainer.evaluate(test_ds)
-
-    # Save artifacts
-    with open(ANALYTICS_DIR / "metrics.json", "w") as f:
-        json.dump(eval_metrics, f, indent=2)
-    trainer.save_model(ANALYTICS_DIR / "hf_model")
-
-    # Log to MLflow
-    mlflow.log_metric("f1_weighted", float(eval_metrics.get("eval_f1_weighted", 0)))
-    mlflow.log_artifact(str(ANALYTICS_DIR / "metrics.json"))
-
-    logger.info("Transformer done. F1(weighted)=", round(float(eval_metrics.get("eval_f1_weighted", 0)), 4))
+    logger.info("Evaluating on test set...")
+    results = trainer.evaluate(test_ds)
+    
+    # Save model and results
+    trainer.save_model(str(ANALYTICS_DIR / "final_model"))
+    tokenizer.save_pretrained(str(ANALYTICS_DIR / "final_model"))
+    
+    with open(ANALYTICS_DIR / "results.json", "w") as f:
+        json.dump(results, f, indent=2)
+    
+    logger.info(f"Model saved to {ANALYTICS_DIR}")
+    logger.info(f"Test F1 Score: {results.get('eval_f1_weighted', 0):.4f}")
+    logger.info("Transformer training completed successfully!")
