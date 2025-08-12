@@ -1,19 +1,19 @@
 {
-  "total_samples": 10000,
-  "train_samples": 7000,
-  "validation_samples": 1500,
-  "test_samples": 1500,
+  "total_samples": 25000,
+  "train_samples": 17500,
+  "validation_samples": 3750,
+  "test_samples": 3750,
   "categories": [
-    "regulatory",
     "litigation",
-    "contracts",
-    "compliance"
+    "compliance",
+    "regulatory",
+    "contracts"
   ],
   "risk_levels": [
-    "MediumRisk",
+    "LowRisk",
     "HighRisk",
-    "LowRisk"
+    "MediumRisk"
   ],
-  "generated_date": "2025-08-12T22:54:41.189366",
-  "data_generator": "ComplianceDataGenerator with Faker"
+  "generated_date": "2025-08-12T23:06:27.919728",
+  "data_generator": "ComplianceDataGenerator with Faker (Enhanced)"
 }

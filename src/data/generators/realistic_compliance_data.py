@@ -242,8 +242,8 @@ def create_realistic_datasets():
     """Create realistic training, validation, and test datasets."""
     generator = ComplianceDataGenerator()
     
-    # Generate comprehensive dataset
-    full_dataset = generator.generate_dataset(num_samples=10000)
+    # Generate comprehensive dataset - INCREASED TO 25,000 SAMPLES
+    full_dataset = generator.generate_dataset(num_samples=25000)
     
     # Split into train/validation/test (70/15/15)
     train_size = int(0.7 * len(full_dataset))
@@ -268,18 +268,28 @@ def create_realistic_datasets():
         "categories": full_dataset['category'].unique().tolist(),
         "risk_levels": full_dataset['label'].unique().tolist(),
         "generated_date": datetime.now().isoformat(),
-        "data_generator": "ComplianceDataGenerator with Faker"
+        "data_generator": "ComplianceDataGenerator with Faker (Enhanced)"
     }
     
     with open(f"{output_dir}/metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
     
-    print(f"\n✅ Datasets created successfully!")
+    print(f"\n✅ Enhanced Datasets created successfully!")
     print(f"📁 Output directory: {output_dir}")
     print(f"📊 Train: {len(train_df)} samples")
     print(f"📊 Validation: {len(val_df)} samples")
     print(f"📊 Test: {len(test_df)} samples")
     print(f"📄 Metadata saved to: {output_dir}/metadata.json")
+    
+    # Print detailed statistics
+    print(f"\n📈 Dataset Statistics:")
+    print(f"   Total documents: {len(full_dataset):,}")
+    print(f"   Training samples: {len(train_df):,}")
+    print(f"   Validation samples: {len(val_df):,}")
+    print(f"   Test samples: {len(test_df):,}")
+    print(f"   Categories: {len(full_dataset['category'].unique())}")
+    print(f"   Risk levels: {len(full_dataset['label'].unique())}")
+    print(f"   Average text length: {full_dataset['text'].str.len().mean():.0f} characters")
 
 if __name__ == "__main__":
     create_realistic_datasets()
