@@ -1,0 +1,11 @@
+text,label
+"Data retention policies must comply with regulatory requirements.",HighRisk
+"Contract amendments require mutual agreement.",MediumRisk
+"Payment is due upon receipt of goods.",LowRisk
+"Breach of confidentiality results in legal action.",HighRisk
+"Service availability is subject to maintenance windows.",MediumRisk
+"All disputes shall be governed by English law.",LowRisk
+"Supplier shall maintain data security standards.",HighRisk
+"Change requests require formal approval process.",MediumRisk
+"Warranty period is limited to one year.",LowRisk
+"Intellectual property rights are non-transferable.",MediumRisk

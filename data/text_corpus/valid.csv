@@ -1,0 +1,11 @@
+text,label
+"Personal data shall be processed only for specified purposes.",HighRisk
+"Contract term is twelve months with automatic renewal.",LowRisk
+"Supplier shall indemnify against all third-party claims.",HighRisk
+"Delivery schedule is subject to availability.",MediumRisk
+"All communications must be in writing.",MediumRisk
+"Termination requires 60 days written notice.",LowRisk
+"Confidential information includes all business data.",HighRisk
+"Performance metrics are measured quarterly.",MediumRisk
+"Force majeure includes natural disasters and strikes.",LowRisk
+"Intellectual property includes patents and trademarks.",MediumRisk

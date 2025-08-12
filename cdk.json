@@ -1,0 +1,24 @@
+{
+  "app": "python app.py",
+  "context": {
+    "project_prefix": "enterprise",
+    "env_name": "production",
+    "region": "eu-west-2",
+    "billing_email": "enterprise-support@company.com",
+    "monthly_budget": 5000,
+    "environment": {
+      "dev": {
+        "region": "eu-west-2",
+        "monthly_budget": 1000
+      },
+      "staging": {
+        "region": "eu-west-2",
+        "monthly_budget": 2500
+      },
+      "production": {
+        "region": "eu-west-2",
+        "monthly_budget": 5000
+      }
+    }
+  }
+}

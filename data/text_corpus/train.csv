@@ -1,0 +1,21 @@
+text,label
+"The processor shall not transfer personal data outside the EEA without appropriate safeguards.",HighRisk
+"This agreement renews annually unless either party gives ninety (90) days' notice.",LowRisk
+"Indemnification shall be without limitation for any breach arising from misuse of confidential data.",HighRisk
+"Fees are payable within thirty (30) days of invoice.",LowRisk
+"The contractor shall maintain comprehensive insurance coverage for all activities.",MediumRisk
+"All intellectual property rights remain with the original owner.",MediumRisk
+"Force majeure events shall excuse performance for the duration of the event.",LowRisk
+"Any unauthorized disclosure of trade secrets shall result in immediate termination.",HighRisk
+"Payment terms are net 45 days from receipt of invoice.",LowRisk
+"The supplier warrants that all products meet industry standards.",MediumRisk
+"Data processing activities must comply with GDPR requirements.",HighRisk
+"Service level agreements specify 99.9% uptime guarantee.",MediumRisk
+"Confidentiality obligations survive termination for five years.",HighRisk
+"Change orders require written approval from both parties.",MediumRisk
+"Liquidated damages shall not exceed 10% of contract value.",MediumRisk
+"All disputes shall be resolved through binding arbitration.",LowRisk
+"Material breach allows immediate termination without notice.",HighRisk
+"Subcontracting requires prior written consent.",MediumRisk
+"Warranties are limited to manufacturer specifications.",LowRisk
+"Intellectual property infringement claims must be reported within 30 days.",HighRisk
