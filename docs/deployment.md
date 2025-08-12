@@ -1,440 +1,492 @@
-# Enterprise Data Quality Platform - Deployment Guide
+# Enterprise Data Quality & Compliance Platform - Deployment Guide
 
-## Overview
+This guide provides comprehensive instructions for deploying the Enterprise Data Quality & Compliance Platform across different environments.
 
-This guide covers the deployment of the Enterprise Data Quality Platform, which includes:
+## Table of Contents
 
-- **Foundation Infrastructure** (Phase 0): S3 buckets, IAM roles, CloudTrail, billing alarms
-- **Data Quality Pipeline** (Phase 1): Glue jobs, data validation, quality monitoring
-- **ML Inference API** (Phase 4): Lambda container with A/B testing for model comparison
+1. [Prerequisites](#prerequisites)
+2. [Environment Setup](#environment-setup)
+3. [Local Development](#local-development)
+4. [Staging Deployment](#staging-deployment)
+5. [Production Deployment](#production-deployment)
+6. [Monitoring and Observability](#monitoring-and-observability)
+7. [Security Configuration](#security-configuration)
+8. [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
 
 ### Required Tools
 
-- AWS CLI v2+ configured with appropriate permissions
-- Docker Desktop running
-- CDK CLI installed (`npm install -g aws-cdk`)
-- Python 3.11+ with virtual environment
-- Git
+- **Python 3.8+**: [Download Python](https://www.python.org/downloads/)
+- **AWS CLI**: [Install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+- **AWS CDK**: `npm install -g aws-cdk`
+- **Docker**: [Install Docker](https://docs.docker.com/get-docker/)
+- **Git**: [Install Git](https://git-scm.com/downloads)
 
-### AWS Permissions
+### AWS Account Setup
 
-Ensure your AWS credentials have permissions for:
+1. **Create AWS Account**: [Sign up for AWS](https://aws.amazon.com/)
+2. **Create IAM User**: Create a user with appropriate permissions
+3. **Configure AWS CLI**:
+   ```bash
+   aws configure
+   ```
+4. **Set up AWS Credentials**:
+   ```bash
+   export AWS_ACCESS_KEY_ID=your_access_key
+   export AWS_SECRET_ACCESS_KEY=your_secret_key
+   export AWS_DEFAULT_REGION=eu-west-2
+   ```
 
-- CloudFormation (for CDK)
-- IAM (roles and policies)
-- S3 (buckets and objects)
-- Lambda (functions and containers)
-- ECR (container registry)
-- API Gateway
-- CloudWatch (logs and metrics)
-- SSM (parameter store)
+### Required AWS Permissions
 
-## Configuration
-
-### Environment Variables
-
-The platform uses the following configuration (from `cdk.json`):
+Your IAM user/role needs the following permissions:
 
 ```json
 {
-  "project_prefix": "enterprise",
-  "env_name": "production",
-  "region": "eu-west-2",
-  "billing_email": "enterprise-support@company.com",
-  "monthly_budget": 5000
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*",
+        "glue:*",
+        "lambda:*",
+        "iam:*",
+        "cloudwatch:*",
+        "logs:*",
+        "ec2:*",
+        "kms:*",
+        "textract:*",
+        "sagemaker:*",
+        "apigateway:*",
+        "cognito-idp:*"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
-### Customization
+## Environment Setup
 
-You can override these settings by:
-
-1. **Modifying cdk.json** directly
-2. **Using CDK context**: `cdk deploy --context project_prefix=mycompany --context env_name=dev`
-3. **Environment variables**: `export CDK_DEFAULT_REGION=us-east-1`
-
-## Deployment Steps
-
-### Step 1: Environment Setup
+### 1. Clone Repository
 
 ```bash
-# Clone the repository
 git clone <repository-url>
-cd dq-compliance-platform
+cd enterprise-data-quality-platform
+```
 
-# Create and activate virtual environment
+### 2. Create Virtual Environment
+
+```bash
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate  # Linux/Mac
+# or
+.venv\Scripts\activate     # Windows
+```
 
-# Install dependencies
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-
-# Bootstrap CDK (first time only)
-cdk bootstrap
 ```
 
-### Step 2: Deploy Foundation Infrastructure
+### 4. Environment Configuration
+
+Copy the example environment file and configure it:
 
 ```bash
-# Deploy foundation stack
-cdk deploy enterprise-foundation
-
-# This creates:
-# - S3 buckets (raw, processed, analytics, audit)
-# - IAM roles and policies
-# - CloudTrail for audit logging
-# - SNS topic for alerts
-# - AWS Budget with $5000 monthly limit
+cp env.example .env
 ```
 
-### Step 3: Deploy Billing Alarms
+Edit `.env` with your configuration:
 
 ```bash
-# Deploy billing alarms (us-east-1 required)
-cdk deploy enterprise-billing
+# Environment
+ENV_NAME=development
+PROJECT_PREFIX=enterprise
+AWS_REGION=eu-west-2
 
-# This creates:
-# - CloudWatch alarms for budget monitoring
-# - SNS notifications for cost alerts
+# AWS Configuration
+AWS_ACCOUNT_ID=your_account_id
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+
+# Billing and Cost Management
+BILLING_EMAIL=your-email@company.com
+MONTHLY_BUDGET=5000
+
+# Security
+AUTH_USER_POOL_ID=your_user_pool_id
+AUTH_CLIENT_ID=your_client_id
+KMS_KEY_ALIAS=enterprise-production-key
+
+# Monitoring
+CLOUDWATCH_LOG_GROUP=/aws/enterprise-dq/production
 ```
 
-### Step 4: Deploy Data Quality Pipeline
+## Local Development
+
+### Using Docker Compose
+
+1. **Start LocalStack**:
+
+   ```bash
+   docker-compose up localstack -d
+   ```
+
+2. **Start Development Services**:
+
+   ```bash
+   docker-compose up app mlflow jupyter -d
+   ```
+
+3. **Access Services**:
+   - Application: http://localhost:8000
+   - MLflow: http://localhost:5000
+   - Jupyter: http://localhost:8888
+
+### Using Local Environment
+
+1. **Bootstrap CDK**:
+
+   ```bash
+   cdk bootstrap
+   ```
+
+2. **Deploy Foundation**:
+
+   ```bash
+   cdk deploy enterprise-foundation --require-approval never
+   ```
+
+3. **Run Tests**:
+
+   ```bash
+   make test
+   ```
+
+4. **Generate Test Data**:
+   ```bash
+   make generate-data
+   ```
+
+## Staging Deployment
+
+### 1. Environment Configuration
+
+Set staging environment variables:
 
 ```bash
-# Deploy data quality stack
-cdk deploy enterprise-data-quality
-
-# This creates:
-# - Glue jobs for data processing
-# - Data quality validation rules
-# - Monitoring dashboards
+export ENV_NAME=staging
+export PROJECT_PREFIX=enterprise
+export AWS_REGION=eu-west-2
 ```
 
-### Step 5: Deploy ML Inference API
+### 2. Deploy Infrastructure
 
 ```bash
-# Deploy ML inference stack
-cdk deploy enterprise-ml-inference
+# Deploy all stacks to staging
+make deploy-staging
 
-# This creates:
-# - ECR repository for Lambda container
-# - Lambda function with container image
-# - API Gateway with /predict endpoint
-# - IAM roles and policies
-# - SSM parameters for configuration
+# Or deploy individual stacks
+cdk deploy enterprise-foundation --context env_name=staging
+cdk deploy enterprise-data-quality --context env_name=staging
+cdk deploy enterprise-document-processing --context env_name=staging
+cdk deploy enterprise-ml-inference --context env_name=staging
 ```
 
-### Step 6: Build and Deploy Lambda Container
+### 3. Verify Deployment
 
 ```bash
-# Navigate to lambda application directory
-cd lambda_app
+# Check CloudFormation stacks
+aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE
 
-# Make build script executable (Linux/Mac)
-chmod +x build_and_deploy.sh
+# Check S3 buckets
+aws s3 ls | grep enterprise-staging
 
-# Run build and deploy script
-./build_and_deploy.sh
+# Check Lambda functions
+aws lambda list-functions --region eu-west-2 | grep enterprise-staging
 ```
 
-The build script will:
-
-- Create dummy models for testing (if Phase 3 models not available)
-- Build Docker container image
-- Push to ECR
-- Update Lambda function
-- Create Lambda versions for A/B testing
-- Set up alias with 90/10 routing (baseline/transformer)
-
-### Step 7: Test the API
+### 4. Run Integration Tests
 
 ```bash
-# Get the API endpoint URL
-aws ssm get-parameter --name "/enterprise/production/api-endpoint" --query Parameter.Value --output text
-
-# Test the API
-python test_api.py https://your-api-id.execute-api.eu-west-2.amazonaws.com/prod
+# Run integration tests against staging
+python -m pytest tests/integration/ -v --env=staging
 ```
 
-## API Usage
+## Production Deployment
 
-### Endpoints
+### 1. Pre-deployment Checklist
 
-- **Health Check**: `GET /health`
-- **Models Status**: `GET /models`
-- **Prediction**: `POST /predict`
+- [ ] All tests passing
+- [ ] Security scan completed
+- [ ] Performance tests passed
+- [ ] Documentation updated
+- [ ] Backup strategy in place
+- [ ] Rollback plan prepared
 
-### Request Format
+### 2. Environment Configuration
 
-```json
-{
-  "text": "Contract includes indemnification clauses.",
-  "model": "auto|baseline|transformer",
-  "explain": true,
-  "doc_id": "optional-document-id"
-}
-```
-
-### Response Format
-
-```json
-{
-  "model": "baseline",
-  "label": "HighRisk",
-  "confidence": 0.87,
-  "explanation": {
-    "type": "tokens",
-    "top_terms": ["indemnify", "liability"],
-    "html_url": null
-  },
-  "timings_ms": { "pre": 3, "infer": 40, "post": 2 }
-}
-```
-
-### Example Usage
+Set production environment variables:
 
 ```bash
-# Basic prediction
-curl -X POST "https://your-api.execute-api.eu-west-2.amazonaws.com/prod/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "text": "Standard service agreement with normal terms.",
-    "model": "baseline",
-    "explain": true
-  }'
-
-# Transformer with pre-computed explanation
-curl -X POST "https://your-api.execute-api.eu-west-2.amazonaws.com/prod/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "text": "Contract includes comprehensive indemnification.",
-    "doc_id": "contract_001",
-    "model": "transformer",
-    "explain": true
-  }'
+export ENV_NAME=production
+export PROJECT_PREFIX=enterprise
+export AWS_REGION=eu-west-2
 ```
 
-## A/B Testing Configuration
-
-### Current Setup
-
-- **Version A (Baseline)**: 90% of traffic
-- **Version B (Transformer)**: 10% of traffic
-
-### Adjusting Traffic Split
+### 3. Security Validation
 
 ```bash
-# Update traffic distribution
-aws lambda update-alias \
-  --function-name enterprise-production-ml-infer \
-  --name prod \
-  --routing-config AdditionalVersionWeights='{"2":0.5,"3":0.5}' \
-  --region eu-west-2
+# Run security scan
+make security-scan
+
+# Validate security configuration
+python -c "from security.security_config import security_manager; security_manager.validate_encryption_settings()"
 ```
 
-### Monitoring A/B Performance
+### 4. Deploy Infrastructure
 
 ```bash
-# View CloudWatch metrics
-aws cloudwatch get-metric-statistics \
-  --namespace AWS/Lambda \
-  --metric-name Duration \
-  --dimensions Name=FunctionName,Value=enterprise-production-ml-infer \
-  --start-time 2024-01-01T00:00:00Z \
-  --end-time 2024-01-02T00:00:00Z \
-  --period 3600 \
-  --statistics Average
+# Deploy to production
+make deploy-prod
+
+# Or deploy with manual approval
+cdk deploy --all --context env_name=production
 ```
 
-## Monitoring and Troubleshooting
-
-### CloudWatch Logs
+### 5. Post-deployment Verification
 
 ```bash
-# View Lambda logs
-aws logs tail /aws/lambda/enterprise-production-ml-infer --follow
+# Verify all services are running
+aws cloudwatch describe-alarms --alarm-names enterprise-production-*
 
-# View API Gateway logs
-aws logs describe-log-groups --log-group-name-prefix "API-Gateway-Execution-Logs"
+# Check application health
+curl -f https://your-api-gateway-url/health
+
+# Verify data pipeline
+aws glue get-crawlers --region eu-west-2 | grep enterprise-production
 ```
 
-### Health Checks
+### 6. Monitoring Setup
 
 ```bash
-# API health
-curl https://your-api.execute-api.eu-west-2.amazonaws.com/prod/health
+# Set up CloudWatch dashboards
+aws cloudwatch put-dashboard --dashboard-name enterprise-production --dashboard-body file://monitoring/dashboards/production.json
 
-# Models status
-curl https://your-api.execute-api.eu-west-2.amazonaws.com/prod/models
+# Configure alarms
+aws cloudwatch put-metric-alarm --cli-input-json file://monitoring/alarms/production.json
 ```
+
+## Monitoring and Observability
+
+### CloudWatch Dashboards
+
+Access your CloudWatch dashboards:
+
+1. **Data Quality Dashboard**: Monitor data quality metrics
+2. **Pipeline Performance**: Track ETL job performance
+3. **Cost Monitoring**: Monitor AWS costs
+4. **Security Dashboard**: Track security events
+
+### Log Analysis
+
+```bash
+# View application logs
+aws logs tail /aws/enterprise-dq/production --follow
+
+# View Lambda function logs
+aws logs tail /aws/lambda/enterprise-production-data-quality --follow
+
+# View Glue job logs
+aws logs tail /aws-glue/jobs/logs-v2 --follow
+```
+
+### Metrics and Alerts
+
+Key metrics to monitor:
+
+- **Data Quality Score**: Should be > 0.85
+- **Pipeline Success Rate**: Should be > 95%
+- **API Response Time**: Should be < 500ms
+- **Error Rate**: Should be < 1%
+
+## Security Configuration
+
+### 1. Encryption Setup
+
+```bash
+# Create KMS key
+aws kms create-key --description "Enterprise DQ Platform Key" --region eu-west-2
+
+# Create alias
+aws kms create-alias --alias-name enterprise-production-key --target-key-id your-key-id
+```
+
+### 2. IAM Roles and Policies
+
+```bash
+# Create service roles
+aws iam create-role --role-name enterprise-production-glue-role --assume-role-policy-document file://iam/glue-trust-policy.json
+
+# Attach policies
+aws iam attach-role-policy --role-name enterprise-production-glue-role --policy-arn arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+```
+
+### 3. Network Security
+
+```bash
+# Create VPC (if not using default)
+aws ec2 create-vpc --cidr-block 10.0.0.0/16
+
+# Create security groups
+aws ec2 create-security-group --group-name enterprise-production-sg --description "Enterprise DQ Platform Security Group"
+```
+
+### 4. Compliance Validation
+
+```bash
+# Validate GDPR compliance
+python -c "from security.security_config import compliance_manager; print(compliance_manager.validate_compliance('GDPR'))"
+
+# Validate SOX compliance
+python -c "from security.security_config import compliance_manager; print(compliance_manager.validate_compliance('SOX'))"
+```
+
+## Troubleshooting
 
 ### Common Issues
 
-1. **Model Loading Failures**
+#### 1. CDK Deployment Fails
 
-   - Check if model files exist in S3
-   - Verify Lambda has S3 read permissions
-   - Check CloudWatch logs for specific errors
+**Error**: `Stack deployment failed`
 
-2. **Timeout Errors**
-
-   - Increase Lambda timeout (max 15 minutes)
-   - Optimize model size or use smaller models
-   - Consider provisioned concurrency for production
-
-3. **Memory Errors**
-
-   - Increase Lambda memory allocation
-   - Optimize model loading
-   - Use model quantization
-
-4. **Cold Start Delays**
-   - Consider provisioned concurrency
-   - Use smaller, optimized models
-   - Implement warm-up mechanisms
-
-## Cost Optimization
-
-### Budget Guardrails
-
-- **Monthly Budget**: $5000 with 80% alert threshold
-- **Lambda Reserved Concurrency**: 2 (hard cap)
-- **Timeout**: 30 seconds (prevents runaway costs)
-- **No Persistent Endpoints**: Lambda only
-
-### Cost Monitoring
+**Solution**:
 
 ```bash
-# Check Lambda costs
-aws ce get-cost-and-usage \
-  --time-period Start=2024-01-01,End=2024-01-02 \
-  --granularity MONTHLY \
-  --metrics BlendedCost \
-  --group-by Type=DIMENSION,Key=SERVICE \
-  --filter '{"Dimensions":{"Key":"SERVICE","Values":["AWS Lambda"]}}'
+# Check CloudFormation events
+aws cloudformation describe-stack-events --stack-name enterprise-foundation
+
+# Check IAM permissions
+aws sts get-caller-identity
+
+# Retry deployment
+cdk deploy --all --require-approval never
 ```
 
-### Optimization Tips
+#### 2. Lambda Function Errors
 
-- Use Lambda container images for consistent deployments
-- Implement proper error handling to avoid retries
-- Monitor and adjust reserved concurrency based on usage
-- Use CloudWatch alarms for cost monitoring
+**Error**: `Function execution failed`
 
-## Security
-
-### IAM Permissions
-
-- Lambda has read-only access to S3 analytics bucket
-- API Gateway logs to CloudWatch
-- No public access to S3 (pre-signed URLs only)
-
-### Data Protection
-
-- Text content not logged (only hashes/IDs)
-- KMS encryption on S3 buckets
-- HTTPS-only API access
-- VPC isolation (if required)
-
-### Compliance
-
-- CloudTrail for audit logging
-- S3 versioning for data retention
-- Encrypted storage and transmission
-- Access logging enabled
-
-## Scaling and Performance
-
-### Performance Targets
-
-- **Latency**: p95 < 5 seconds
-- **Error Rate**: < 1%
-- **Throughput**: Configurable based on concurrency limits
-- **Cost per Request**: < $0.001
-
-### Scaling Considerations
-
-- **Lambda Concurrency**: Adjust based on expected load
-- **API Gateway**: Automatic scaling
-- **S3**: No scaling limits for read operations
-- **CloudWatch**: Automatic scaling for logs
-
-### Production Recommendations
-
-- Use provisioned concurrency for consistent performance
-- Implement proper monitoring and alerting
-- Set up automated backups and disaster recovery
-- Consider multi-region deployment for global users
-
-## Maintenance
-
-### Regular Tasks
-
-- Monitor CloudWatch metrics and logs
-- Review and update IAM permissions
-- Check for security updates
-- Monitor costs and optimize usage
-- Update models and retrain as needed
-
-### Backup and Recovery
-
-- S3 buckets have versioning enabled
-- CloudFormation templates for infrastructure
-- Lambda function versions for rollback
-- SSM parameters for configuration
-
-### Updates and Upgrades
-
-- Update dependencies regularly
-- Test new model versions before deployment
-- Use blue-green deployment for zero-downtime updates
-- Maintain backward compatibility
-
-## Support and Troubleshooting
-
-### Getting Help
-
-- Check CloudWatch logs for detailed error messages
-- Review API Gateway access logs
-- Monitor Lambda function metrics
-- Use AWS X-Ray for distributed tracing
-
-### Common Commands
+**Solution**:
 
 ```bash
-# List all stacks
-cdk list
+# Check Lambda logs
+aws logs tail /aws/lambda/enterprise-production-data-quality --follow
 
-# View stack details
-cdk diff enterprise-ml-inference
-
-# Destroy specific stack
-cdk destroy enterprise-ml-inference
-
-# Update Lambda function code
-aws lambda update-function-code --function-name enterprise-production-ml-infer --image-uri <new-image-uri>
-
-# View Lambda function configuration
-aws lambda get-function --function-name enterprise-production-ml-infer
+# Check function configuration
+aws lambda get-function --function-name enterprise-production-data-quality
 ```
 
-### Emergency Procedures
+#### 3. S3 Access Denied
 
-- **Service Outage**: Check CloudWatch alarms and logs
-- **Cost Spike**: Review Lambda metrics and S3 access
-- **Security Incident**: Review CloudTrail logs
-- **Data Loss**: Check S3 versioning and backups
+**Error**: `Access Denied to S3 bucket`
+
+**Solution**:
+
+```bash
+# Check bucket policy
+aws s3api get-bucket-policy --bucket enterprise-raw-production-account-region
+
+# Check IAM permissions
+aws iam get-role-policy --role-name enterprise-production-glue-role --policy-name S3Access
+```
+
+#### 4. Glue Job Failures
+
+**Error**: `Glue job execution failed`
+
+**Solution**:
+
+```bash
+# Check job logs
+aws logs tail /aws-glue/jobs/logs-v2 --follow
+
+# Check job configuration
+aws glue get-job --job-name enterprise-production-contracts-etl
+```
+
+### Performance Optimization
+
+#### 1. Lambda Cold Starts
+
+**Solution**:
+
+- Use provisioned concurrency
+- Optimize function size
+- Use Lambda layers for dependencies
+
+#### 2. Glue Job Performance
+
+**Solution**:
+
+- Increase worker type
+- Optimize Spark configuration
+- Use data partitioning
+
+#### 3. S3 Performance
+
+**Solution**:
+
+- Use S3 Transfer Acceleration
+- Implement parallel processing
+- Use appropriate storage classes
+
+### Support and Maintenance
+
+#### 1. Regular Maintenance
+
+```bash
+# Weekly health checks
+make health-check
+
+# Monthly cost review
+aws ce get-cost-and-usage --time-period Start=2024-01-01,End=2024-01-31 --granularity MONTHLY --metrics BlendedCost
+
+# Quarterly security audit
+make security-audit
+```
+
+#### 2. Backup and Recovery
+
+```bash
+# Create backup
+aws s3 sync s3://enterprise-raw-production-account-region s3://enterprise-backup-production-account-region
+
+# Test recovery
+aws s3 sync s3://enterprise-backup-production-account-region s3://enterprise-test-recovery-account-region
+```
+
+#### 3. Scaling
+
+```bash
+# Scale Lambda functions
+aws lambda update-function-configuration --function-name enterprise-production-data-quality --timeout 900
+
+# Scale Glue jobs
+aws glue update-job --job-name enterprise-production-contracts-etl --job-update WorkerType=G.1X,NumberOfWorkers=10
+```
 
 ## Conclusion
 
-This deployment guide covers the complete setup of the Enterprise Data Quality Platform. The system is designed to be:
+This deployment guide provides a comprehensive approach to deploying the Enterprise Data Quality & Compliance Platform. Follow the steps carefully and ensure all prerequisites are met before proceeding with deployment.
 
-- **Cost-effective**: Pay-per-use with budget controls
-- **Scalable**: Automatic scaling with Lambda and API Gateway
-- **Secure**: IAM controls, encryption, and audit logging
-- **Maintainable**: Infrastructure as code with CDK
-- **Observable**: Comprehensive monitoring and logging
+For additional support:
 
-For additional support or questions, refer to the AWS documentation or contact the platform team.
+- **Documentation**: [docs/](docs/)
+- **Issues**: [GitHub Issues](https://github.com/your-org/enterprise-data-quality-platform/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/your-org/enterprise-data-quality-platform/discussions)
+- **Enterprise Support**: enterprise-support@company.com

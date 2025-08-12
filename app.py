@@ -1,11 +1,11 @@
 import os
 import aws_cdk as cdk
 
-from stacks.foundation_stack import FoundationStack
-from stacks.billing_alarm_stack import BillingAlarmStack
-from stacks.data_quality_stack import DataQualityStack
-from stacks.ml_inference_stack import MLInferenceStack
-from stacks.document_processing_stack import DocumentProcessingStack
+from infrastructure.foundation_stack import FoundationStack
+from infrastructure.billing_alarm_stack import BillingAlarmStack
+from infrastructure.data_quality_stack import DataQualityStack
+from infrastructure.ml_inference_stack import MLInferenceStack
+from infrastructure.document_processing_stack import DocumentProcessingStack
 
 app = cdk.App()
 

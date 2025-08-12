@@ -1,219 +1,352 @@
-# Project Structure
+# Enterprise Data Quality & Compliance Platform - Project Structure
 
-## Overview
+This document describes the clean and organized project structure for the Enterprise Data Quality & Compliance Platform.
 
-The Enterprise Data Quality Platform follows a modular, production-ready architecture with clear separation of concerns and enterprise-grade organization.
-
-## Directory Structure
+## 📁 Root Directory Structure
 
 ```
 enterprise-data-quality-platform/
-├── 📁 docs/                          # Documentation
-│   ├── architecture.md               # Architecture overview
-│   └── project-structure.md          # This file
-├── 📁 src/                           # Source code
-│   ├── 📁 data_quality/              # Data quality framework
-│   │   ├── __init__.py
-│   │   ├── data_validation_suite.py  # Great Expectations validation
-│   │   ├── generate_synthetic_data.py # Test data generation
-│   │   ├── quality_assessment.py     # Quality scoring and monitoring
-│   │   └── utils.py                  # Validation utilities
-│   ├── 📁 etl_pipelines/             # ETL processing
-│   │   ├── __init__.py
-│   │   └── contracts_etl_job.py      # Glue ETL job for contracts
-│   ├── 📁 machine_learning/          # ML capabilities
-│   │   ├── __init__.py
-│   │   ├── baseline_tf_idf.py        # Baseline ML model
-│   │   ├── eval_report.py            # Model evaluation
-│   │   ├── mlflow_utils.py           # MLflow integration
-│   │   ├── transformer_train.py      # Transformer model training
-│   │   └── 📁 explain/               # Model explainability
-│   │       ├── global_words.py       # Global feature importance
-│   │       └── lime_explain.py       # LIME explanations
-│   └── 📁 data/                      # Data preparation
-│       └── prepare_text_corpus.py    # Text corpus preparation
-├── 📁 stacks/                        # AWS CDK infrastructure
-│   ├── foundation_stack.py           # Core infrastructure
-│   ├── data_quality_stack.py         # Data quality components
-│   ├── billing_alarm_stack.py        # Cost monitoring
-│   └── ml_inference_stack.py         # ML inference API
-├── 📁 tests/                         # Test suite
-├── 📁 lambda_app/                    # Lambda application
-│   ├── app/                          # Lambda function code
-│   ├── Dockerfile                    # Container definition
-│   ├── requirements.txt              # Lambda dependencies
-│   ├── build_and_deploy.sh           # Deployment script
-│   └── test_api.py                   # API testing
-├── 📁 assets/                        # Static assets
-│   ├── sample_contract_register.csv  # Sample data
-│   └── image_showcase.png            # Documentation images
-├── 📁 data/                          # Data directories
-│   ├── raw/                          # Raw data storage
-│   ├── processed/                    # Processed data storage
-│   └── text_corpus/                  # ML training data
-├── 📁 analytics/                     # Analytics outputs
-│   └── models/                       # Trained models
-├── 📁 mlruns/                        # MLflow experiment tracking
-├── 📁 cdk.out/                       # CDK build outputs
-├── 📄 README.md                      # Main documentation
-├── 📄 CONTRIBUTING.md                # Contribution guidelines
-├── 📄 LICENSE                        # MIT License
-├── 📄 requirements.txt               # Python dependencies
-├── 📄 env.example                    # Environment variables template
-├── 📄 cdk.json                       # CDK configuration
-├── 📄 app.py                         # CDK application entry point
-└── 📄 .gitignore                     # Git ignore rules
+├── 📄 README.md                    # Main project documentation
+├── 📄 LICENSE                      # Project license
+├── 📄 CONTRIBUTING.md              # Contributing guidelines
+├── 📄 requirements.txt             # Python dependencies
+├── 📄 app.py                       # CDK application entry point
+├── 📄 cdk.json                     # CDK configuration
+├── 📄 Dockerfile                   # Multi-stage Docker build
+├── 📄 docker-compose.yml           # Local development environment
+├── 📄 Makefile                     # Development and deployment commands
+├── 📄 .gitignore                   # Git ignore rules
+│
+├── 📁 src/                         # Source code
+│   ├── 📁 data_quality/           # Data quality modules
+│   ├── 📁 etl_pipelines/          # ETL pipeline modules
+│   ├── 📁 ml/                     # Machine learning modules
+│   ├── 📁 ocr/                    # OCR and document processing
+│   ├── 📁 data/                   # Data processing utilities
+│   └── 📁 utils/                  # Utility modules
+│
+├── 📁 infrastructure/              # Infrastructure and configuration
+│   ├── 📁 stacks/                 # CDK infrastructure stacks
+│   ├── 📁 config/                 # Configuration files
+│   └── 📁 security/               # Security configuration
+│
+├── 📁 tests/                       # Test suite
+│   ├── 📁 unit/                   # Unit tests
+│   ├── 📁 integration/            # Integration tests
+│   └── 📁 e2e/                    # End-to-end tests
+│
+├── 📁 docs/                        # Documentation
+│   ├── 📄 README.md               # Main documentation
+│   ├── 📄 deployment.md           # Deployment guide
+│   ├── 📄 architecture.md         # Architecture documentation
+│   ├── 📄 project-structure.md    # This file
+│   └── 📄 cleanup-summary.md      # Cleanup summary
+│
+├── 📁 scripts/                     # Utility scripts
+│   ├── 📄 setup.sh                # Setup scripts
+│   ├── 📄 deploy.sh               # Deployment scripts
+│   └── 📄 maintenance.sh          # Maintenance scripts
+│
+├── 📁 monitoring/                  # Monitoring and observability
+│   ├── 📁 dashboards/             # CloudWatch dashboards
+│   ├── 📁 alarms/                 # CloudWatch alarms
+│   ├── 📁 grafana/                # Grafana configuration
+│   └── 📁 prometheus/             # Prometheus configuration
+│
+├── 📁 .github/                     # GitHub configuration
+│   └── 📁 workflows/              # CI/CD workflows
+│
+├── 📁 assets/                      # Static assets
+│   ├── 📁 images/                 # Images and diagrams
+│   ├── 📁 templates/              # Template files
+│   └── 📁 samples/                # Sample data files
+│
+├── 📁 analytics/                   # Analytics outputs
+│   ├── 📁 reports/                # Generated reports
+│   ├── 📁 metrics/                # Performance metrics
+│   └── 📁 visualizations/         # Data visualizations
+│
+├── 📁 lambda_app/                  # Lambda function code
+│   ├── 📁 handlers/               # Lambda handlers
+│   └── 📁 layers/                 # Lambda layers
+│
+└── 📁 .venv/                       # Virtual environment (gitignored)
 ```
 
-## Key Components
+## 📁 Source Code Structure (`src/`)
 
-### Infrastructure (CDK Stacks)
-
-#### Foundation Stack (`stacks/foundation_stack.py`)
-
-- **S3 Buckets**: Raw, processed, analytics data lakes
-- **IAM Roles**: Admin, Data Engineer, Reviewer groups
-- **CloudTrail**: Audit logging and compliance
-- **Glue Database**: Data catalog foundation
-
-#### Data Quality Stack (`stacks/data_quality_stack.py`)
-
-- **Glue Crawlers**: Automatic schema discovery
-- **ETL Jobs**: Data transformation pipelines
-- **IAM Roles**: Glue service permissions
-- **Quality Framework**: Great Expectations integration
-
-#### Billing Alarm Stack (`stacks/billing_alarm_stack.py`)
-
-- **Budget Alerts**: Cost monitoring and notifications
-- **SNS Topics**: Alert distribution
-- **CloudWatch**: Billing metrics and alarms
-
-#### ML Inference Stack (`stacks/ml_inference_stack.py`)
-
-- **Lambda Functions**: Model serving
-- **API Gateway**: RESTful API endpoints
-- **ECR Repository**: Container image storage
-- **SSM Parameters**: Configuration management
-
-### Data Quality Framework (`src/data_quality/`)
-
-#### Core Components
-
-- **Validation Suite**: Great Expectations validation rules
-- **Quality Assessment**: Automated quality scoring
-- **Synthetic Data**: Test data generation
-- **Utilities**: Validation helper functions
-
-#### Features
-
-- Automated data validation
-- Quality score calculation
-- Compliance monitoring
-- Audit trail generation
+### Data Quality Modules (`src/data_quality/`)
+```
+src/data_quality/
+├── 📄 __init__.py
+├── 📄 quality_assessment.py       # Data quality assessment logic
+├── 📄 quality_metrics.py          # Quality metrics calculation
+├── 📄 quality_rules.py            # Data quality rules
+├── 📄 quality_reports.py          # Quality report generation
+└── 📄 generate_synthetic_data.py  # Test data generation
+```
 
 ### ETL Pipelines (`src/etl_pipelines/`)
+```
+src/etl_pipelines/
+├── 📄 __init__.py
+├── 📄 contracts_etl_job.py        # Contracts ETL processing
+├── 📄 data_cleaning.py            # Data cleaning utilities
+├── 📄 data_transformation.py      # Data transformation logic
+└── 📄 pipeline_monitoring.py      # Pipeline monitoring
+```
 
-#### Processing Jobs
+### Machine Learning (`src/ml/`)
+```
+src/ml/
+├── 📄 __init__.py
+├── 📁 pipeline/                   # ML pipeline components
+│   ├── 📄 legal_ml_pipeline.py    # Legal document ML pipeline
+│   └── 📄 model_training.py       # Model training utilities
+├── 📁 models/                     # Model implementations
+│   ├── 📄 baseline_tf_idf.py      # Baseline TF-IDF model
+│   ├── 📄 transformer_train.py    # Transformer model training
+│   └── 📄 model_evaluation.py     # Model evaluation
+├── 📁 explain/                    # Model explainability
+│   ├── 📄 lime_explain.py         # LIME explanations
+│   └── 📄 global_words.py         # Global word importance
+└── 📁 utils/                      # ML utilities
+    ├── 📄 mlflow_tracker.py       # MLflow integration
+    └── 📄 model_utils.py          # Model utilities
+```
 
-- **Contracts ETL**: Contract data transformation
-- **Data Cleaning**: Standardization and validation
-- **Schema Evolution**: Automatic schema updates
-- **Quality Gates**: Validation checkpoints
+### OCR and Document Processing (`src/ocr/`)
+```
+src/ocr/
+├── 📄 __init__.py
+├── 📄 common.py                   # Common OCR utilities
+├── 📄 lambda_ingest_router.py     # Document ingestion router
+└── 📄 lambda_textract_consumer.py # Textract processing
+```
 
-### Machine Learning (`src/machine_learning/`)
+### Data Processing (`src/data/`)
+```
+src/data/
+├── 📄 __init__.py
+├── 📁 generators/                 # Data generators
+│   ├── 📄 legal_text_generator.py # Legal text generation
+│   └── 📄 synthetic_data.py       # Synthetic data generation
+├── 📄 prepare_text_corpus.py      # Text corpus preparation
+└── 📄 data_utils.py               # Data utilities
+```
 
-#### Model Development
+### Utilities (`src/utils/`)
+```
+src/utils/
+├── 📄 __init__.py
+└── 📄 logging_config.py           # Logging configuration
+```
 
-- **Baseline Models**: TF-IDF based classifiers
-- **Transformer Models**: Advanced NLP models
-- **Model Evaluation**: Performance assessment
-- **Explainability**: Model interpretation tools
+## 📁 Infrastructure Structure (`infrastructure/`)
 
-#### ML Operations
+### CDK Stacks (`infrastructure/stacks/`)
+```
+infrastructure/stacks/
+├── 📄 foundation_stack.py         # Foundation infrastructure
+├── 📄 data_quality_stack.py       # Data quality platform
+├── 📄 document_processing_stack.py # Document processing
+├── 📄 ml_inference_stack.py       # ML inference
+└── 📄 billing_alarm_stack.py      # Billing and cost management
+```
 
-- **MLflow Integration**: Experiment tracking
-- **Model Registry**: Version control
-- **A/B Testing**: Model comparison
-- **Monitoring**: Performance tracking
+### Configuration (`infrastructure/config/`)
+```
+infrastructure/config/
+├── 📄 production.py               # Production configuration
+├── 📄 staging.py                  # Staging configuration
+└── 📄 development.py              # Development configuration
+```
 
-### Lambda Application (`lambda_app/`)
+### Security (`infrastructure/security/`)
+```
+infrastructure/security/
+├── 📄 security_config.py          # Security configuration
+├── 📄 iam_policies.py             # IAM policies
+└── 📄 compliance_frameworks.py    # Compliance frameworks
+```
 
-#### API Services
+## 📁 Test Structure (`tests/`)
 
-- **Model Serving**: Real-time inference
-- **Explanation API**: Model interpretability
-- **Health Checks**: Service monitoring
-- **Error Handling**: Robust error management
+```
+tests/
+├── 📄 __init__.py
+├── 📄 conftest.py                 # Pytest configuration
+├── 📁 unit/                       # Unit tests
+│   ├── 📁 data_quality/           # Data quality unit tests
+│   ├── 📁 ml/                     # ML unit tests
+│   └── 📁 utils/                  # Utility unit tests
+├── 📁 integration/                # Integration tests
+│   ├── 📁 aws/                    # AWS integration tests
+│   └── 📁 api/                    # API integration tests
+└── 📁 e2e/                        # End-to-end tests
+    ├── 📁 deployment/             # Deployment tests
+    └── 📁 workflows/              # Workflow tests
+```
 
-## Configuration Management
+## 📁 Documentation Structure (`docs/`)
 
-### Environment Variables (`env.example`)
+```
+docs/
+├── 📄 README.md                   # Main documentation
+├── 📄 deployment.md               # Deployment guide
+├── 📄 architecture.md             # Architecture documentation
+├── 📄 project-structure.md        # This file
+├── 📄 cleanup-summary.md          # Cleanup summary
+├── 📄 api.md                      # API documentation
+├── 📄 troubleshooting.md          # Troubleshooting guide
+└── 📄 contributing.md             # Contributing guidelines
+```
 
-- **AWS Configuration**: Region, profile settings
-- **Project Settings**: Prefix, environment names
-- **Data Lake**: Bucket configurations
-- **Quality Settings**: Thresholds and parameters
-- **ML Configuration**: Model and training settings
-- **Security**: Encryption and access controls
+## 📁 Monitoring Structure (`monitoring/`)
 
-### CDK Configuration (`cdk.json`)
+```
+monitoring/
+├── 📁 dashboards/                 # CloudWatch dashboards
+│   ├── 📄 production.json         # Production dashboard
+│   ├── 📄 staging.json            # Staging dashboard
+│   └── 📄 development.json        # Development dashboard
+├── 📁 alarms/                     # CloudWatch alarms
+│   ├── 📄 production.json         # Production alarms
+│   ├── 📄 staging.json            # Staging alarms
+│   └── 📄 development.json        # Development alarms
+├── 📁 grafana/                    # Grafana configuration
+│   ├── 📁 dashboards/             # Grafana dashboards
+│   └── 📁 datasources/            # Grafana data sources
+└── 📁 prometheus/                 # Prometheus configuration
+    ├── 📄 prometheus.yml          # Prometheus config
+    └── 📄 rules/                  # Prometheus rules
+```
 
-- **Project Context**: Environment-specific settings
-- **Resource Naming**: Consistent naming conventions
-- **Budget Controls**: Cost management settings
-- **Environment Support**: Multi-environment deployment
+## 📁 Scripts Structure (`scripts/`)
 
-## Development Workflow
+```
+scripts/
+├── 📄 setup.sh                    # Environment setup
+├── 📄 deploy.sh                   # Deployment scripts
+├── 📄 maintenance.sh              # Maintenance scripts
+├── 📄 backup.sh                   # Backup scripts
+├── 📄 monitoring.sh               # Monitoring scripts
+└── 📄 security.sh                 # Security scripts
+```
 
-### Local Development
+## 📁 Assets Structure (`assets/`)
 
-1. **Environment Setup**: Virtual environment and dependencies
-2. **Configuration**: Environment variables and AWS setup
-3. **Testing**: Unit, integration, and e2e tests
-4. **Code Quality**: Linting, formatting, and type checking
+```
+assets/
+├── 📁 images/                     # Images and diagrams
+│   ├── 📄 architecture.png        # Architecture diagram
+│   ├── 📄 data-flow.png           # Data flow diagram
+│   └── 📄 deployment.png          # Deployment diagram
+├── 📁 templates/                  # Template files
+│   ├── 📄 email_templates/        # Email templates
+│   └── 📄 report_templates/       # Report templates
+└── 📁 samples/                    # Sample data files
+    ├── 📄 contracts/              # Sample contracts
+    └── 📄 reports/                # Sample reports
+```
 
-### Deployment Pipeline
+## 📁 Analytics Structure (`analytics/`)
 
-1. **Infrastructure**: CDK deployment to target environment
-2. **Data Pipeline**: ETL job execution and validation
-3. **Quality Assessment**: Automated quality checks
-4. **Monitoring**: Performance and cost monitoring
+```
+analytics/
+├── 📁 reports/                    # Generated reports
+│   ├── 📁 quality/                # Quality reports
+│   ├── 📁 performance/            # Performance reports
+│   └── 📁 compliance/             # Compliance reports
+├── 📁 metrics/                    # Performance metrics
+│   ├── 📄 data_quality.json       # Data quality metrics
+│   ├── 📄 model_performance.json  # Model performance metrics
+│   └── 📄 system_metrics.json     # System metrics
+└── 📁 visualizations/             # Data visualizations
+    ├── 📄 charts/                 # Charts and graphs
+    └── 📄 dashboards/             # Interactive dashboards
+```
 
-### Quality Assurance
+## 📁 Lambda App Structure (`lambda_app/`)
 
-- **Code Review**: Pull request process
-- **Testing**: Automated test suites
-- **Documentation**: Comprehensive documentation
-- **Security**: Security scanning and compliance
+```
+lambda_app/
+├── 📁 handlers/                   # Lambda handlers
+│   ├── 📄 data_quality_handler.py # Data quality Lambda
+│   ├── 📄 ml_inference_handler.py # ML inference Lambda
+│   └── 📄 document_handler.py     # Document processing Lambda
+├── 📁 layers/                     # Lambda layers
+│   ├── 📁 dependencies/           # Dependency layers
+│   └── 📁 custom/                 # Custom layers
+└── 📄 requirements.txt            # Lambda dependencies
+```
 
-## Best Practices
+## 🔧 Key Configuration Files
 
-### Code Organization
+### Root Level
+- **`app.py`**: CDK application entry point
+- **`cdk.json`**: CDK configuration
+- **`requirements.txt`**: Python dependencies
+- **`Dockerfile`**: Container configuration
+- **`docker-compose.yml`**: Local development
+- **`Makefile`**: Development commands
+- **`.gitignore`**: Git ignore rules
 
-- **Modular Design**: Clear separation of concerns
-- **Type Hints**: Comprehensive type annotations
-- **Documentation**: Docstrings and comments
-- **Error Handling**: Robust error management
+### Infrastructure
+- **`infrastructure/config/production.py`**: Production settings
+- **`infrastructure/security/security_config.py`**: Security settings
+- **`infrastructure/stacks/*.py`**: CDK infrastructure stacks
 
-### Security
+### CI/CD
+- **`.github/workflows/ci.yml`**: GitHub Actions workflow
+- **`scripts/deploy.sh`**: Deployment scripts
+- **`scripts/setup.sh`**: Environment setup
 
-- **Least Privilege**: Minimal required permissions
-- **Encryption**: Data encryption at rest and in transit
-- **Audit Logging**: Comprehensive audit trails
-- **Access Control**: Role-based access management
+## 🎯 Benefits of This Structure
 
-### Performance
+### 1. **Clear Separation of Concerns**
+- Source code, infrastructure, and documentation are clearly separated
+- Each module has a specific responsibility
+- Easy to locate and maintain code
 
-- **Optimization**: Efficient data processing
-- **Monitoring**: Real-time performance tracking
-- **Scaling**: Auto-scaling capabilities
-- **Cost Management**: Resource optimization
+### 2. **Scalability**
+- Modular structure supports team growth
+- Easy to add new features and modules
+- Clear boundaries between components
 
-### Compliance
+### 3. **Maintainability**
+- Consistent naming conventions
+- Logical grouping of related files
+- Easy to understand and navigate
 
-- **Data Governance**: Data lineage and tracking
-- **Quality Assurance**: Automated quality validation
-- **Audit Trails**: Complete audit logging
-- **Regulatory Compliance**: GDPR, SOX, HIPAA support
+### 4. **Deployment Ready**
+- Infrastructure as code with CDK
+- Environment-specific configurations
+- Automated deployment pipelines
+
+### 5. **Testing Support**
+- Dedicated test structure
+- Unit, integration, and e2e tests
+- Comprehensive test coverage
+
+### 6. **Documentation**
+- Comprehensive documentation structure
+- Architecture and deployment guides
+- API and troubleshooting documentation
+
+### 7. **Monitoring and Observability**
+- Dedicated monitoring structure
+- CloudWatch and Grafana integration
+- Comprehensive alerting
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+2. **Review the structure**: Understand the organization
+3. **Set up environment**: Follow the setup guide
+4. **Deploy infrastructure**: Use the deployment scripts
+5. **Run tests**: Verify everything works
+6. **Start development**: Begin adding features
+
+This structure provides a solid foundation for enterprise-scale development while maintaining clarity and organization.
 
