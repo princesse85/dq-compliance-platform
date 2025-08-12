@@ -3,10 +3,8 @@ import boto3
 from urllib.parse import unquote_plus
 from xml.etree import ElementTree as ET
 from common import PROCESSED_BUCKET, write_s3_text, write_s3_json
-from src.utils.logging_config import get_logger
 
-logger = get_logger(__name__)
-
+# Configure logging
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
@@ -16,25 +14,34 @@ s3 = boto3.client('s3')
 
 def _extract_docx_text(file_bytes: bytes) -> str:
     """Extract text content from DOCX file using XML parsing."""
-    with zipfile.ZipFile(io.BytesIO(file_bytes)) as docx_zip:
-        xml_content = docx_zip.read('word/document.xml')
-    
-    root = ET.fromstring(xml_content)
-    namespace = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
-    
-    paragraphs = []
-    for paragraph in root.findall('.//w:p', namespace):
-        text_runs = [run.text for run in paragraph.findall('.//w:t', namespace) if run.text]
-        if text_runs:
-            paragraphs.append(''.join(text_runs))
-    
-    return '\n'.join(paragraphs)
+    try:
+        with zipfile.ZipFile(io.BytesIO(file_bytes)) as docx_zip:
+            xml_content = docx_zip.read('word/document.xml')
+        
+        root = ET.fromstring(xml_content)
+        namespace = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+        
+        paragraphs = []
+        for paragraph in root.findall('.//w:p', namespace):
+            text_runs = [run.text for run in paragraph.findall('.//w:t', namespace) if run.text]
+            if text_runs:
+                paragraphs.append(''.join(text_runs))
+        
+        return '\n'.join(paragraphs)
+    except Exception as e:
+        log.error(f"Failed to extract text from DOCX: {str(e)}")
+        raise
 
 def _parse_document_path(s3_key: str) -> tuple[str, str]:
     """Parse S3 key to extract ingest date and document ID."""
-    ingest_date = s3_key.split('ingest_date=')[-1].split('/')[0] if 'ingest_date=' in s3_key else '2025-08-12'
-    doc_id = s3_key.split('/')[-1].rsplit('.', 1)[0]
-    return ingest_date, doc_id
+    try:
+        ingest_date = s3_key.split('ingest_date=')[-1].split('/')[0] if 'ingest_date=' in s3_key else '2025-08-12'
+        doc_id = s3_key.split('/')[-1].rsplit('.', 1)[0]
+        return ingest_date, doc_id
+    except Exception as e:
+        log.error(f"Failed to parse document path {s3_key}: {str(e)}")
+        # Return default values
+        return '2025-08-12', 'unknown'
 
 def _process_pdf_document(bucket: str, key: str, topic_arn: str, publish_role: str) -> None:
     """Start Textract analysis for PDF documents."""
@@ -88,31 +95,51 @@ def _process_docx_document(bucket: str, key: str, ingest_date: str, doc_id: str)
 
 def handler(event, context):
     """Main handler for document processing router."""
-    topic_arn = os.environ['SNS_TOPIC_ARN']
-    publish_role = os.environ['TEXTRACT_PUBLISH_ROLE_ARN']
-
-    for record in event.get('Records', []):
-        bucket = record['s3']['bucket']['name']
-        s3_key = unquote_plus(record['s3']['object']['key'])
+    try:
+        topic_arn = os.environ.get('SNS_TOPIC_ARN')
+        publish_role = os.environ.get('TEXTRACT_PUBLISH_ROLE_ARN')
         
-        # Only process documents in the docs/ prefix
-        if not s3_key.lower().startswith('docs/'):
-            continue
+        if not topic_arn or not publish_role:
+            log.error("Missing required environment variables: SNS_TOPIC_ARN or TEXTRACT_PUBLISH_ROLE_ARN")
+            return {"statusCode": 500, "body": "Configuration error"}
 
-        # Parse document metadata
-        ingest_date, doc_id = _parse_document_path(s3_key)
-        file_extension = s3_key.lower().rsplit('.', 1)[-1]
-        
-        try:
-            if file_extension == 'pdf':
-                _process_pdf_document(bucket, s3_key, topic_arn, publish_role)
-            elif file_extension == 'docx':
-                _process_docx_document(bucket, s3_key, ingest_date, doc_id)
-            else:
-                log.warning(f"Unsupported file type: {file_extension} for document {s3_key}")
+        processed_count = 0
+        error_count = 0
+
+        for record in event.get('Records', []):
+            try:
+                bucket = record['s3']['bucket']['name']
+                s3_key = unquote_plus(record['s3']['object']['key'])
                 
-        except Exception as e:
-            log.error(f"Failed to process document {s3_key}: {str(e)}")
-            # Continue processing other documents
+                # Only process documents in the docs/ prefix
+                if not s3_key.lower().startswith('docs/'):
+                    log.info(f"Skipping non-document file: {s3_key}")
+                    continue
 
-    return {"statusCode": 200, "body": "Document processing completed"}
+                # Parse document metadata
+                ingest_date, doc_id = _parse_document_path(s3_key)
+                file_extension = s3_key.lower().rsplit('.', 1)[-1]
+                
+                if file_extension == 'pdf':
+                    _process_pdf_document(bucket, s3_key, topic_arn, publish_role)
+                    processed_count += 1
+                elif file_extension == 'docx':
+                    _process_docx_document(bucket, s3_key, ingest_date, doc_id)
+                    processed_count += 1
+                else:
+                    log.warning(f"Unsupported file type: {file_extension} for document {s3_key}")
+                    
+            except Exception as e:
+                log.error(f"Failed to process document {s3_key}: {str(e)}")
+                error_count += 1
+                # Continue processing other documents
+
+        log.info(f"Document processing completed. Processed: {processed_count}, Errors: {error_count}")
+        return {
+            "statusCode": 200, 
+            "body": f"Document processing completed. Processed: {processed_count}, Errors: {error_count}"
+        }
+
+    except Exception as e:
+        log.error(f"Handler failed: {str(e)}")
+        return {"statusCode": 500, "body": f"Internal error: {str(e)}"}

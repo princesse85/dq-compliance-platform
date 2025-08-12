@@ -87,9 +87,6 @@ def get_logger(name: str = None) -> logging.Logger:
     if name is None:
         # Get the calling module's name
         import inspect
-from src.utils.logging_config import get_logger
-
-logger = get_logger(__name__)
         frame = inspect.currentframe().f_back
         name = frame.f_globals.get('__name__', 'enterprise_dq')
     
@@ -99,89 +96,27 @@ logger = get_logger(__name__)
 # Environment-specific logging setup
 def setup_environment_logging() -> logging.Logger:
     """
-    Set up logging based on the current environment.
+    Set up logging based on environment variables.
     
     Returns:
-        Configured logger for the current environment
+        Configured logger instance
     """
-    env = os.getenv("ENV_NAME", "development").lower()
+    env = os.getenv('ENV_NAME', 'development')
+    log_level = os.getenv('LOG_LEVEL', 'INFO')
     
-    if env == "production":
-        # Production: INFO level, file logging
-        log_file = "/var/log/enterprise_dq/app.log"
-        level = "INFO"
-    elif env == "staging":
-        # Staging: DEBUG level, file logging
-        log_file = "logs/staging.log"
-        level = "DEBUG"
+    if env == 'production':
+        log_file = '/var/log/enterprise_dq/app.log'
+        return setup_logging(
+            name='enterprise_dq',
+            level=log_level,
+            log_file=log_file
+        )
     else:
-        # Development: DEBUG level, console only
-        log_file = None
-        level = "DEBUG"
-    
-    return setup_logging(
-        name="enterprise_dq",
-        level=level,
-        log_file=log_file
-    )
-
-
-# Structured logging helpers
-class StructuredLogger:
-    """Helper class for structured logging with context."""
-    
-    def __init__(self, logger: logging.Logger):
-        self.logger = logger
-    
-    def log_operation_start(self, operation: str, **kwargs):
-        """Log the start of an operation."""
-        self.logger.info(f"Starting operation: {operation}", extra={
-            'operation': operation,
-            'status': 'started',
-            'timestamp': datetime.utcnow().isoformat(),
-            **kwargs
-        })
-    
-    def log_operation_success(self, operation: str, **kwargs):
-        """Log successful completion of an operation."""
-        self.logger.info(f"Operation completed successfully: {operation}", extra={
-            'operation': operation,
-            'status': 'completed',
-            'timestamp': datetime.utcnow().isoformat(),
-            **kwargs
-        })
-    
-    def log_operation_error(self, operation: str, error: Exception, **kwargs):
-        """Log an operation error."""
-        self.logger.error(f"Operation failed: {operation} - {str(error)}", extra={
-            'operation': operation,
-            'status': 'failed',
-            'error': str(error),
-            'error_type': type(error).__name__,
-            'timestamp': datetime.utcnow().isoformat(),
-            **kwargs
-        })
-    
-    def log_data_quality_metric(self, metric_name: str, value: float, **kwargs):
-        """Log a data quality metric."""
-        self.logger.info(f"Data quality metric: {metric_name} = {value}", extra={
-            'metric_name': metric_name,
-            'metric_value': value,
-            'timestamp': datetime.utcnow().isoformat(),
-            **kwargs
-        })
-    
-    def log_model_performance(self, model_name: str, metric: str, value: float, **kwargs):
-        """Log model performance metrics."""
-        self.logger.info(f"Model performance: {model_name} - {metric} = {value}", extra={
-            'model_name': model_name,
-            'metric': metric,
-            'value': value,
-            'timestamp': datetime.utcnow().isoformat(),
-            **kwargs
-        })
+        return setup_logging(
+            name='enterprise_dq',
+            level=log_level
+        )
 
 
 # Initialize default logger
-default_logger = setup_environment_logging()
-structured_logger = StructuredLogger(default_logger)
+_default_logger = setup_environment_logging()

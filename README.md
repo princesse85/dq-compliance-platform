@@ -46,57 +46,84 @@ This platform implements a modern data architecture with the following component
 - API Gateway with authentication
 - Real-time monitoring and alerting
 
-## 📋 Prerequisites
+## 🚀 Quick Start
 
-- AWS CLI configured with appropriate permissions
-- Python 3.8+ with virtual environment
-- AWS CDK v2 installed globally
-- Docker (for containerized deployments)
+### Prerequisites
 
-## 🛠️ Installation & Setup
+- **Python 3.8+** - [Download here](https://www.python.org/downloads/)
+- **Node.js 16+** - [Download here](https://nodejs.org/)
+- **AWS CLI** - [Download here](https://aws.amazon.com/cli/)
+- **Docker** (optional) - [Download here](https://www.docker.com/)
 
-### 1. Clone the Repository
+### Easy Deployment
 
+#### Option 1: Automated Setup (Recommended)
+
+**For Linux/macOS:**
 ```bash
-git clone <repository-url>
-cd enterprise-data-quality-platform
+git clone https://github.com/your-username/dq-compliance-platform.git
+cd dq-compliance-platform
+chmod +x scripts/setup.sh
+./scripts/setup.sh setup
+./scripts/setup.sh deploy
 ```
 
-### 2. Set Up Virtual Environment
+**For Windows:**
+```powershell
+git clone https://github.com/your-username/dq-compliance-platform.git
+cd dq-compliance-platform
+.\scripts\deploy.ps1 deploy
+```
 
+#### Option 2: Manual Setup
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/your-username/dq-compliance-platform.git
+cd dq-compliance-platform
+```
+
+2. **Configure AWS credentials:**
+```bash
+aws configure
+```
+
+3. **Install dependencies:**
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-# or
-.venv\Scripts\activate     # Windows
-```
-
-### 3. Install Dependencies
-
-```bash
+source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+npm install -g aws-cdk
 ```
 
-### 4. Configure Environment
-
+4. **Deploy infrastructure:**
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+cdk bootstrap
+cdk deploy --all --require-approval never
 ```
 
-### 5. Bootstrap CDK (First Time Only)
+### What Gets Deployed
+
+The platform deploys the following AWS infrastructure:
+
+- **🏗️ Foundation Stack** - S3 buckets, IAM roles, VPC, CloudWatch
+- **💰 Billing Alarm Stack** - Cost monitoring and alerts
+- **🔍 Data Quality Stack** - Great Expectations, Glue jobs
+- **🤖 ML Inference Stack** - Lambda functions, API Gateway
+- **📄 Document Processing Stack** - Textract, OCR processing
+
+### Testing Your Deployment
 
 ```bash
-cdk bootstrap aws://ACCOUNT_ID/REGION
+# Run tests
+./scripts/setup.sh test  # Linux/macOS
+.\scripts\deploy.ps1 test  # Windows
+
+# Test API endpoints (get URL from CDK outputs)
+curl https://your-api-gateway-url.amazonaws.com/prod/health
 ```
 
-## 🚀 Deployment
-
-### Deploy All Components
-
-```bash
-# Deploy foundation infrastructure
-cdk deploy enterprise-foundation --require-approval never
+## 📋 Detailed Setup Instructions
 
 # Deploy data quality platform
 cdk deploy enterprise-data-quality --require-approval never

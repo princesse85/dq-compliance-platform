@@ -92,6 +92,7 @@ class DataQualityStack(Stack):
         )
 
         # ---- Glue ETL Job asset (PySpark script) ----
+        # Use a more reliable path for the ETL script
         etl_asset = assets.Asset(self, "ContractsEtlScript",
             path="src/etl_pipelines/contracts_etl_job.py"
         )
@@ -115,8 +116,10 @@ class DataQualityStack(Stack):
                 "--processed_bucket": processed_bucket.bucket_name,
                 "--raw_prefix": raw_prefix,
                 "--processed_prefix": processed_prefix,
-                "--TempDir": f"s3://{analytics_bucket.bucket_name}/glue-tmp/"
+                "--TempDir": f"s3://{analytics_bucket.bucket_name}/glue-tmp/",
+                "--additional-python-modules": "boto3>=1.34.0"
             },
             execution_property=glue.CfnJob.ExecutionPropertyProperty(max_concurrent_runs=1),
             description="ETL: Clean contract register CSV -> Parquet with basic remediation",
+            timeout=60,  # 60 minutes timeout
         )
