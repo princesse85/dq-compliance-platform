@@ -25,6 +25,17 @@ python-dateutil>=2.8.0
 pytz>=2023.3
 faker>=20.0.0
 
+# ML and AI Dependencies
+transformers>=4.35.0
+torch>=2.0.0
+datasets>=2.14.0
+evaluate>=0.4.0
+accelerate>=0.24.0
+
+# ETL and Data Processing
+pyspark>=3.4.0
+delta-spark>=2.4.0
+
 # Development and Testing (optional for production)
 pytest>=7.4.0
 pytest-cov>=4.1.0

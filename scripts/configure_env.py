@@ -1,158 +1,269 @@
 #!/usr/bin/env python3
 """
 Environment Configuration Script
-Automatically configures the environment using AWS credentials and region.
+
+This script helps users configure their environment for the Data Quality Compliance Platform.
+It validates AWS credentials, creates necessary directories, and sets up environment variables.
 """
 
 import os
+import sys
 import subprocess
 import json
 from pathlib import Path
+from typing import Dict, Optional
 
-def run_command(command, capture_output=True):
-    """Run a command and return the result."""
+def print_status(message: str, status: str = "INFO"):
+    """Print formatted status message."""
+    colors = {
+        "INFO": "\033[94m",    # Blue
+        "SUCCESS": "\033[92m", # Green
+        "WARNING": "\033[93m", # Yellow
+        "ERROR": "\033[91m",   # Red
+    }
+    color = colors.get(status, colors["INFO"])
+    reset = "\033[0m"
+    print(f"{color}[{status}]{reset} {message}")
+
+def check_aws_credentials() -> bool:
+    """Check if AWS credentials are configured."""
     try:
-        result = subprocess.run(command, shell=True, capture_output=capture_output, text=True)
-        return result.returncode == 0, result.stdout.strip(), result.stderr.strip()
-    except Exception as e:
-        return False, "", str(e)
+        result = subprocess.run(
+            ["aws", "sts", "get-caller-identity"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        identity = json.loads(result.stdout)
+        print_status(f"AWS credentials valid - Account: {identity['Account']}", "SUCCESS")
+        return True
+    except (subprocess.CalledProcessError, json.JSONDecodeError, FileNotFoundError):
+        print_status("AWS credentials not configured or invalid", "WARNING")
+        return False
 
-def get_aws_identity():
-    """Get AWS account identity."""
-    success, output, error = run_command("aws sts get-caller-identity --query Account --output text")
-    if success:
-        return output
-    return None
+def get_aws_account_id() -> Optional[str]:
+    """Get AWS account ID."""
+    try:
+        result = subprocess.run(
+            ["aws", "sts", "get-caller-identity", "--query", "Account", "--output", "text"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return None
 
-def get_aws_region():
-    """Get configured AWS region."""
-    success, output, error = run_command("aws configure get region")
-    if success and output:
-        return output
-    return None
+def get_aws_region() -> str:
+    """Get AWS region from configuration."""
+    try:
+        result = subprocess.run(
+            ["aws", "configure", "get", "region"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "us-east-1"
 
-def get_aws_user():
-    """Get AWS user/role name."""
-    success, output, error = run_command("aws sts get-caller-identity --query Arn --output text")
-    if success:
-        # Extract user/role name from ARN
-        parts = output.split('/')
-        if len(parts) > 1:
-            return parts[-1]
-    return "unknown"
-
-def create_env_file(project_prefix, billing_email, monthly_budget, aws_account_id, aws_region, aws_user):
-    """Create .env file with configuration."""
+def create_directories():
+    """Create necessary directories."""
+    directories = [
+        "analytics/models/baseline",
+        "analytics/models/transformer/checkpoints",
+        "analytics/models/transformer/final_model",
+        "src/data/text_corpus",
+        "src/data/raw",
+        "logs",
+        ".streamlit",
+        "config"
+    ]
     
-    env_content = f"""# Environment Configuration
-ENV_NAME=development
-PROJECT_PREFIX={project_prefix}
-AWS_REGION={aws_region}
+    for directory in directories:
+        Path(directory).mkdir(parents=True, exist_ok=True)
+        print_status(f"Created directory: {directory}", "SUCCESS")
+
+def create_env_file(aws_account_id: Optional[str] = None, aws_region: str = "us-east-1"):
+    """Create .env file with configuration."""
+    env_template = f"""# =============================================================================
+# ENVIRONMENT CONFIGURATION - AUTO-GENERATED
+# =============================================================================
 
 # AWS Configuration
-AWS_ACCOUNT_ID={aws_account_id}
-AWS_USER={aws_user}
+AWS_ACCESS_KEY_ID=your_aws_access_key_here
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key_here
+AWS_DEFAULT_REGION={aws_region}
+AWS_REGION={aws_region}
 
-# Billing and Cost Management
-BILLING_EMAIL={billing_email}
-MONTHLY_BUDGET={monthly_budget}
+# AWS S3 Buckets
+COMPLIANCE_BUCKET=enterprise-compliance-data-{aws_account_id or 'your-account-id'}
+RAW_DATA_BUCKET=enterprise-raw-data-{aws_account_id or 'your-account-id'}
+PROCESSED_DATA_BUCKET=enterprise-processed-data-{aws_account_id or 'your-account-id'}
+ML_MODELS_BUCKET=enterprise-ml-models-{aws_account_id or 'your-account-id'}
 
-# Security (update these with your values)
-AUTH_USER_POOL_ID=
-AUTH_CLIENT_ID=
-KMS_KEY_ALIAS={project_prefix}-development-key
+# Dashboard Configuration
+STREAMLIT_SERVER_PORT=8501
+STREAMLIT_SERVER_ADDRESS=localhost
+STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+STREAMLIT_SERVER_HEADLESS=true
+DASHBOARD_REFRESH_INTERVAL=30
+DASHBOARD_MAX_UPLOAD_SIZE=200
 
-# Monitoring
-CLOUDWATCH_LOG_GROUP=/aws/{project_prefix}-dq/development
+# ML Model Configuration
+MODEL_NAME=distilbert-base-uncased
+EPOCHS=1
+BATCH_SIZE=16
+LEARNING_RATE=2e-5
+MAX_LENGTH=128
 
-# CDK Configuration
-CDK_DEFAULT_ACCOUNT={aws_account_id}
-CDK_DEFAULT_REGION={aws_region}
+# ETL Configuration
+SPARK_MASTER=local[*]
+SPARK_DRIVER_MEMORY=2g
+SPARK_EXECUTOR_MEMORY=2g
+ETL_RAW_PREFIX=contract_register/
+ETL_PROCESSED_PREFIX=contract_register/
+
+# Development Configuration
+DEBUG=false
+ENVIRONMENT=development
+USE_LOCAL_DATA=true
+MOCK_AWS_SERVICES=false
+
+# Feature Flags
+ENABLE_DOCUMENT_ANALYSIS=true
+ENABLE_ML_PREDICTIONS=true
+ENABLE_REAL_TIME_ALERTS=false
+ENABLE_DATA_EXPORT=true
 """
     
-    with open('.env', 'w') as f:
-        f.write(env_content)
+    with open(".env", "w") as f:
+        f.write(env_template)
     
-    print(f"✅ Environment configuration saved to .env")
-    print(f"   Project Prefix: {project_prefix}")
-    print(f"   AWS Region: {aws_region}")
-    print(f"   AWS Account: {aws_account_id}")
-    print(f"   Billing Email: {billing_email}")
-    print(f"   Monthly Budget: ${monthly_budget}")
+    print_status("Created .env file", "SUCCESS")
 
-def main():
-    """Main configuration function."""
-    print("🔧 Enterprise Data Quality & Compliance Platform - Environment Configuration")
-    print("=" * 70)
+def check_dependencies():
+    """Check if required dependencies are installed."""
+    required_packages = [
+        "streamlit", "pandas", "numpy", "plotly", "boto3",
+        "scikit-learn", "transformers", "torch", "datasets"
+    ]
     
-    # Check AWS credentials
-    print("\n🔍 Checking AWS credentials...")
-    success, output, error = run_command("aws sts get-caller-identity")
-    if not success:
-        print("❌ AWS credentials are not configured or invalid")
-        print("Please configure your AWS credentials first:")
-        print("  1. Run: aws configure")
-        print("  2. Enter your AWS Access Key ID")
-        print("  3. Enter your AWS Secret Access Key")
-        print("  4. Enter your default region (e.g., us-east-1)")
-        print("  5. Enter your output format (json)")
+    missing_packages = []
+    
+    for package in required_packages:
+        try:
+            __import__(package)
+            print_status(f"✅ {package}", "SUCCESS")
+        except ImportError:
+            missing_packages.append(package)
+            print_status(f"❌ {package}", "ERROR")
+    
+    if missing_packages:
+        print_status(f"Missing packages: {', '.join(missing_packages)}", "WARNING")
+        print_status("Run: pip install -r requirements.txt", "INFO")
         return False
-    
-    # Get AWS information
-    aws_account_id = get_aws_identity()
-    aws_region = get_aws_region()
-    aws_user = get_aws_user()
-    
-    if not aws_account_id:
-        print("❌ Could not retrieve AWS account ID")
-        return False
-    
-    if not aws_region:
-        print("❌ AWS region not configured")
-        print("Please run: aws configure")
-        return False
-    
-    print(f"✅ AWS credentials validated successfully")
-    print(f"   Account ID: {aws_account_id}")
-    print(f"   Region: {aws_region}")
-    print(f"   User: {aws_user}")
-    
-    # Get user input for configuration
-    print("\n📝 Configuration Setup")
-    print("-" * 30)
-    
-    project_prefix = input("Enter your project prefix (default: enterprise): ").strip()
-    if not project_prefix:
-        project_prefix = "enterprise"
-    
-    billing_email = input("Enter your billing email: ").strip()
-    if not billing_email:
-        print("❌ Billing email is required")
-        return False
-    
-    monthly_budget = input("Enter your monthly budget in USD (default: 5000): ").strip()
-    if not monthly_budget:
-        monthly_budget = "5000"
-    
-    try:
-        monthly_budget = float(monthly_budget)
-    except ValueError:
-        print("❌ Invalid monthly budget. Please enter a valid number.")
-        return False
-    
-    # Create .env file
-    print(f"\n📄 Creating environment configuration...")
-    create_env_file(project_prefix, billing_email, monthly_budget, aws_account_id, aws_region, aws_user)
-    
-    print(f"\n🎉 Environment configuration completed successfully!")
-    print(f"\nNext steps:")
-    print(f"  1. Review the .env file and update security settings if needed")
-    print(f"  2. Run: ./scripts/setup.sh deploy  (Linux/macOS)")
-    print(f"  3. Run: .\\scripts\\deploy.ps1 deploy  (Windows)")
     
     return True
 
+def create_streamlit_config():
+    """Create Streamlit configuration."""
+    config_content = """[server]
+port = 8501
+address = "localhost"
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+primaryColor = "#FF4B4B"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#262730"
+"""
+    
+    config_path = Path(".streamlit/config.toml")
+    config_path.parent.mkdir(exist_ok=True)
+    
+    with open(config_path, "w") as f:
+        f.write(config_content)
+    
+    print_status("Created Streamlit configuration", "SUCCESS")
+
+def validate_setup():
+    """Validate the complete setup."""
+    print_status("Validating setup...", "INFO")
+    
+    # Check if .env exists
+    if not Path(".env").exists():
+        print_status("❌ .env file not found", "ERROR")
+        return False
+    
+    # Check if directories exist
+    required_dirs = [
+        "analytics/models/baseline",
+        "analytics/models/transformer",
+        "src/data/text_corpus",
+        ".streamlit"
+    ]
+    
+    for directory in required_dirs:
+        if not Path(directory).exists():
+            print_status(f"❌ Directory not found: {directory}", "ERROR")
+            return False
+    
+    # Check dependencies
+    if not check_dependencies():
+        return False
+    
+    print_status("✅ Setup validation completed", "SUCCESS")
+    return True
+
+def main():
+    """Main configuration function."""
+    print_status("🚀 Data Quality Compliance Platform - Environment Configuration", "INFO")
+    print_status("=" * 60, "INFO")
+    
+    # Check AWS credentials
+    aws_configured = check_aws_credentials()
+    aws_account_id = get_aws_account_id() if aws_configured else None
+    aws_region = get_aws_region()
+    
+    # Create directories
+    print_status("Creating directories...", "INFO")
+    create_directories()
+    
+    # Create environment file
+    print_status("Creating environment configuration...", "INFO")
+    create_env_file(aws_account_id, aws_region)
+    
+    # Create Streamlit config
+    print_status("Creating Streamlit configuration...", "INFO")
+    create_streamlit_config()
+    
+    # Validate setup
+    if validate_setup():
+        print_status("=" * 60, "INFO")
+        print_status("✅ Environment configuration completed successfully!", "SUCCESS")
+        
+        if aws_configured:
+            print_status("Next steps:", "INFO")
+            print_status("1. Update .env with your AWS credentials", "INFO")
+            print_status("2. Run: cdk bootstrap", "INFO")
+            print_status("3. Run: cdk deploy --all", "INFO")
+            print_status("4. Run: python scripts/generate_data_and_train.py", "INFO")
+            print_status("5. Run: streamlit run streamlit_app.py", "INFO")
+        else:
+            print_status("Next steps (Local Development):", "INFO")
+            print_status("1. Run: pip install -r requirements.txt", "INFO")
+            print_status("2. Run: python scripts/generate_data_and_train.py", "INFO")
+            print_status("3. Run: streamlit run streamlit_app.py", "INFO")
+    else:
+        print_status("❌ Setup validation failed", "ERROR")
+        sys.exit(1)
+
 if __name__ == "__main__":
-    success = main()
-    if not success:
-        exit(1)
+    main()

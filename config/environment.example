@@ -1,52 +1,157 @@
 # =============================================================================
 # ENVIRONMENT CONFIGURATION
 # =============================================================================
+# Copy this file to .env and update with your values
 
-# Project Configuration
-PROJECT_PREFIX=enterprise
-ENV_NAME=development
-AWS_REGION=eu-west-2
+# =============================================================================
+# AWS CONFIGURATION
+# =============================================================================
 
-# AWS Configuration
-CDK_DEFAULT_ACCOUNT=123456789012
-CDK_DEFAULT_REGION=eu-west-2
+# AWS Credentials (required for production deployment)
+AWS_ACCESS_KEY_ID=your_aws_access_key_here
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key_here
+AWS_DEFAULT_REGION=us-east-1
+AWS_REGION=us-east-1
 
-# Billing Configuration
-BILLING_EMAIL=enterprise-support@company.com
-MONTHLY_BUDGET=5000
+# AWS S3 Buckets (will be created by CDK)
+COMPLIANCE_BUCKET=enterprise-compliance-data-{account_id}
+RAW_DATA_BUCKET=enterprise-raw-data-{account_id}
+PROCESSED_DATA_BUCKET=enterprise-processed-data-{account_id}
+ML_MODELS_BUCKET=enterprise-ml-models-{account_id}
 
-# Data Quality Configuration
+# AWS Lambda Configuration
+LAMBDA_TIMEOUT=300
+LAMBDA_MEMORY_SIZE=1024
+
+# =============================================================================
+# DASHBOARD CONFIGURATION
+# =============================================================================
+
+# Streamlit Configuration
+STREAMLIT_SERVER_PORT=8501
+STREAMLIT_SERVER_ADDRESS=localhost
+STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+STREAMLIT_SERVER_HEADLESS=true
+
+# Dashboard Settings
+DASHBOARD_REFRESH_INTERVAL=30
+DASHBOARD_MAX_UPLOAD_SIZE=200
+
+# =============================================================================
+# ML MODEL CONFIGURATION
+# =============================================================================
+
+# Model Training Parameters
+MODEL_NAME=distilbert-base-uncased
+EPOCHS=1
+BATCH_SIZE=16
+LEARNING_RATE=2e-5
+MAX_LENGTH=128
+
+# Model Storage
+MODEL_CHECKPOINT_DIR=analytics/models/transformer/checkpoints
+MODEL_FINAL_DIR=analytics/models/transformer/final_model
+BASELINE_MODEL_DIR=analytics/models/baseline
+
+# =============================================================================
+# ETL CONFIGURATION
+# =============================================================================
+
+# Spark Configuration
+SPARK_MASTER=local[*]
+SPARK_DRIVER_MEMORY=2g
+SPARK_EXECUTOR_MEMORY=2g
+
+# ETL Job Parameters
+ETL_RAW_PREFIX=contract_register/
+ETL_PROCESSED_PREFIX=contract_register/
+ETL_BATCH_SIZE=1000
+
+# =============================================================================
+# DATA QUALITY CONFIGURATION
+# =============================================================================
+
+# Quality Thresholds
+QUALITY_COMPLETENESS_THRESHOLD=0.95
+QUALITY_ACCURACY_THRESHOLD=0.90
+QUALITY_TIMELINESS_THRESHOLD=0.85
+QUALITY_VALIDITY_THRESHOLD=0.92
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+
+# Encryption
+ENCRYPTION_KEY=your_encryption_key_here
+ENABLE_DATA_ENCRYPTION=true
+
+# Authentication (for future implementation)
+ENABLE_AUTH=false
+AUTH_PROVIDER=aws_cognito
+COGNITO_USER_POOL_ID=your_user_pool_id
+COGNITO_CLIENT_ID=your_client_id
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+
+# CloudWatch Configuration
+ENABLE_CLOUDWATCH_LOGGING=true
 LOG_LEVEL=INFO
-QUALITY_THRESHOLD=0.85
+METRICS_NAMESPACE=EnterpriseCompliance
 
-# Document Processing Configuration
-LOW_CONF_THRESHOLD=0.85
-MAX_FILE_SIZE=10485760  # 10MB
+# Alerting
+ENABLE_ALERTS=true
+ALERT_EMAIL=alerts@company.com
+ALERT_SNS_TOPIC=your_sns_topic_arn
 
-# ML Configuration
-MODEL_VARIANT=baseline
-MLFLOW_TRACKING_URI=http://localhost:5000
+# =============================================================================
+# DEVELOPMENT CONFIGURATION
+# =============================================================================
 
-# Database Configuration (for local development)
-POSTGRES_DB=enterprise_dq
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=password
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
+# Development Mode
+DEBUG=false
+ENVIRONMENT=development
 
-# Redis Configuration (for local development)
-REDIS_HOST=localhost
-REDIS_PORT=6379
+# Local Development (when AWS not available)
+USE_LOCAL_DATA=true
+MOCK_AWS_SERVICES=false
 
-# Elasticsearch Configuration (for local development)
-ELASTICSEARCH_HOST=localhost
-ELASTICSEARCH_PORT=9200
+# =============================================================================
+# PERFORMANCE CONFIGURATION
+# =============================================================================
 
-# Monitoring Configuration
-PROMETHEUS_PORT=9090
-GRAFANA_PORT=3000
-GRAFANA_PASSWORD=admin
+# Caching
+ENABLE_CACHING=true
+CACHE_TTL=300
 
-# Development Configuration
-DEBUG=true
-ENABLE_HOT_RELOAD=true
+# Database (for future implementation)
+DATABASE_URL=postgresql://user:password@localhost:5432/compliance_db
+DATABASE_POOL_SIZE=10
+
+# =============================================================================
+# INTEGRATION CONFIGURATION
+# =============================================================================
+
+# External APIs (for future implementation)
+API_BASE_URL=https://api.company.com
+API_KEY=your_api_key_here
+API_TIMEOUT=30
+
+# Third-party Services
+SLACK_WEBHOOK_URL=your_slack_webhook_url
+EMAIL_SMTP_SERVER=smtp.company.com
+EMAIL_SMTP_PORT=587
+EMAIL_USERNAME=notifications@company.com
+EMAIL_PASSWORD=your_email_password
+
+# =============================================================================
+# FEATURE FLAGS
+# =============================================================================
+
+# Enable/Disable Features
+ENABLE_DOCUMENT_ANALYSIS=true
+ENABLE_ML_PREDICTIONS=true
+ENABLE_REAL_TIME_ALERTS=false
+ENABLE_DATA_EXPORT=true
+ENABLE_ADVANCED_ANALYTICS=true

@@ -198,3 +198,54 @@ dist/
 
 # MLflow
 mlruns/
+
+# ML Models (generated during training)
+analytics/models/
+
+# Claude AI
+.claude/
+
+# CDK Output
+cdk.out/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest Cache
+.pytest_cache/
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# CDK
+cdk.context.json
+
+# Node modules (if any)
+node_modules/
+
+# Build artifacts
+build/
+dist/
