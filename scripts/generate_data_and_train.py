@@ -13,8 +13,11 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-# Add src to path
-sys.path.insert(0, str(Path("src")))
+# Add src to path - use absolute path to ensure it works from any directory
+script_dir = Path(__file__).parent
+project_root = script_dir.parent
+src_path = project_root / "src"
+sys.path.insert(0, str(src_path))
 
 def check_dependencies():
     """Check if all required dependencies are installed."""
@@ -50,7 +53,7 @@ def generate_realistic_data():
     
     try:
         # Import and run the data generator
-        from data.generators.realistic_compliance_data import create_realistic_datasets
+        from src.data.generators.realistic_compliance_data import create_realistic_datasets
         create_realistic_datasets()
         return True
     except Exception as e:

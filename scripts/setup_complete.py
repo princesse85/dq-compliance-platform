@@ -80,10 +80,26 @@ def setup_virtual_environment():
         print_status("Failed to create virtual environment", "ERROR")
         return False
     
-    print_status("Virtual environment created. Please activate it and run this script again.", "WARNING")
-    print_status("On Windows: .venv\\Scripts\\activate", "INFO")
-    print_status("On macOS/Linux: source .venv/bin/activate", "INFO")
-    return False
+    # Automatically activate virtual environment
+    print_status("Activating virtual environment...", "INFO")
+    
+    # Get the path to the virtual environment's Python executable
+    if os.name == 'nt':  # Windows
+        venv_python = Path(".venv/Scripts/python.exe")
+        venv_pip = Path(".venv/Scripts/pip.exe")
+    else:  # Unix/Linux/macOS
+        venv_python = Path(".venv/bin/python")
+        venv_pip = Path(".venv/bin/pip")
+    
+    if venv_python.exists():
+        # Update sys.executable to use the virtual environment's Python
+        sys.executable = str(venv_python)
+        print_status("Virtual environment activated automatically", "SUCCESS")
+        return True
+    else:
+        print_status("Virtual environment created but could not activate automatically", "WARNING")
+        print_status("Please activate manually and run this script again", "INFO")
+        return None
 
 def check_aws_setup():
     """Check AWS setup and return configuration."""
@@ -292,8 +308,18 @@ def main():
         sys.exit(1)
     
     # Setup virtual environment
-    if not setup_virtual_environment():
+    venv_result = setup_virtual_environment()
+    if venv_result is False:
+        # If virtual environment setup failed, exit
         sys.exit(1)
+    elif venv_result is None:
+        # If virtual environment was just created, restart the script
+        print_status("Restarting script with virtual environment...", "INFO")
+        if os.name == 'nt':  # Windows
+            os.system(f'"{sys.executable}" "{__file__}"')
+        else:  # Unix/Linux/macOS
+            os.system(f'{sys.executable} "{__file__}"')
+        return
     
     # Install dependencies
     if not install_dependencies():
@@ -329,16 +355,12 @@ def main():
         print_status("3. Run: cdk deploy --all", "INFO")
     
     print_status("Next steps for local development:", "INFO")
-    print_status("1. Run: streamlit run streamlit_app.py", "INFO")
+    print_status("1. Dashboard will launch automatically", "INFO")
     print_status("2. Open: http://localhost:8501", "INFO")
     
-    # Ask if user wants to launch dashboard now
-    try:
-        response = input("\n🚀 Launch dashboard now? (y/n): ").strip().lower()
-        if response in ['y', 'yes']:
-            launch_dashboard()
-    except KeyboardInterrupt:
-        print_status("Setup completed. Run 'streamlit run streamlit_app.py' to start.", "INFO")
+    # Automatically launch dashboard
+    print_status("🚀 Launching dashboard automatically...", "INFO")
+    launch_dashboard()
 
 if __name__ == "__main__":
     main()

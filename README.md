@@ -59,31 +59,56 @@ dq-compliance-platform/
 Before starting, ensure you have:
 
 - **Python 3.8+**
-- **Node.js 16+** (for AWS CDK)
-- **AWS CLI** configured with credentials
 - **Git**
 
-### Option 1: Complete AWS Deployment
+### 🎯 **One-Command Setup (Recommended)**
 
-#### 1. **Clone and Setup Environment**
+The easiest way to get started is with our automated setup:
+
+#### **Windows Users:**
+
+```cmd
+# Clone the repository
+git clone https://github.com/princesse85/dq-compliance-platform.git
+cd dq-compliance-platform
+
+# Double-click setup.bat or run:
+setup.bat
+```
+
+#### **macOS/Linux Users:**
 
 ```bash
 # Clone the repository
 git clone https://github.com/princesse85/dq-compliance-platform.git
 cd dq-compliance-platform
 
-# Create virtual environment
-python -m venv .venv
-
-# Activate virtual environment
-# On Windows:
-.venv\Scripts\activate
-# On macOS/Linux:
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+# Run the setup script:
+./setup.sh
 ```
+
+#### **All Platforms (Python):**
+
+```bash
+# Clone the repository
+git clone https://github.com/princesse85/dq-compliance-platform.git
+cd dq-compliance-platform
+
+# Run the Python setup:
+python setup.py
+```
+
+**All methods do the same thing automatically:**
+
+- ✅ Create and activate virtual environment
+- ✅ Install all dependencies
+- ✅ Generate sample data
+- ✅ Train ML models
+- ✅ Launch dashboard
+
+Your dashboard will be available at: **http://localhost:8501**
+
+### Option 1: Complete AWS Deployment (Advanced)
 
 #### 2. **Configure AWS**
 

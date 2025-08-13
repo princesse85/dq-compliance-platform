@@ -39,7 +39,11 @@ def validate_imports():
     """Validate that all imports work correctly."""
     try:
         # Test the main dashboard import
-        sys.path.insert(0, str(Path("src")))
+        # Add src to path - use absolute path to ensure it works from any directory
+script_dir = Path(__file__).parent
+project_root = script_dir.parent
+src_path = project_root / "src"
+sys.path.insert(0, str(src_path))
         from dashboard.main import main
         from dashboard.utils import DashboardDataLoader
         print("✅ All imports validated successfully")
