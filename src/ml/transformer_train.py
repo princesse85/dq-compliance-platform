@@ -18,9 +18,9 @@ ANALYTICS_DIR = pathlib.Path("analytics/models/transformer")
 ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
 
 MODEL_NAME = os.getenv("MODEL_NAME", "distilbert-base-uncased")
-EPOCHS = float(os.getenv("EPOCHS", "2"))
-BATCH = int(os.getenv("BATCH", "8"))
-LR = float(os.getenv("LR", "5e-5"))
+EPOCHS = float(os.getenv("EPOCHS", "1"))  # Reduced from 2 to 1
+BATCH = int(os.getenv("BATCH", "16"))     # Increased from 8 to 16 for faster training
+LR = float(os.getenv("LR", "2e-5"))       # Slightly higher learning rate
 
 
 def load_df(split):
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     def tok(batch):
         """Tokenize batch of texts."""
-        return tokenizer(batch["text"], truncation=True, padding="max_length", max_length=256)
+        return tokenizer(batch["text"], truncation=True, padding="max_length", max_length=128)  # Reduced from 256 to 128
 
     def to_ds(df):
         """Convert DataFrame to HuggingFace Dataset."""
@@ -85,10 +85,12 @@ if __name__ == "__main__":
         per_device_eval_batch_size=BATCH,
         num_train_epochs=EPOCHS,
         weight_decay=0.01,
-        logging_steps=50,
+        logging_steps=100,  # Reduced from 50 to 100
         load_best_model_at_end=True,
         metric_for_best_model="f1_weighted",
-        save_total_limit=2,
+        save_total_limit=1,  # Reduced from 2 to 1
+        gradient_accumulation_steps=2,  # Added for faster training
+        warmup_steps=100,  # Added warmup
     )
 
     # Initialize trainer

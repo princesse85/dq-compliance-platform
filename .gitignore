@@ -195,3 +195,6 @@ node_modules/
 # Build artifacts
 build/
 dist/
+
+# MLflow
+mlruns/
