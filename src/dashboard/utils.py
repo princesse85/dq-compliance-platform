@@ -9,6 +9,7 @@ import os
 from typing import Dict, List, Optional
 from datetime import datetime, timedelta
 import logging
+from .real_ml_utils import analyze_document_with_real_ml, get_real_ml_metrics, get_real_compliance_data
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -76,7 +77,24 @@ class DashboardDataLoader:
             return self._generate_mock_data(year, risk_type)
 
     def _generate_mock_data(self, year: int, risk_type: str) -> pd.DataFrame:
-        """Generate mock compliance data for demonstration."""
+        """Generate mock compliance data for demonstration, with real data when available."""
+        # First try to get real compliance data
+        try:
+            real_data = get_real_compliance_data()
+            if not real_data.empty:
+                logger.info(f"Using real compliance data ({len(real_data)} records)")
+                # Filter by year if needed
+                real_data['Date'] = pd.to_datetime(real_data['Date'])
+                real_data = real_data[real_data['Date'].dt.year == year]
+                
+                if risk_type != 'all':
+                    real_data = real_data[real_data['Risk Category'].str.lower() == risk_type.lower()]
+                
+                return real_data
+        except Exception as e:
+            logger.warning(f"Could not load real data, using mock: {e}")
+        
+        # Fallback to mock data
         np.random.seed(year)
         start_date = datetime(year, 1, 1)
         end_date = datetime(year, 12, 31)
@@ -131,7 +149,17 @@ def format_number(n: int) -> str:
 
 
 def generate_ml_metrics() -> pd.DataFrame:
-    """Generate mock ML model metrics."""
+    """Generate ML model metrics with real data when available."""
+    try:
+        # Try to get real ML metrics first
+        real_metrics = get_real_ml_metrics()
+        if not real_metrics.empty:
+            logger.info(f"Using real ML metrics ({len(real_metrics)} records)")
+            return real_metrics
+    except Exception as e:
+        logger.warning(f"Could not load real ML metrics, using mock: {e}")
+    
+    # Fallback to mock metrics
     models = ["legal-bert-v2.1", "compliance-gpt-3.5", "risk-detector-xlnet"]
     metrics_data = []
     for model in models:
@@ -162,12 +190,21 @@ def get_data_quality_metrics() -> Dict:
 
 
 def analyze_document_with_ml(uploaded_file) -> Optional[Dict]:
-    """Analyze document using ML models."""
+    """Analyze document using real ML models."""
     if uploaded_file is None:
         return None
 
     try:
-        # Simulate ML analysis
+        # Try to use real ML analysis first
+        real_analysis = analyze_document_with_real_ml(uploaded_file)
+        if real_analysis:
+            logger.info(f"Using real ML analysis for document: {real_analysis.get('filename', 'unknown')}")
+            return real_analysis
+    except Exception as e:
+        logger.warning(f"Real ML analysis failed, using fallback: {e}")
+
+    # Fallback to mock analysis
+    try:
         analysis = {
             "filename": uploaded_file.name,
             "file_size": len(uploaded_file.getvalue()),
@@ -191,7 +228,7 @@ def analyze_document_with_ml(uploaded_file) -> Optional[Dict]:
                 "negative": 0.10
             },
             "entities": ["Company Name", "Contract Date", "Liability Terms"],
-            "model_used": "legal-bert-v2.1"
+            "model_used": "mock_fallback"
         }
         return analysis
     except Exception as e:
