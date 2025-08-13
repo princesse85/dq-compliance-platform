@@ -274,15 +274,15 @@ def create_realistic_datasets():
     with open(f"{output_dir}/metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
     
-    print(f"\n✅ Enhanced Datasets created successfully!")
-    print(f"📁 Output directory: {output_dir}")
-    print(f"📊 Train: {len(train_df)} samples")
-    print(f"📊 Validation: {len(val_df)} samples")
-    print(f"📊 Test: {len(test_df)} samples")
-    print(f"📄 Metadata saved to: {output_dir}/metadata.json")
+    print(f"\n[SUCCESS] Enhanced Datasets created successfully!")
+    print(f"Output directory: {output_dir}")
+    print(f"Train: {len(train_df)} samples")
+    print(f"Validation: {len(val_df)} samples")
+    print(f"Test: {len(test_df)} samples")
+    print(f"Metadata saved to: {output_dir}/metadata.json")
     
     # Print detailed statistics
-    print(f"\n📈 Dataset Statistics:")
+    print(f"\nDataset Statistics:")
     print(f"   Total documents: {len(full_dataset):,}")
     print(f"   Training samples: {len(train_df):,}")
     print(f"   Validation samples: {len(val_df):,}")

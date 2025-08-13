@@ -13,9 +13,25 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create analytics directory
-ANALYTICS_DIR = pathlib.Path("analytics/models/transformer")
-ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
+# Create analytics directory - try multiple paths
+analytics_paths = [
+    pathlib.Path("analytics/models/transformer"),
+    pathlib.Path("../../analytics/models/transformer"),
+    pathlib.Path("../../../analytics/models/transformer")
+]
+
+ANALYTICS_DIR = None
+for path in analytics_paths:
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+        ANALYTICS_DIR = path
+        break
+    except:
+        continue
+
+if ANALYTICS_DIR is None:
+    ANALYTICS_DIR = pathlib.Path("analytics/models/transformer")
+    ANALYTICS_DIR.mkdir(parents=True, exist_ok=True)
 
 MODEL_NAME = os.getenv("MODEL_NAME", "distilbert-base-uncased")
 EPOCHS = float(os.getenv("EPOCHS", "1"))  # Reduced from 2 to 1
@@ -25,7 +41,18 @@ LR = float(os.getenv("LR", "2e-5"))       # Slightly higher learning rate
 
 def load_df(split):
     """Load dataset split as DataFrame."""
-    return pd.read_csv(f"src/data/text_corpus/{split}.csv")
+    # Try different possible paths
+    paths_to_try = [
+        f"src/data/text_corpus/{split}.csv",
+        f"../data/text_corpus/{split}.csv",
+        f"../../src/data/text_corpus/{split}.csv"
+    ]
+    
+    for path in paths_to_try:
+        if pathlib.Path(path).exists():
+            return pd.read_csv(path)
+    
+    raise FileNotFoundError(f"Could not find {split}.csv in any of the expected locations: {paths_to_try}")
 
 
 if __name__ == "__main__":

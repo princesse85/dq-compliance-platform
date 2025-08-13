@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Complete Setup Script for Data Quality Compliance Platform
 
@@ -300,7 +301,7 @@ def launch_dashboard():
 
 def main():
     """Main setup function."""
-    print_status("🚀 Data Quality Compliance Platform - Complete Setup", "INFO")
+    print_status("Data Quality Compliance Platform - Complete Setup", "INFO")
     print_status("=" * 60, "INFO")
     
     # Check Python version
@@ -359,7 +360,7 @@ def main():
     print_status("2. Open: http://localhost:8501", "INFO")
     
     # Automatically launch dashboard
-    print_status("🚀 Launching dashboard automatically...", "INFO")
+    print_status("Launching dashboard automatically...", "INFO")
     launch_dashboard()
 
 if __name__ == "__main__":

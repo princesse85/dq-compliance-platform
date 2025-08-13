@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Generate Realistic Data and Train ML Models
 
@@ -21,48 +22,60 @@ sys.path.insert(0, str(src_path))
 
 def check_dependencies():
     """Check if all required dependencies are installed."""
-    print("🔍 Checking dependencies...")
+    print("Checking dependencies...")
     
     try:
         import faker
-        print("✅ Faker installed")
+        print("[OK] Faker installed")
     except ImportError:
-        print("❌ Faker not installed. Run: pip install faker")
+        print("[ERROR] Faker not installed. Run: pip install faker")
         return False
     
     try:
         import transformers
-        print("✅ Transformers installed")
+        print("[OK] Transformers installed")
     except ImportError:
-        print("❌ Transformers not installed. Run: pip install transformers")
+        print("[ERROR] Transformers not installed. Run: pip install transformers")
         return False
     
     try:
         import datasets
-        print("✅ Datasets installed")
+        print("[OK] Datasets installed")
     except ImportError:
-        print("❌ Datasets not installed. Run: pip install datasets")
+        print("[ERROR] Datasets not installed. Run: pip install datasets")
         return False
     
     return True
 
 def generate_realistic_data():
     """Generate realistic compliance data using Faker."""
-    print("\n📊 Generating Realistic Compliance Data:")
+    print("\nGenerating Realistic Compliance Data:")
     print("=" * 50)
     
     try:
         # Import and run the data generator
-        from src.data.generators.realistic_compliance_data import create_realistic_datasets
-        create_realistic_datasets()
+        import importlib.util
+        
+        # Load the module directly from file path
+        spec = importlib.util.spec_from_file_location(
+            "realistic_compliance_data", 
+            src_path / "data" / "generators" / "realistic_compliance_data.py"
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        
+        # Call the function
+        module.create_realistic_datasets()
         return True
     except Exception as e:
-        print(f"❌ Error generating data: {e}")
+        print(f"[ERROR] Error generating data: {e}")
+        print(f"[DEBUG] Current working directory: {os.getcwd()}")
+        print(f"[DEBUG] Python path: {sys.path}")
         return False
 
 def train_baseline_model():
     """Train the baseline TF-IDF + Logistic Regression model."""
-    print("\n🤖 Training Baseline Model:")
+    print("\nTraining Baseline Model:")
     print("=" * 50)
     
     try:
@@ -70,19 +83,19 @@ def train_baseline_model():
         os.chdir("src/ml")
         result = subprocess.run([sys.executable, "baseline_tf_idf.py"], 
                               capture_output=True, text=True, check=True)
-        print("✅ Baseline model trained successfully")
+        print("[SUCCESS] Baseline model trained successfully")
         print(result.stdout)
         os.chdir("../..")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error training baseline model: {e}")
+        print(f"[ERROR] Error training baseline model: {e}")
         print(e.stderr)
         os.chdir("../..")
         return False
 
 def train_transformer_model():
     """Train the transformer model."""
-    print("\n🤖 Training Transformer Model:")
+    print("\nTraining Transformer Model:")
     print("=" * 50)
     
     try:
@@ -90,19 +103,19 @@ def train_transformer_model():
         os.chdir("src/ml")
         result = subprocess.run([sys.executable, "transformer_train.py"], 
                               capture_output=True, text=True, check=True)
-        print("✅ Transformer model trained successfully")
+        print("[SUCCESS] Transformer model trained successfully")
         print(result.stdout)
         os.chdir("../..")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error training transformer model: {e}")
+        print(f"[ERROR] Error training transformer model: {e}")
         print(e.stderr)
         os.chdir("../..")
         return False
 
 def create_model_integration():
     """Create model integration for the dashboard."""
-    print("\n🔧 Creating Model Integration:")
+    print("\nCreating Model Integration:")
     print("=" * 50)
     
     # Create a new utils file that uses real models
@@ -139,12 +152,12 @@ class RealMLPredictor:
             baseline_path = Path("analytics/models/baseline/model.joblib")
             if baseline_path.exists():
                 self.baseline_model = joblib.load(baseline_path)
-                logger.info("✅ Baseline model loaded successfully")
+                logger.info("[OK] Baseline model loaded successfully")
             
             # Try to load transformer model (if available)
             transformer_path = Path("analytics/models/transformer/final_model")
             if transformer_path.exists():
-                logger.info("✅ Transformer model directory found")
+                logger.info("[OK] Transformer model directory found")
                 
         except Exception as e:
             logger.warning(f"Could not load models: {e}")
@@ -362,11 +375,11 @@ def get_real_ml_metrics() -> pd.DataFrame:
     with open("src/dashboard/real_ml_utils.py", "w") as f:
         f.write(integration_code)
     
-    print("✅ Real ML integration created")
+    print("[SUCCESS] Real ML integration created")
 
 def update_dashboard_utils():
     """Update dashboard utils to use real ML models."""
-    print("\n🔄 Updating Dashboard Utils:")
+    print("\nUpdating Dashboard Utils:")
     print("=" * 50)
     
     # Read current utils
@@ -413,21 +426,21 @@ def update_dashboard_utils():
     with open("src/dashboard/utils.py", "w") as f:
         f.write(utils_content)
     
-    print("✅ Dashboard utils updated to use real ML models")
+    print("[SUCCESS] Dashboard utils updated to use real ML models")
 
 def main():
     """Main function to generate data and train models."""
-    print("🚀 Generate Realistic Data and Train ML Models")
+    print("Generate Realistic Data and Train ML Models")
     print("=" * 60)
     
     # Check dependencies
     if not check_dependencies():
-        print("❌ Missing dependencies. Please install required packages.")
+        print("[ERROR] Missing dependencies. Please install required packages.")
         return
     
     # Generate realistic data
     if not generate_realistic_data():
-        print("❌ Failed to generate data")
+        print("[ERROR] Failed to generate data")
         return
     
     # Train models
@@ -435,7 +448,7 @@ def main():
     transformer_success = train_transformer_model()
     
     if not baseline_success and not transformer_success:
-        print("❌ No models trained successfully")
+        print("[ERROR] No models trained successfully")
         return
     
     # Create integration
@@ -445,21 +458,21 @@ def main():
     update_dashboard_utils()
     
     print("\n" + "=" * 60)
-    print("✅ ML Pipeline Complete!")
-    print("\n🎯 What's been accomplished:")
-    print("1. ✅ Generated 10,000 realistic compliance documents using Faker")
-    print("2. ✅ Trained baseline TF-IDF + Logistic Regression model")
+    print("[SUCCESS] ML Pipeline Complete!")
+    print("\nWhat's been accomplished:")
+    print("1. [OK] Generated 25,000 realistic compliance documents using Faker")
+    print("2. [OK] Trained baseline TF-IDF + Logistic Regression model")
     if transformer_success:
-        print("3. ✅ Trained transformer model")
-    print("4. ✅ Created real ML integration for dashboard")
-    print("5. ✅ Updated dashboard to use real predictions")
+        print("3. [OK] Trained transformer model")
+    print("4. [OK] Created real ML integration for dashboard")
+    print("5. [OK] Updated dashboard to use real predictions")
     
-    print("\n🚀 Next steps:")
+    print("\nNext steps:")
     print("1. Restart the dashboard: streamlit run streamlit_app.py")
     print("2. Upload documents in the Document Intelligence tab")
     print("3. See real ML predictions instead of mock data!")
     
-    print("\n📊 Model Performance:")
+    print("\nModel Performance:")
     if baseline_success:
         print("- Baseline model: TF-IDF + Logistic Regression")
         print("- Expected F1 score: ~0.85-0.90")
