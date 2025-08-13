@@ -42,62 +42,153 @@ dq-compliance-platform/
 ├── README.md                # This file
 ├── .gitignore              # Git ignore rules
 ├── src/
-│   └── dashboard/
-│       ├── __init__.py      # Dashboard module
-│       ├── main.py          # Main dashboard application
-│       └── utils.py         # Utility functions and data loading
-├── scripts/                 # Deployment and setup scripts
-└── assets/                  # Static assets (images, etc.)
+│   ├── dashboard/           # Streamlit dashboard
+│   ├── ml/                 # Machine learning models
+│   ├── etl_pipelines/      # Data processing
+│   └── data_quality/       # Data validation
+├── infrastructure/          # AWS CDK stacks
+├── lambda_app/             # AWS Lambda functions
+├── scripts/                # Deployment and setup scripts
+└── assets/                 # Static assets (images, etc.)
 ```
 
 ## 🚀 Quick Start
 
-### Local Development
+### Prerequisites
 
-1. **Clone the repository**
+Before starting, ensure you have:
 
-   ```bash
-   git clone https://github.com/your-username/dq-compliance-platform.git
-   cd dq-compliance-platform
-   ```
+- **Python 3.8+**
+- **Node.js 16+** (for AWS CDK)
+- **AWS CLI** configured with credentials
+- **Git**
 
-2. **Create virtual environment**
+### Option 1: Complete AWS Deployment
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
+#### 1. **Clone and Setup Environment**
 
-3. **Install dependencies**
+```bash
+# Clone the repository
+git clone https://github.com/princesse85/dq-compliance-platform.git
+cd dq-compliance-platform
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Create virtual environment
+python -m venv .venv
 
-4. **Run the dashboard**
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
 
-   ```bash
-   streamlit run streamlit_app.py
-   ```
+# Install dependencies
+pip install -r requirements.txt
+```
 
-5. **Open your browser**
-   Navigate to `http://localhost:8501`
+#### 2. **Configure AWS**
 
-### Streamlit Cloud Deployment
+```bash
+# Configure AWS credentials
+aws configure
 
-1. **Push to GitHub**
+# Install AWS CDK globally
+npm install -g aws-cdk
 
-   ```bash
-   git add .
-   git commit -m "Initial dashboard deployment"
-   git push origin main
-   ```
+# Bootstrap CDK (first time only)
+cdk bootstrap
+```
 
-2. **Deploy on Streamlit Cloud**
-   - Go to [share.streamlit.io](https://share.streamlit.io)
-   - Connect your GitHub repository
-   - Set the main file path to `streamlit_app.py`
-   - Deploy!
+#### 3. **Environment Configuration**
+
+```bash
+# Run the configuration script
+python scripts/configure_env.py
+
+# Copy and configure environment file
+cp config/environment.example .env
+# Edit .env with your specific settings
+```
+
+#### 4. **Deploy Infrastructure**
+
+```bash
+# Deploy all AWS infrastructure stacks
+cdk deploy --all
+
+# This will create:
+# - S3 buckets for data storage
+# - Lambda functions for ETL and ML inference
+# - API Gateway for REST APIs
+# - CloudWatch for monitoring
+# - IAM roles and policies
+```
+
+#### 5. **Run ETL and ML Pipelines**
+
+```bash
+# Generate synthetic data and train models
+python scripts/generate_data_and_train.py
+
+# Run ETL pipeline
+python src/etl_pipelines/contracts_etl_job.py
+```
+
+#### 6. **Run the Dashboard**
+
+```bash
+# Option 1: Using the Makefile
+make dashboard
+
+# Option 2: Using the script directly
+python scripts/run_dashboard.py
+
+# Option 3: Direct Streamlit command
+streamlit run src/dashboard/main.py
+```
+
+### Option 2: Local Development (No AWS)
+
+For quick local development without AWS deployment:
+
+```bash
+# 1. Clone and setup
+git clone https://github.com/princesse85/dq-compliance-platform.git
+cd dq-compliance-platform
+
+# 2. Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run dashboard with local data
+streamlit run streamlit_app.py
+
+# 5. Open browser at http://localhost:8501
+```
+
+### Option 3: Using Makefile Commands
+
+```bash
+# View all available commands
+make help
+
+# Complete setup
+make dev-setup
+
+# Run dashboard
+make dashboard
+
+# Run tests
+make test
+
+# Deploy to AWS
+make deploy
+
+# Clean up
+make clean
+```
 
 ## 🔧 Configuration
 
@@ -193,6 +284,11 @@ pytest tests/
 
 # Run with coverage
 pytest --cov=src tests/
+
+# Run specific test categories
+make test-unit
+make test-integration
+make test-performance
 ```
 
 ## 🔒 Security
@@ -209,6 +305,34 @@ pytest --cov=src tests/
 - **Optimized Queries**: Efficient data filtering and aggregation
 - **Responsive Design**: Fast loading on all devices
 
+## 🚨 Troubleshooting
+
+### Common Issues
+
+```bash
+# Check dependencies
+python scripts/run_dashboard.py --check-deps
+
+# Verify AWS credentials
+aws sts get-caller-identity
+
+# Check CDK status
+cdk diff
+
+# View logs
+make logs
+
+# Reset environment
+make reset
+```
+
+### Error Solutions
+
+- **AWS Credentials**: Ensure `aws configure` is completed
+- **CDK Bootstrap**: Run `cdk bootstrap` if deploying for first time
+- **Port Conflicts**: Change port with `--port 8502` if 8501 is busy
+- **Dependencies**: Run `pip install -r requirements.txt` if import errors occur
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -216,6 +340,8 @@ pytest --cov=src tests/
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ## 📝 License
 
@@ -239,6 +365,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Streamlit Cloud deployment ready
 - ✅ Professional dark sidebar theme
 - ✅ Export functionality framework
+- ✅ Complete AWS infrastructure deployment
+- ✅ ETL and ML pipeline integration
 
 ### v2.0.0
 
