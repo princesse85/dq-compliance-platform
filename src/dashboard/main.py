@@ -577,7 +577,7 @@ def main():
         
         # Auto-refresh controls
         st.markdown("#### ⚡ Real-time Updates")
-        auto_refresh = st.toggle("Enable Auto-refresh", value=st.session_state.auto_refresh)
+        auto_refresh = st.toggle("Enable Auto-refresh", value=False)  # Disabled by default
         if auto_refresh:
             refresh_interval = st.selectbox(
                 "Refresh Interval",
@@ -656,8 +656,8 @@ def main():
         # --- Load and filter data once ---
         data_loader = DashboardDataLoader()
         
-        # Use @st.cache_data for this function in a real app
-        @st.cache_data
+        # Cache data loading to prevent repeated loading
+        @st.cache_data(ttl=300)  # Cache for 5 minutes
         def load_filtered_data(year, risk_types, regions, risk_levels):
             # Load all data for the year
             data = data_loader.load_compliance_data(year, 'all')
@@ -722,8 +722,15 @@ def main():
 
     # Auto-refresh functionality
     if st.session_state.auto_refresh:
-        time.sleep(1)  # Small delay to prevent too frequent updates
-        st.rerun()
+        # Use a placeholder that updates every refresh_interval seconds
+        placeholder = st.empty()
+        if 'last_refresh' not in st.session_state:
+            st.session_state.last_refresh = time.time()
+        
+        current_time = time.time()
+        if current_time - st.session_state.last_refresh >= st.session_state.refresh_interval:
+            st.session_state.last_refresh = current_time
+            st.rerun()
 
 
 if __name__ == "__main__":

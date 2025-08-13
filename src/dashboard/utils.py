@@ -27,13 +27,24 @@ class DashboardDataLoader:
     def _initialize_aws_client(self):
         """Initialize AWS S3 client."""
         try:
-            self.s3_client = boto3.client("s3", region_name=self.aws_region)
-            # Only log if we have credentials
-            if os.getenv("AWS_ACCESS_KEY_ID"):
-                logger.info("AWS S3 client initialized successfully")
+            # Only try to initialize if we have valid AWS credentials
+            if os.getenv("AWS_ACCESS_KEY_ID") and os.getenv("AWS_SECRET_ACCESS_KEY"):
+                self.s3_client = boto3.client("s3", region_name=self.aws_region)
+                # Test the credentials with a simple call
+                try:
+                    self.s3_client.list_buckets()
+                    logger.info("AWS S3 client initialized successfully")
+                except Exception as e:
+                    if "InvalidAccessKeyId" in str(e) or "SignatureDoesNotMatch" in str(e):
+                        logger.info("AWS credentials found but invalid - using local data only")
+                        self.s3_client = None
+                    else:
+                        raise e
+            else:
+                self.s3_client = None
         except Exception as e:
             # Don't log warnings for missing credentials (expected in demo)
-            if "NoCredentialsError" not in str(e):
+            if "NoCredentialsError" not in str(e) and "InvalidAccessKeyId" not in str(e):
                 logger.warning(f"Failed to initialize AWS S3 client: {e}")
             self.s3_client = None
 
@@ -139,7 +150,7 @@ class DashboardDataLoader:
     def get_risk_trends(self, year: int) -> pd.DataFrame:
         """Get risk trends over time for a given year."""
         data = self.load_compliance_data(year)
-        trends = data.groupby([pd.Grouper(key='Date', freq='M'), 'Risk Category'])['Risk Value'].mean().reset_index()
+        trends = data.groupby([pd.Grouper(key='Date', freq='ME'), 'Risk Category'])['Risk Value'].mean().reset_index()
         return trends
 
 
