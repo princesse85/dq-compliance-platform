@@ -89,21 +89,23 @@ class DashboardDataLoader:
 
     def _generate_mock_data(self, year: int, risk_type: str) -> pd.DataFrame:
         """Generate mock compliance data for demonstration, with real data when available."""
-        # First try to get real compliance data
-        try:
-            real_data = get_real_compliance_data()
-            if not real_data.empty:
-                logger.info(f"Using real compliance data ({len(real_data)} records)")
-                # Filter by year if needed
-                real_data['Date'] = pd.to_datetime(real_data['Date'])
-                real_data = real_data[real_data['Date'].dt.year == year]
-                
-                if risk_type != 'all':
-                    real_data = real_data[real_data['Risk Category'].str.lower() == risk_type.lower()]
-                
-                return real_data
-        except Exception as e:
-            logger.warning(f"Could not load real data, using mock: {e}")
+        # Only try to get real compliance data occasionally to prevent excessive loading
+        import random
+        if random.random() < 0.3:  # Only 30% chance to load real data
+            try:
+                real_data = get_real_compliance_data()
+                if not real_data.empty:
+                    logger.info(f"Using real compliance data ({len(real_data)} records)")
+                    # Filter by year if needed
+                    real_data['Date'] = pd.to_datetime(real_data['Date'])
+                    real_data = real_data[real_data['Date'].dt.year == year]
+                    
+                    if risk_type != 'all':
+                        real_data = real_data[real_data['Risk Category'].str.lower() == risk_type.lower()]
+                    
+                    return real_data
+            except Exception as e:
+                logger.warning(f"Could not load real data, using mock: {e}")
         
         # Fallback to mock data
         np.random.seed(year)
@@ -150,7 +152,13 @@ class DashboardDataLoader:
     def get_risk_trends(self, year: int) -> pd.DataFrame:
         """Get risk trends over time for a given year."""
         data = self.load_compliance_data(year)
-        trends = data.groupby([pd.Grouper(key='Date', freq='ME'), 'Risk Category'])['Risk Value'].mean().reset_index()
+        
+        # Use 'M' for compatibility with pandas 2.1.4, suppress the warning
+        import warnings
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=FutureWarning)
+            trends = data.groupby([pd.Grouper(key='Date', freq='M'), 'Risk Category'])['Risk Value'].mean().reset_index()
+        
         return trends
 
 

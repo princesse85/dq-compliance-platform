@@ -341,24 +341,34 @@ def create_regional_risk_heatmap(data):
 
 def create_compliance_trends_chart(data_loader, year):
     """Creates a line chart for compliance trends over time."""
-    trends_data = data_loader.get_risk_trends(year)
-    fig = px.line(
-        trends_data,
-        x="Date",
-        y="Risk Value",
-        color="Risk Category",
-        labels={"Risk Value": "Average Risk Score (%)"},
-        line_shape="spline"
-    )
-    fig.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        paper_bgcolor="rgba(0,0,0,0)",
-        yaxis=dict(gridcolor='#e2e8f0'),
-        height=400,
-        margin=dict(t=10, b=10, l=10, r=10),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
-    )
-    st.plotly_chart(fig, use_container_width=True)
+    try:
+        trends_data = data_loader.get_risk_trends(year)
+        
+        if trends_data.empty:
+            st.warning("No trends data available for the selected year.")
+            return
+            
+        fig = px.line(
+            trends_data,
+            x="Date",
+            y="Risk Value",
+            color="Risk Category",
+            labels={"Risk Value": "Average Risk Score (%)"},
+            line_shape="spline"
+        )
+        fig.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            yaxis=dict(gridcolor='#e2e8f0'),
+            height=400,
+            margin=dict(t=10, b=10, l=10, r=10),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    except Exception as e:
+        st.error(f"Error creating trends chart: {str(e)}")
+        # Fallback: show a simple message
+        st.info("Trends chart temporarily unavailable. Please check other tabs.")
 
 
 # --- Tab Functions ---
@@ -426,22 +436,30 @@ def show_risk_analytics_tab(data):
         st.markdown('<div class="chart-title">Deep Dive: Risk Register</div>', unsafe_allow_html=True)
         st.info("Filter and explore all identified risk items. Sort by clicking on column headers.")
         
-        # Display a styled dataframe
-        st.dataframe(
-            data,
-            use_container_width=True,
-            height=500,
-            column_config={
-                "ID": st.column_config.TextColumn("Risk ID"),
-                "Risk Value": st.column_config.ProgressColumn(
-                    "Risk Score",
-                    help="Calculated risk score from 0 to 100.",
-                    format="%.1f%%",
-                    min_value=0,
-                    max_value=100,
-                ),
-            }
-        )
+        try:
+            if data.empty:
+                st.warning("No risk data available. Please adjust your filters.")
+                return
+                
+            # Display a styled dataframe
+            st.dataframe(
+                data,
+                use_container_width=True,
+                height=500,
+                column_config={
+                    "ID": st.column_config.TextColumn("Risk ID"),
+                    "Risk Value": st.column_config.ProgressColumn(
+                        "Risk Score",
+                        help="Calculated risk score from 0 to 100.",
+                        format="%.1f%%",
+                        min_value=0,
+                        max_value=100,
+                    ),
+                }
+            )
+        except Exception as e:
+            st.error(f"Error displaying risk data: {str(e)}")
+            st.info("Please try refreshing the page or adjusting your filters.")
 
 def show_document_intelligence_tab():
     """Displays the document analysis tab."""
@@ -457,10 +475,11 @@ def show_document_intelligence_tab():
         
         if uploaded_file:
             with st.spinner("🔍 Analyzing document with trained ML models..."):
-                # Real ML analysis
-                analysis = analyze_document_with_ml(uploaded_file)
-                
-                if analysis:
+                try:
+                    # Real ML analysis
+                    analysis = analyze_document_with_ml(uploaded_file)
+                    
+                    if analysis:
                     st.success(f"**Analysis Complete!** File: `{analysis['filename']}`")
                     
                     cols = st.columns(4)
@@ -504,8 +523,12 @@ def show_document_intelligence_tab():
                             st.write(f"**Entities:** {entity_text}")
                         else:
                             st.info("No specific entities detected in this document.")
-                else:
-                    st.error("Failed to analyze document. Please try again.")
+                    else:
+                        st.error("Failed to analyze document. Please try again.")
+                        
+                except Exception as e:
+                    st.error(f"Error analyzing document: {str(e)}")
+                    st.info("Please try uploading a different file or check the file format.")
 
 def show_ml_performance_tab():
     """Displays the ML model performance monitoring tab."""
