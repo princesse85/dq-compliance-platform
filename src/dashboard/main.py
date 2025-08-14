@@ -480,49 +480,49 @@ def show_document_intelligence_tab():
                     analysis = analyze_document_with_ml(uploaded_file)
                     
                     if analysis:
-                    st.success(f"**Analysis Complete!** File: `{analysis['filename']}`")
-                    
-                    cols = st.columns(4)
-                    cols[0].metric("Compliance Score", f"{analysis['compliance_score']}%")
-                    cols[1].metric("Predicted Risk Level", analysis['risk_level'])
-                    cols[2].metric("Processing Time", f"{analysis['processing_time']:.2f}s")
-                    cols[3].metric("Model Used", analysis['model_used'])
-                    
-                    # Model confidence indicator
-                    if 'confidence' in analysis:
-                        confidence_pct = analysis['confidence'] * 100
-                        st.progress(confidence_pct / 100, text=f"Model Confidence: {confidence_pct:.1f}%")
-                    
-                    expander = st.expander("**View Detailed Analysis**")
-                    with expander:
-                        st.subheader("Key Risks Identified")
-                        for risk in analysis.get('key_risks', []):
-                            if analysis['risk_level'] == 'High':
-                                st.error(f"🚨 {risk}")
-                            elif analysis['risk_level'] == 'Medium':
-                                st.warning(f"⚠️ {risk}")
+                        st.success(f"**Analysis Complete!** File: `{analysis['filename']}`")
+                        
+                        cols = st.columns(4)
+                        cols[0].metric("Compliance Score", f"{analysis['compliance_score']}%")
+                        cols[1].metric("Predicted Risk Level", analysis['risk_level'])
+                        cols[2].metric("Processing Time", f"{analysis['processing_time']:.2f}s")
+                        cols[3].metric("Model Used", analysis['model_used'])
+                        
+                        # Model confidence indicator
+                        if 'confidence' in analysis:
+                            confidence_pct = analysis['confidence'] * 100
+                            st.progress(confidence_pct / 100, text=f"Model Confidence: {confidence_pct:.1f}%")
+                        
+                        expander = st.expander("**View Detailed Analysis**")
+                        with expander:
+                            st.subheader("Key Risks Identified")
+                            for risk in analysis.get('key_risks', []):
+                                if analysis['risk_level'] == 'High':
+                                    st.error(f"🚨 {risk}")
+                                elif analysis['risk_level'] == 'Medium':
+                                    st.warning(f"⚠️ {risk}")
+                                else:
+                                    st.info(f"ℹ️ {risk}")
+                            
+                            st.subheader("Recommendations")
+                            for i, rec in enumerate(analysis.get('recommendations', []), 1):
+                                st.write(f"{i}. {rec}")
+                            
+                            if 'sentiment' in analysis:
+                                st.subheader("Sentiment Analysis")
+                                sentiment = analysis['sentiment']
+                                col1, col2, col3 = st.columns(3)
+                                col1.metric("Positive", f"{sentiment.get('positive', 0):.1%}")
+                                col2.metric("Neutral", f"{sentiment.get('neutral', 0):.1%}")
+                                col3.metric("Negative", f"{sentiment.get('negative', 0):.1%}")
+                            
+                            st.subheader("Extracted Entities")
+                            entities = analysis.get('entities', [])
+                            if entities:
+                                entity_text = " • ".join(entities)
+                                st.write(f"**Entities:** {entity_text}")
                             else:
-                                st.info(f"ℹ️ {risk}")
-                        
-                        st.subheader("Recommendations")
-                        for i, rec in enumerate(analysis.get('recommendations', []), 1):
-                            st.write(f"{i}. {rec}")
-                        
-                        if 'sentiment' in analysis:
-                            st.subheader("Sentiment Analysis")
-                            sentiment = analysis['sentiment']
-                            col1, col2, col3 = st.columns(3)
-                            col1.metric("Positive", f"{sentiment.get('positive', 0):.1%}")
-                            col2.metric("Neutral", f"{sentiment.get('neutral', 0):.1%}")
-                            col3.metric("Negative", f"{sentiment.get('negative', 0):.1%}")
-                        
-                        st.subheader("Extracted Entities")
-                        entities = analysis.get('entities', [])
-                        if entities:
-                            entity_text = " • ".join(entities)
-                            st.write(f"**Entities:** {entity_text}")
-                        else:
-                            st.info("No specific entities detected in this document.")
+                                st.info("No specific entities detected in this document.")
                     else:
                         st.error("Failed to analyze document. Please try again.")
                         
