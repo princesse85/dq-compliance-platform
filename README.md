@@ -1,411 +1,203 @@
-# 🏢 Enterprise Compliance Dashboard
+# DQ Compliance Platform - Technical Implementation Guide
 
-A comprehensive, real-time dashboard for data quality and compliance monitoring built with Streamlit.
+## Table of Contents
+1. [System Overview](#system-overview)
+2. [Architecture](#architecture)
+3. [Data Flow](#data-flow)
+4. [Core Components](#core-components)
+5. [Machine Learning Pipeline](#machine-learning-pipeline)
+6. [Infrastructure](#infrastructure)
+7. [API Endpoints](#api-endpoints)
+8. [Dashboard Features](#dashboard-features)
+9. [Deployment](#deployment)
+10. [Usage Guide](#usage-guide)
 
-## ✨ Features
+## System Overview
 
-### 🚀 **Interactive Dashboard**
+The DQ Compliance Platform is an enterprise-grade solution designed to monitor and ensure data quality compliance across organizational datasets. Built with a modern microservices architecture, the platform combines automated data validation, machine learning-powered anomaly detection, and real-time monitoring capabilities to provide comprehensive data governance.
 
-- **Real-time Auto-refresh**: Configurable intervals (15s to 5min)
-- **Multi-select Filters**: Risk categories, regions, and risk levels
-- **Dynamic Data Loading**: Cached data loading for optimal performance
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
+The platform primarily targets contract management systems but can be adapted for various compliance domains. It features a Streamlit-based dashboard for user interaction, automated data quality checks using Great Expectations, and transformer-based models for advanced document analysis.
 
-### 📊 **Analytics & Visualization**
+## Architecture
 
-- **Executive Dashboard**: Key performance indicators with trend analysis
-- **Risk Analytics**: Deep dive into risk register with interactive tables
-- **Document Intelligence**: AI-powered document analysis (PDF, TXT)
-- **ML Performance Monitoring**: Real-time model performance tracking
-- **Data Quality Metrics**: Comprehensive data quality assessment
+The platform follows a modular, cloud-native architecture with the following key layers:
 
-### 🎨 **Enhanced UI/UX**
+1. **Presentation Layer**: Streamlit dashboard for user interaction and visualization
+2. **Application Layer**: Python services handling business logic, data processing, and ML inference
+3. **Data Layer**: Structured and unstructured data storage with validation mechanisms
+4. **Infrastructure Layer**: AWS-based cloud infrastructure managed by AWS CDK
 
-- **Professional Styling**: Modern, clean interface with dark sidebar
-- **Animated Components**: Hover effects and smooth transitions
-- **Status Indicators**: Real-time feedback and loading states
-- **Export Functionality**: Data export capabilities (ready for implementation)
+### Key Architecture Components
 
-### 🔧 **Technical Features**
+- **Frontend**: Streamlit dashboard with responsive design and interactive visualizations
+- **Backend Services**: Modular Python components for data processing, validation, and analysis
+- **ML Pipeline**: Transformer-based models for document classification and entity extraction
+- **Data Quality Engine**: Great Expectations-based validation suite for data integrity checks
+- **Infrastructure**: AWS CDK-managed cloud resources including Lambda functions, S3, and API Gateway
 
-- **Modular Architecture**: Clean, maintainable code structure
-- **AWS Integration**: Ready for production deployment with S3
-- **Caching**: Optimized performance with Streamlit caching
-- **Error Handling**: Robust error handling and fallbacks
+## Data Flow
 
-## 🏗️ Project Structure
+1. **Data Ingestion**: Data enters the system through multiple channels (file uploads, API integrations, database connections). The project utilizes a synthetic data generation module to create its training corpus, ensuring a consistent and controlled data environment.
+2. **Preprocessing**: Raw data is cleaned, normalized, and prepared for validation
+3. **Quality Assessment**: Data passes through the Great Expectations validation suite
+4. **ML Analysis**: Documents are processed by transformer models for compliance insights
+5. **Storage**: Validated and processed data is stored in appropriate data stores
+6. **Visualization**: Results are displayed in the dashboard with real-time metrics
+7. **Alerting**: Compliance violations trigger notifications through configured channels
 
-```
-dq-compliance-platform/
-├── streamlit_app.py          # Streamlit Cloud entry point
-├── requirements.txt          # Python dependencies
-├── README.md                # This file
-├── .gitignore              # Git ignore rules
-├── src/
-│   ├── dashboard/           # Streamlit dashboard
-│   ├── ml/                 # Machine learning models
-│   ├── etl_pipelines/      # Data processing
-│   └── data_quality/       # Data validation
-├── infrastructure/          # AWS CDK stacks
-├── lambda_app/             # AWS Lambda functions
-├── scripts/                # Deployment and setup scripts
-└── assets/                 # Static assets (images, etc.)
-```
+## Core Components
 
-## 🚀 Quick Start
+### 1. Data Quality Module (`src/data_quality`)
+- **Data Validation Suite**: Implements Great Expectations for data integrity checks
+- **Quality Assessment**: Automated scoring of data quality metrics
+- **Synthetic Data Generation**: Tools for generating test datasets
+
+### 2. Dashboard (`src/dashboard`)
+- **Main Application**: Streamlit-based interface with responsive design
+- **Real ML Utils**: Helper functions for ML model integration
+- **Utilities**: Common dashboard functions for data loading and formatting
+
+### 3. Machine Learning (`src/ml`)
+- **Transformer Training**: BERT/DistilBERT-based models for document classification
+- **Model Integration**: Utilities for model deployment and inference
+- **Analytics Pipeline**: Tools for model evaluation and reporting
+
+### 4. ETL Pipelines (`src/etl_pipelines`)
+- **Data Processing Workflows**: Automated pipelines for data transformation
+- **Integration Connectors**: Adapters for various data sources
+
+### 5. OCR Module (`src/ocr`)
+- **Document Processing**: Optical character recognition for scanned documents
+- **Text Extraction**: Conversion of images to machine-readable text
+
+## Machine Learning Pipeline
+
+The ML pipeline is built around transformer models for natural language processing tasks:
+
+### Model Training
+1. **Data Preparation**: Text corpus is tokenized using DistilBERT tokenizer
+2. **Model Configuration**: Sequence classification model with fine-tuning parameters
+3. **Training Process**: Uses Hugging Face Transformers library with configurable hyperparameters
+4. **Evaluation**: Model performance assessed using standard NLP metrics
+
+### Inference Pipeline
+1. **Model Loading**: Pre-trained models are loaded for inference
+2. **Text Processing**: Input documents are tokenized and processed
+3. **Prediction Generation**: Model outputs compliance classifications and risk scores
+4. **Results Integration**: ML insights are incorporated into data quality metrics
+
+### Key Features
+- Configurable model parameters through environment variables
+- Support for multiple transformer architectures
+- Automated model evaluation and reporting
+- Integration with dashboard for real-time insights
+
+## Infrastructure
+
+The platform is designed for AWS deployment using AWS CDK (Cloud Development Kit):
+
+### Core Stacks
+1. **Foundation Stack**: Base infrastructure components (VPC, security groups)
+2. **Document Processing Stack**: Services for OCR and document analysis
+3. **Data Quality Stack**: Resources for data validation and monitoring
+4. **ML Inference Stack**: Serverless functions for ML model serving
+5. **Billing Alarm Stack**: Cost monitoring and alerting mechanisms
+
+### Key Services
+- **AWS Lambda**: Serverless compute for data processing functions
+- **Amazon S3**: Object storage for documents and datasets
+- **API Gateway**: RESTful API endpoints for external integrations
+- **CloudWatch**: Monitoring and logging services
+- **IAM**: Security and access control management
+
+### Security Configuration
+- Role-based access control for different user types
+- Encryption at rest and in transit
+- VPC isolation for sensitive workloads
+- Automated security scanning and compliance checks
+
+## API Endpoints
+
+The platform exposes several RESTful API endpoints for integration:
+
+### Data Quality Endpoints
+- `POST /validate`: Submit data for quality validation
+- `GET /metrics`: Retrieve current data quality metrics
+- `GET /violations`: List recent compliance violations
+
+### ML Endpoints
+- `POST /analyze`: Submit document for ML-based compliance analysis
+- `GET /models`: List available ML models
+- `POST /predict`: Get predictions from trained models
+
+### Dashboard Endpoints
+- `GET /dashboard/data`: Retrieve dashboard metrics and visualizations
+- `POST /dashboard/config`: Update dashboard configuration settings
+
+## Dashboard Features
+
+The Streamlit dashboard provides a comprehensive interface for monitoring compliance:
+
+### Key Features
+1. **Real-time Metrics**: Live display of data quality scores and compliance metrics
+2. **Interactive Visualizations**: Charts and graphs for trend analysis
+3. **Document Analysis**: ML-powered insights on contract documents
+4. **Alert Management**: Configuration of compliance alerts and notifications
+5. **Historical Reporting**: Access to historical compliance data and trends
+
+### User Interface Components
+- **Metric Cards**: Key performance indicators with visual indicators
+- **Time Series Charts**: Trend analysis for data quality metrics
+- **Compliance Heatmaps**: Visual representation of compliance status across datasets
+- **Document Viewer**: Side-by-side comparison of original documents and ML analysis
+- **Configuration Panel**: User settings and system configuration options
+
+## Deployment
 
 ### Prerequisites
-
-Before starting, ensure you have:
-
-- **Python 3.8+**
-- **Git**
-
-### 🎯 **One-Command Setup (Recommended)**
-
-The easiest way to get started is with our automated setup:
-
-#### **Windows Users:**
-
-```cmd
-# Clone the repository
-git clone https://github.com/princesse85/dq-compliance-platform.git
-cd dq-compliance-platform
-
-# Double-click setup.bat or run:
-setup.bat
-```
-
-#### **macOS/Linux Users:**
-
-```bash
-# Clone the repository
-git clone https://github.com/princesse85/dq-compliance-platform.git
-cd dq-compliance-platform
-
-# Run the setup script:
-./setup.sh
-```
-
-#### **All Platforms (Python):**
-
-```bash
-# Clone the repository
-git clone https://github.com/princesse85/dq-compliance-platform.git
-cd dq-compliance-platform
-
-# Run the Python setup:
-python setup.py
-```
-
-**All methods do the same thing automatically:**
-
-- ✅ Create and activate virtual environment
-- ✅ Install all dependencies
-- ✅ Generate sample data
-- ✅ Train ML models
-- ✅ Launch dashboard
-
-Your dashboard will be available at: **http://localhost:8501**
-
-### Option 1: Complete AWS Deployment (Advanced)
-
-#### 2. **Configure AWS**
-
-```bash
-# Configure AWS credentials
-aws configure
-
-# Install AWS CDK globally
-npm install -g aws-cdk
-
-# Bootstrap CDK (first time only)
-cdk bootstrap
-```
-
-#### 3. **Environment Configuration**
-
-```bash
-# Run the configuration script
-python scripts/configure_env.py
-
-# Copy and configure environment file
-cp config/environment.example .env
-# Edit .env with your specific settings
-```
-
-#### 4. **Deploy Infrastructure**
-
-```bash
-# Deploy all AWS infrastructure stacks
-cdk deploy --all
-
-# This will create:
-# - S3 buckets for data storage
-# - Lambda functions for ETL and ML inference
-# - API Gateway for REST APIs
-# - CloudWatch for monitoring
-# - IAM roles and policies
-```
-
-#### 5. **Run ETL and ML Pipelines**
-
-```bash
-# Generate synthetic data and train models
-python scripts/generate_data_and_train.py
-
-# Run ETL pipeline
-python src/etl_pipelines/contracts_etl_job.py
-```
-
-#### 6. **Run the Dashboard**
-
-```bash
-# Option 1: Using the Makefile
-make dashboard
-
-# Option 2: Using the script directly
-python scripts/run_dashboard.py
-
-# Option 3: Direct Streamlit command
-streamlit run src/dashboard/main.py
-```
-
-### Option 2: Local Development (No AWS)
-
-For quick local development without AWS deployment:
-
-```bash
-# 1. Clone and setup
-git clone https://github.com/princesse85/dq-compliance-platform.git
-cd dq-compliance-platform
-
-# 2. Create virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Run dashboard with local data
-streamlit run streamlit_app.py
-
-# 5. Open browser at http://localhost:8501
-```
-
-### Option 3: Using Makefile Commands
-
-```bash
-# View all available commands
-make help
-
-# Complete setup
-make dev-setup
-
-# Run dashboard
-make dashboard
-
-# Run tests
-make test
-
-# Deploy to AWS
-make deploy
-
-# Clean up
-make clean
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-For production deployment, set these environment variables:
-
-```bash
-# AWS Configuration
-AWS_ACCESS_KEY_ID=your_access_key
-AWS_SECRET_ACCESS_KEY=your_secret_key
-AWS_DEFAULT_REGION=us-east-1
-
-# Dashboard Configuration
-COMPLIANCE_BUCKET=your-s3-bucket-name
-```
-
-### Customization
-
-The dashboard is highly customizable:
-
-- **Data Sources**: Modify `src/dashboard/utils.py` to connect to your data sources
-- **Styling**: Update CSS in `src/dashboard/main.py`
-- **Charts**: Customize visualizations in the chart functions
-- **Filters**: Add new filter options in the sidebar
-
-## 📊 Dashboard Sections
-
-### 1. Executive Dashboard
-
-- **KPIs**: Overall compliance, risk scores, high-risk items, ML accuracy
-- **Charts**: Risk distribution, regional heatmap, compliance trends
-- **Real-time Updates**: Auto-refresh with configurable intervals
-
-### 2. Risk Analytics
-
-- **Interactive Table**: Sortable risk register with progress indicators
-- **Multi-level Filtering**: By category, region, and risk level
-- **Data Export**: Export filtered data (ready for implementation)
-
-### 3. Document Intelligence
-
-- **File Upload**: Support for PDF and TXT files
-- **AI Analysis**: Compliance scoring, risk assessment, entity extraction
-- **Detailed Reports**: Key risks, recommendations, and extracted entities
-
-### 4. ML Performance
-
-- **Model Monitoring**: Accuracy, precision, recall, and latency tracking
-- **Performance Trends**: Historical performance visualization
-- **Model Selection**: Compare different ML models
-
-### 5. Data Quality
-
-- **Quality Metrics**: Completeness, accuracy, timeliness, validity
-- **Trend Analysis**: Quality score changes over time
-- **Issue Detection**: Automated quality issue identification
-
-## 🛠️ Development
-
-### Adding New Features
-
-1. **New Data Source**
-
-   ```python
-   # In src/dashboard/utils.py
-   def load_new_data():
-       # Your data loading logic
-       pass
-   ```
-
-2. **New Chart**
-
-   ```python
-   # In src/dashboard/main.py
-   def create_new_chart(data):
-       # Your chart creation logic
-       pass
-   ```
-
-3. **New Tab**
-   ```python
-   # Add to main() function
-   with tab6:
-       show_new_feature_tab()
-   ```
-
-### Testing
-
-```bash
-# Run tests
-pytest tests/
-
-# Run with coverage
-pytest --cov=src tests/
-
-# Run specific test categories
-make test-unit
-make test-integration
-make test-performance
-```
-
-## 🔒 Security
-
-- **Environment Variables**: Sensitive data stored in environment variables
-- **Input Validation**: All user inputs are validated
-- **Error Handling**: Secure error messages without exposing internals
-- **AWS IAM**: Proper IAM roles and permissions for production
-
-## 📈 Performance
-
-- **Caching**: Streamlit caching for expensive operations
-- **Lazy Loading**: Data loaded only when needed
-- **Optimized Queries**: Efficient data filtering and aggregation
-- **Responsive Design**: Fast loading on all devices
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-```bash
-# Check dependencies
-python scripts/run_dashboard.py --check-deps
-
-# Verify AWS credentials
-aws sts get-caller-identity
-
-# Check CDK status
-cdk diff
-
-# View logs
-make logs
-
-# Reset environment
-make reset
-```
-
-### Error Solutions
-
-- **AWS Credentials**: Ensure `aws configure` is completed
-- **CDK Bootstrap**: Run `cdk bootstrap` if deploying for first time
-- **Port Conflicts**: Change port with `--port 8502` if 8501 is busy
-- **Dependencies**: Run `pip install -r requirements.txt` if import errors occur
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-- **Documentation**: Check the inline code comments
-- **Issues**: Report bugs via GitHub Issues
-- **Discussions**: Use GitHub Discussions for questions
-- **Email**: contact@company.com
-
-## 🔄 Version History
-
-### v2.1.0 (Current)
-
-- ✅ Real-time auto-refresh functionality
-- ✅ Multi-select filters for enhanced data exploration
-- ✅ Enhanced visual feedback and animations
-- ✅ Modular architecture for better maintainability
-- ✅ Streamlit Cloud deployment ready
-- ✅ Professional dark sidebar theme
-- ✅ Export functionality framework
-- ✅ Complete AWS infrastructure deployment
-- ✅ ETL and ML pipeline integration
-
-### v2.0.0
-
-- ✅ Initial dashboard implementation
-- ✅ Basic charts and visualizations
-- ✅ AWS integration framework
-- ✅ Document analysis capabilities
-
-### v1.0.0
-
-- ✅ Core compliance monitoring features
-- ✅ Basic risk analytics
-- ✅ ML model integration
-
----
-
-**Built with ❤️ by the Enterprise Solutions Team**
+- Python 3.8+
+- AWS CLI configured with appropriate permissions
+- Node.js (for CDK deployment)
+- Docker (for containerized components)
+
+### Local Development Setup
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Configure environment variables
+4. Run the dashboard: `streamlit run streamlit_app.py`
+
+### Cloud Deployment
+1. Install CDK: `npm install -g aws-cdk`
+2. Bootstrap CDK: `cdk bootstrap`
+3. Deploy stacks: `cdk deploy`
+
+### Configuration
+- Environment-specific settings in `.env` files
+- Streamlit secrets in `.streamlit/secrets.toml`
+- Infrastructure parameters in CDK stack definitions
+
+## Usage Guide
+
+### Dashboard Navigation
+1. **Home Page**: Overview of system health and key metrics
+2. **Data Quality**: Detailed view of data validation results
+3. **Document Analysis**: ML-powered document insights
+4. **Reports**: Historical data and compliance reports
+5. **Settings**: System configuration and user preferences
+
+### Data Submission
+1. Upload CSV files through the dashboard interface
+2. Use API endpoints for programmatic data submission
+3. Configure automated data ingestion from external sources
+
+### Monitoring and Alerts
+1. Configure threshold-based alerts for data quality metrics
+2. Set up notification channels (email, Slack, etc.)
+3. Review compliance violations in the dashboard
+4. Generate and export compliance reports
+
+### Model Management
+1. Train new models using the transformer training pipeline
+2. Evaluate model performance with the evaluation report tool
+3. Deploy updated models to the inference stack
+4. Monitor model performance through dashboard metrics
