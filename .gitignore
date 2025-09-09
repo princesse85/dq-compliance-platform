@@ -201,6 +201,8 @@ mlruns/
 
 # ML Models (generated during training)
 analytics/models/
+src/ml/analytics/models/
+src/data/text_corpus/
 
 # Claude AI
 .claude/

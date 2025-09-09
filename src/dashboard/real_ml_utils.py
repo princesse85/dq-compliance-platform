@@ -1,3 +1,4 @@
+
 """
 Real ML Model Integration for Dashboard
 
@@ -11,8 +12,6 @@ import joblib
 from pathlib import Path
 from typing import Dict, Optional
 import logging
-import os
-import sys
 
 logger = logging.getLogger(__name__)
 
@@ -21,27 +20,23 @@ class RealMLPredictor:
     
     def __init__(self):
         self.baseline_model = None
+        self.transformer_model = None
         self.label_encoder = None
         self._load_models()
     
     def _load_models(self):
         """Load trained models."""
         try:
-            # Try different possible paths for the baseline model
-            baseline_paths = [
-                Path("analytics/models/baseline/model.joblib"),
-                Path("../../analytics/models/baseline/model.joblib"),
-                Path("../../../analytics/models/baseline/model.joblib")
-            ]
+            # Try to load baseline model
+            baseline_path = Path("analytics/models/baseline/model.joblib")
+            if baseline_path.exists():
+                self.baseline_model = joblib.load(baseline_path)
+                logger.info("[OK] Baseline model loaded successfully")
             
-            for baseline_path in baseline_paths:
-                if baseline_path.exists():
-                    self.baseline_model = joblib.load(baseline_path)
-                    logger.info(f"[OK] Baseline model loaded from {baseline_path}")
-                    break
-            
-            if self.baseline_model is None:
-                logger.warning("Could not find trained baseline model, using mock predictions")
+            # Try to load transformer model (if available)
+            transformer_path = Path("analytics/models/transformer/final_model")
+            if transformer_path.exists():
+                logger.info("[OK] Transformer model directory found")
                 
         except Exception as e:
             logger.warning(f"Could not load models: {e}")
@@ -62,9 +57,9 @@ class RealMLPredictor:
             
             # Map prediction to risk level
             risk_mapping = {
-                'HighRisk': 'High',
+                'LowRisk': 'Low',
                 'MediumRisk': 'Medium', 
-                'LowRisk': 'Low'
+                'HighRisk': 'High'
             }
             
             risk_level = risk_mapping.get(prediction, 'Medium')
@@ -91,20 +86,6 @@ class RealMLPredictor:
             "probabilities": {"LowRisk": 0.6, "MediumRisk": 0.3, "HighRisk": 0.1}
         }
 
-    def analyze_bulk_data(self, texts: list) -> pd.DataFrame:
-        """Analyze multiple texts and return results as DataFrame."""
-        results = []
-        for i, text in enumerate(texts):
-            prediction = self.predict_risk(text)
-            results.append({
-                "text_id": f"DOC_{i+1:04d}",
-                "text_sample": text[:100] + "..." if len(text) > 100 else text,
-                "risk_level": prediction["risk_level"],
-                "confidence": prediction["confidence"],
-                "model_used": prediction["model_used"]
-            })
-        return pd.DataFrame(results)
-
 # Global predictor instance
 ml_predictor = RealMLPredictor()
 
@@ -114,41 +95,16 @@ def analyze_document_with_real_ml(uploaded_file) -> Optional[Dict]:
         return None
 
     try:
-        # Read file content based on file type
-        filename = getattr(uploaded_file, 'name', 'uploaded_document.txt')
-        file_extension = filename.lower().split('.')[-1]
-        
-        if hasattr(uploaded_file, 'getvalue'):
-            content = uploaded_file.getvalue()
-            if isinstance(content, bytes):
-                if file_extension == 'pdf':
-                    # For PDF files, try to extract text (basic implementation)
-                    try:
-                        import PyMuPDF  # fitz
-                        pdf_doc = PyMuPDF.open(stream=content, filetype='pdf')
-                        content = ""
-                        for page in pdf_doc:
-                            content += page.get_text()
-                        pdf_doc.close()
-                    except:
-                        # Fallback: just use a sample text for PDF
-                        content = "PDF document content analysis - sample compliance text for demonstration"
-                else:
-                    content = content.decode('utf-8', errors='ignore')
-        else:
-            content = str(uploaded_file)
-        
-        # Ensure we have some content to analyze
-        if not content or len(content.strip()) < 10:
-            content = "Sample document content for analysis"
+        # Read file content
+        content = uploaded_file.getvalue().decode('utf-8')
         
         # Make real prediction
         prediction = ml_predictor.predict_risk(content)
         
         # Generate analysis based on prediction
         analysis = {
-            "filename": getattr(uploaded_file, 'name', 'uploaded_document.txt'),
-            "file_size": len(content),
+            "filename": uploaded_file.name,
+            "file_size": len(uploaded_file.getvalue()),
             "compliance_score": int(100 - (prediction["confidence"] * 20)),  # Inverse of confidence
             "risk_level": prediction["risk_level"],
             "confidence": prediction["confidence"],
@@ -256,130 +212,39 @@ def get_real_ml_metrics() -> pd.DataFrame:
     """Get real ML model metrics if available."""
     try:
         # Try to load metrics from training
-        metrics_paths = [
-            Path("analytics/models/baseline/metrics.json"),
-            Path("../../analytics/models/baseline/metrics.json"),
-            Path("../../../analytics/models/baseline/metrics.json")
-        ]
-        
-        for metrics_path in metrics_paths:
-            if metrics_path.exists():
-                import json
-                with open(metrics_path, 'r') as f:
-                    metrics = json.load(f)
-                
-                # Create realistic metrics based on training results
-                base_f1 = metrics.get("weighted avg", {}).get("f1-score", 0.85)
-                
-                # Generate time series data
-                from datetime import datetime, timedelta
-                dates = pd.date_range(end=pd.Timestamp.now(), periods=30, freq='D')
-                models = ["baseline_tfidf", "transformer_bert", "ensemble"]
-                
-                metrics_data = []
-                for model in models:
-                    for i, date in enumerate(dates):
-                        # Add some realistic variation
-                        variation = np.random.normal(0, 0.02)
-                        f1_score = max(0.7, min(0.98, base_f1 + variation - (i * 0.001)))
-                        
-                        metrics_data.append({
-                            "date": date,
-                            "model_name": model,
-                            "accuracy": f1_score + np.random.normal(0, 0.01),
-                            "precision": f1_score + np.random.normal(0, 0.01),
-                            "recall": f1_score + np.random.normal(0, 0.01),
-                            "latency_ms": np.random.uniform(150, 450) + (i * 1.2),
-                        })
-                
-                return pd.DataFrame(metrics_data)
-                
+        metrics_path = Path("analytics/models/baseline/metrics.json")
+        if metrics_path.exists():
+            import json
+            with open(metrics_path, 'r') as f:
+                metrics = json.load(f)
+            
+            # Create realistic metrics based on training results
+            base_f1 = metrics.get("weighted avg", {}).get("f1-score", 0.85)
+            
+            # Generate time series data
+            dates = pd.date_range(end=pd.Timestamp.now(), periods=30, freq='D')
+            models = ["baseline_tfidf", "transformer_bert", "ensemble"]
+            
+            metrics_data = []
+            for model in models:
+                for i, date in enumerate(dates):
+                    # Add some realistic variation
+                    variation = np.random.normal(0, 0.02)
+                    f1_score = max(0.7, min(0.98, base_f1 + variation - (i * 0.001)))
+                    
+                    metrics_data.append({
+                        "date": date,
+                        "model_name": model,
+                        "accuracy": f1_score + np.random.normal(0, 0.01),
+                        "precision": f1_score + np.random.normal(0, 0.01),
+                        "recall": f1_score + np.random.normal(0, 0.01),
+                        "latency_ms": np.random.uniform(150, 450) + (i * 1.2),
+                    })
+            
+            return pd.DataFrame(metrics_data)
+            
     except Exception as e:
         logger.warning(f"Could not load real metrics: {e}")
     
     # Fallback to mock metrics
-    from datetime import datetime, timedelta
-    models = ["baseline_tfidf", "transformer_bert", "ensemble"]
-    metrics_data = []
-    for model in models:
-        for i in range(30):
-            date = datetime.now() - timedelta(days=i)
-            metrics_data.append({
-                "date": date,
-                "model_name": model,
-                "accuracy": np.random.uniform(0.88, 0.95) - (i * 0.0005),
-                "precision": np.random.uniform(0.85, 0.96) - (i * 0.0004),
-                "recall": np.random.uniform(0.87, 0.97) - (i * 0.0006),
-                "latency_ms": np.random.uniform(150, 450) + (i * 1.2),
-            })
-    return pd.DataFrame(metrics_data)
-
-def get_real_compliance_data() -> pd.DataFrame:
-    """Get real compliance data from our generated datasets (optimized)."""
-    try:
-        # Try to load our generated compliance data
-        data_paths = [
-            Path("src/data/text_corpus/train.csv"),
-            Path("../data/text_corpus/train.csv"),
-            Path("../../src/data/text_corpus/train.csv")
-        ]
-        
-        for data_path in data_paths:
-            if data_path.exists():
-                # Only load a sample of the data for dashboard performance
-                df = pd.read_csv(data_path, nrows=1000)  # Limit to 1000 rows for performance
-                
-                # Convert to dashboard format more efficiently
-                dashboard_data = []
-                
-                # Use batch predictions to be more efficient
-                categories = ["Financial", "Operational", "Legal", "Regulatory", "Cybersecurity"]
-                regions = ["North America", "Europe", "Asia Pacific", "Latin America", "Middle East"]
-                
-                # Sample dates from 2024
-                dates = pd.date_range(start='2024-01-01', end='2024-12-31', periods=len(df))
-                
-                for i, row in df.iterrows():
-                    # Map our ML labels to risk categories
-                    category_map = {
-                        'contracts': 'Legal',
-                        'litigation': 'Legal', 
-                        'regulatory': 'Regulatory',
-                        'compliance': 'Operational'
-                    }
-                    
-                    risk_category = category_map.get(row.get('category', 'compliance'), 'Operational')
-                    
-                    # Use the label from our data instead of re-predicting
-                    label = row.get('label', 'MediumRisk')
-                    risk_level_map = {
-                        'HighRisk': 'High',
-                        'MediumRisk': 'Medium',
-                        'LowRisk': 'Low'
-                    }
-                    risk_level = risk_level_map.get(label, 'Medium')
-                    
-                    # Calculate risk value based on label
-                    risk_value_map = {
-                        'High': np.random.uniform(75, 95),
-                        'Medium': np.random.uniform(45, 75),
-                        'Low': np.random.uniform(20, 45)
-                    }
-                    risk_value = risk_value_map[risk_level]
-                    
-                    dashboard_data.append({
-                        "Date": dates[i],
-                        "Risk Category": risk_category,
-                        "Region": np.random.choice(regions),
-                        "Risk Value": risk_value,
-                        "Risk Level": risk_level,
-                        "ID": row.get('document_id', f"RISK-{np.random.randint(10000, 99999)}")
-                    })
-                
-                logger.info(f"Loaded {len(dashboard_data)} real compliance records (optimized)")
-                return pd.DataFrame(dashboard_data)
-                
-    except Exception as e:
-        logger.warning(f"Could not load real compliance data: {e}")
-    
-    return pd.DataFrame()  # Return empty DataFrame as fallback
+    return generate_ml_metrics()

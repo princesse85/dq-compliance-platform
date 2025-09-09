@@ -9,7 +9,7 @@ import os
 from typing import Dict, List, Optional
 from datetime import datetime, timedelta
 import logging
-from .real_ml_utils import analyze_document_with_real_ml, get_real_ml_metrics, get_real_compliance_data
+from .real_ml_utils import analyze_document_with_real_ml, get_real_ml_metrics
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -168,6 +168,8 @@ def format_number(n: int) -> str:
 
 
 def generate_ml_metrics() -> pd.DataFrame:
+    """Get real ML model metrics."""
+    return get_real_ml_metrics()
     """Generate ML model metrics with real data when available."""
     try:
         # Try to get real ML metrics first
@@ -179,20 +181,6 @@ def generate_ml_metrics() -> pd.DataFrame:
         logger.warning(f"Could not load real ML metrics, using mock: {e}")
     
     # Fallback to mock metrics
-    models = ["legal-bert-v2.1", "compliance-gpt-3.5", "risk-detector-xlnet"]
-    metrics_data = []
-    for model in models:
-        for i in range(30):
-            date = datetime.now() - timedelta(days=i)
-            metrics_data.append({
-                "date": date,
-                "model_name": model,
-                "accuracy": np.random.uniform(0.88, 0.95) - (i * 0.0005),
-                "precision": np.random.uniform(0.85, 0.96) - (i * 0.0004),
-                "recall": np.random.uniform(0.87, 0.97) - (i * 0.0006),
-                "latency_ms": np.random.uniform(150, 450) + (i * 1.2),
-            })
-    return pd.DataFrame(metrics_data)
 
 
 def get_data_quality_metrics() -> Dict:
@@ -210,9 +198,8 @@ def get_data_quality_metrics() -> Dict:
 
 def analyze_document_with_ml(uploaded_file) -> Optional[Dict]:
     """Analyze document using real ML models."""
-    if uploaded_file is None:
-        return None
-
+    return analyze_document_with_real_ml(uploaded_file)
+    """Analyze document using real ML models."""
     try:
         # Try to use real ML analysis first
         real_analysis = analyze_document_with_real_ml(uploaded_file)

@@ -3,7 +3,7 @@
   "context": {
     "project_prefix": "enterprise",
     "env_name": "production",
-    "region": "eu-west-2",
+    "region": "us-east-1",
     "billing_email": "enterprise-support@company.com",
     "monthly_budget": 5000,
     "environment": {

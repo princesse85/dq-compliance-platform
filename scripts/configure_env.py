@@ -146,7 +146,7 @@ def check_dependencies():
     """Check if required dependencies are installed."""
     required_packages = [
         "streamlit", "pandas", "numpy", "plotly", "boto3",
-        "scikit-learn", "transformers", "torch", "datasets"
+        "sklearn", "transformers", "torch", "datasets"
     ]
     
     missing_packages = []
@@ -154,10 +154,10 @@ def check_dependencies():
     for package in required_packages:
         try:
             __import__(package)
-            print_status(f"✅ {package}", "SUCCESS")
+            print_status(f"[OK] {package}", "SUCCESS")
         except ImportError:
             missing_packages.append(package)
-            print_status(f"❌ {package}", "ERROR")
+            print_status(f"[FAIL] {package}", "ERROR")
     
     if missing_packages:
         print_status(f"Missing packages: {', '.join(missing_packages)}", "WARNING")
@@ -199,7 +199,7 @@ def validate_setup():
     
     # Check if .env exists
     if not Path(".env").exists():
-        print_status("❌ .env file not found", "ERROR")
+        print_status("[FAIL] .env file not found", "ERROR")
         return False
     
     # Check if directories exist
@@ -212,19 +212,19 @@ def validate_setup():
     
     for directory in required_dirs:
         if not Path(directory).exists():
-            print_status(f"❌ Directory not found: {directory}", "ERROR")
+            print_status(f"[FAIL] Directory not found: {directory}", "ERROR")
             return False
     
     # Check dependencies
     if not check_dependencies():
         return False
     
-    print_status("✅ Setup validation completed", "SUCCESS")
+    print_status("[OK] Setup validation completed", "SUCCESS")
     return True
 
 def main():
     """Main configuration function."""
-    print_status("🚀 Data Quality Compliance Platform - Environment Configuration", "INFO")
+    print_status("Data Quality Compliance Platform - Environment Configuration", "INFO")
     print_status("=" * 60, "INFO")
     
     # Check AWS credentials
@@ -247,7 +247,7 @@ def main():
     # Validate setup
     if validate_setup():
         print_status("=" * 60, "INFO")
-        print_status("✅ Environment configuration completed successfully!", "SUCCESS")
+        print_status("[OK] Environment configuration completed successfully!", "SUCCESS")
         
         if aws_configured:
             print_status("Next steps:", "INFO")
@@ -262,7 +262,7 @@ def main():
             print_status("2. Run: python scripts/generate_data_and_train.py", "INFO")
             print_status("3. Run: streamlit run streamlit_app.py", "INFO")
     else:
-        print_status("❌ Setup validation failed", "ERROR")
+        print_status("[FAIL] Setup validation failed", "ERROR")
         sys.exit(1)
 
 if __name__ == "__main__":
